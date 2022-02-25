@@ -1,0 +1,12 @@
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\bin\Debug\net6.0\Core.deps.json
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\bin\Debug\net6.0\Core.dll
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\bin\Debug\net6.0\ref\Core.dll
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\bin\Debug\net6.0\Core.pdb
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\obj\Debug\net6.0\Core.csproj.AssemblyReference.cache
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\obj\Debug\net6.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\obj\Debug\net6.0\Core.AssemblyInfoInputs.cache
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\obj\Debug\net6.0\Core.AssemblyInfo.cs
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\obj\Debug\net6.0\Core.csproj.CoreCompileInputs.cache
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\obj\Debug\net6.0\Core.dll
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\obj\Debug\net6.0\ref\Core.dll
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Core\obj\Debug\net6.0\Core.pdb

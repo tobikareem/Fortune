@@ -1,0 +1,107 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Permanent Marker', cursive;
+    background-color: #fefaf6;
+}
+
+.homePageMainBorder {
+    height: 245px;
+    border-radius: 48px;
+    width: 100%;
+    padding: 17px 30px 17px 30px;
+    position: relative;
+    display: block;
+    background-color: #fff;
+    margin-bottom: 3em;
+}
+
+    .homePageMainBorder:last-child {
+        margin-bottom: 7em;
+    }
+
+div.homeRow {
+    height: 300px;
+    position: relative;
+    top: 5%;
+}
+
+.homePageMain {
+    height: auto;
+}
+
+    .homePageMain img {
+        width: 289px;
+        height: 240px;
+        border-radius: 15px;
+        display: flex;
+        margin-left: auto;
+    }
+
+    .homePageMain h1 {
+        font-size: 62px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+
+blockquote {
+    margin: 0;
+    width: auto;
+    font-family: 'Permanent Marker', cursive;
+}
+
+    blockquote p {
+        padding: 15px;
+        background: #eee;
+        border-radius: 5px;
+    }
+
+        blockquote p::before {
+            content: '\201C';
+        }
+
+        blockquote p::after {
+            content: '\201D';
+        }
+
+
+.homePageSection {
+}
+
+    .homePageSection p {
+        width: 500px;
+        text-align: justify;
+        letter-spacing: 1px;
+        font-size: 12px;
+        font-weight: 400;
+        margin-bottom: 40px;
+    }
+
+.learnMore {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 50px;
+}
+
+
+.col3sm {
+    background-color: red;
+    height: calc(100% - 40px);
+    border: 2px solid green;
+    margin-right: 20px;
+}
