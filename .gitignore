@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Fortune/DesignTimeBuild
+/.vs/Fortune/v17/.futdcache.v1
+/.vs/Fortune/project-colors.json

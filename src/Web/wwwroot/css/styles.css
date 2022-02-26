@@ -1,0 +1,85 @@
+﻿body {
+    /*background-color: #e2e8ff;*/
+    background-color: #fefaf6
+}
+
+.toUpper {
+    text-transform: uppercase;
+}
+
+.capSetion {
+    margin: 100px 465px 100px 365px;
+}
+
+.banner {
+    margin: 0 15px 10em 15px;
+    padding: 75px 0 0;
+    height: auto;
+    position: relative;
+}
+
+.leftSide {
+    padding: 6em 0 8em;
+    width: auto;
+    margin: 0 auto;
+    transition: all .2s ease-in-out;
+}
+
+h3.myName {
+    opacity: 1;
+    transform: translateY(0px);
+    font-size: 26px;
+    letter-spacing: 4px;
+    margin-bottom: 75px;
+    font-family: 'Permanent Marker', cursive;
+}
+
+h2.myDesc {
+    opacity: 1;
+    font-size: 30px;
+    font-family: 'Permanent Marker', cursive;
+}
+
+.rightSide {
+    max-width: 60%;
+}
+
+ .rightSide img{
+     border: 6px solid #83c5;
+     border-radius:40px;
+     padding: 5px;
+     width: 600px;
+     height: 600px;
+     margin-bottom: 20px;
+ }
+    .rightSide img:hover {
+        box-shadow: 0 0 2px 1px #023047
+    }
+
+blockquote {
+    margin: 0;
+    width: 600px;
+    font-family: 'Permanent Marker', cursive;
+}
+
+    blockquote p {
+        padding: 15px;
+        background: #eee;
+        border-radius: 5px;
+    }
+
+        blockquote p::before {
+            content: '\201C';
+        }
+
+        blockquote p::after {
+            content: '\201D';
+        }
+
+a.enterHere {
+    border-radius: 5px;
+    /*background-color: #168aad;*/
+    background-color: #83c5;
+    width: 170px;
+    color: white;
+}
