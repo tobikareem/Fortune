@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Jbx/h/xXygMYJHRtOIUkKsdCLa0Oj6ko4NpoBpLs2jI=",
+  "Hash": "uv2C37W6nw3zMhAo7QBSk1T8Dp4/p/TdqeaYZVjyOA8=",
   "Source": "Web",
   "BasePath": "_content/Web",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Web.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\wwwroot\\css\\about.css",
+      "SourceId": "Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\wwwroot\\",
+      "BasePath": "_content/Web",
+      "RelativePath": "css/about.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\about.css"
     },
     {
       "Identity": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\wwwroot\\css\\fonts.css",

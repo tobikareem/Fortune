@@ -1,0 +1,104 @@
+﻿.header {
+    padding: 60px;
+    text-align: center;
+    background: #e2e8ff;
+    color: black;
+    height: 200px;
+}
+
+    .header h1 {
+        font-size: 40px;
+    }
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.side {
+    -ms-flex: 30%;
+    flex: 30%;
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+.main {
+    -ms-flex: 70%;
+    flex: 70%;
+    background-color: white;
+    padding: 20px;
+}
+
+.fakeimg {
+    background-color: #aaa;
+    width: 100%;
+    padding: 20px;
+}
+
+@media screen and (max-width: 700px) {
+    .row {
+        flex-direction: column;
+    }
+}
+
+input[type=text], input[type=email], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 0;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+textarea{
+    height:250px;
+    max-height: 260px;
+}
+
+button.sendMe {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+    button.sendMe:hover {
+        background-color: #45a049;
+    }
+
+.mainContent{
+    overflow: auto;
+}
+
+/*   Small devices (desktop, 992px)*/
+@media (max-width: 576px) {
+    .header {
+        padding: 5px;
+        height: 180px;
+    }
+    input[type=text], input[type=email], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        margin-top: 0;
+        margin-bottom: 16px;
+        resize: vertical;
+        height: 35px;
+    }
+
+    textarea {
+        max-height: 160px;
+    }
+}
+
+form span {
+    margin-top: -18px;
+    display: block;
+}
+
+.mainContent .h3, .h4{
+    margin-top: 20px !important;
+}
