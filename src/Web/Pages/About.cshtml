@@ -1,6 +1,54 @@
 ﻿@page
 @model Web.Pages.AboutModel
 @{
+    ViewData["Title"] = "About";
 }
 
-<h2>About</h2>
+<h2>@ViewData["Title"]</h2>
+
+<div class="header">
+    <h1>KAREEM, OLUWATOBI ABIODUN</h1>
+    <p>I am a man of Fortune</p>
+</div>
+
+<div class="row">
+    <div class="side">
+        <h2>About Me</h2>
+        <div class="fakeimg" style="height:200px;">Image or video</div>
+        <partial name="_ContactMePartial" model="@Model.Input"/>
+    </div>
+
+
+    <div class="main">
+        <div class="mainContent">
+            <p>
+                I am a Software Developer, a Writer and an Entrepreneur. I am passionate about what I do. My most recent work experience is Senior Engineer at Tesla Inc.
+                I am confident of my abilities to produce and my main strength is my leadership and ability to engage in teamwork, which is evident in various projects on the job.
+            </p>
+            <p>
+                I seek to work for a successful company  that has strong leadership and vision before starting my own company ("TobChat"). I would say I am extremely fluent in languages
+                of HTML and CSS, ASP.NET and C# scripting. I am proficient with PHP, Python and JavaScipt/Jquery which I am always interested in learning more. So, If you are looking for
+                someone with a lot of knowledge and excitement, you are lucky to have found me on this site.
+            </p>
+
+            <br />
+            <h3>My Values</h3>
+            <h5><strong>Mission:</strong> To pursue a challenging and a rewarding job experience in an organization offering a broad scope of opportunities and potential for self-development and growth.</h5>
+            <h5><strong>Vision:</strong> To promote the vision of the company where the knowledge and practical experience I acquire will be maximally utilized, to gain an edge in the business market, and to develop the ability to face new challenges in life. </h5>
+
+            <br />
+            <h4><strong>Some 'Other' things about me</strong></h4>
+
+            <ul>
+                <li>My name is Tobi Kareem, my friends call me Captain Oath. And I don't know why myself.</li>
+                <li>I am totally fearless. So, throw me to the wolves and close the gate up, I'm afraid of what will happen to the wolves.</li>
+                <li>I studied for my Master's degree at Hofstra University, USA. I graduated from Babcock University, Nigeria with a Bachelor's degree (Honors)! Both in Computer Science.</li>
+                <li>My greatest fear was about the future! Then I always put my resume on my chest each time I went to sleep in case of my dream job.</li>
+                <li>I'm a writer and I use a lot of big words in my write-ups to make me look and sound smart. Like utilizing gargantuan expressions for simple idioms.</li>
+                <li>I love business so much,I'll sell water to a well.</li>
+                <li>I love creative thinking. Sometimes, I think outside of the box. Other times, I get rid of the box.</li>
+                <li>My best colors are the ones that look good on me, I love cars, computers, football/soccer, shoes. My favourite car is Tesla, My soccer team is Arsenal.</li>
+            </ul>
+        </div>
+    </div>
+</div>
