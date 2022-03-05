@@ -1,0 +1,25 @@
+﻿@page "{id}"
+@model Web.Pages.BlogPostModel
+@{
+    ViewData["Title"] = "BlopPost";
+}
+
+<div class="blopPost">
+
+
+    <h2>@Model.BlogPost.Title</h2>
+
+    <div class="header">
+        <img src="~/lib/images/blogpost.jpg" alt="@Model.BlogPost.Author" asp-append-version=true>
+
+        <p><span>@Model.BlogPost.Author.</span> @Model.BlogPost.Date</p>
+        <h4>@Model.BlogPost.Description</h4>
+    </div>
+
+    <div class="row">
+        <div class="content">
+            <p>@Html.Raw(@Model.BlogPost.Content)</p>
+        </div>
+    </div>
+
+</div>

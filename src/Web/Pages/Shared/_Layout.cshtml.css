@@ -48,13 +48,14 @@ button.accept-policy {
 }
 
 .footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
     line-height: 25px;
     background-color: #e2e8ff;
     padding: 10px 0px 25px 0px;
+    margin-bottom: 0;
 }
 
 .social_footer_ul {

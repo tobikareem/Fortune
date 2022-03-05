@@ -9,7 +9,8 @@
       "Web/1.0.0": {
         "dependencies": {
           "Core": "1.0.0",
-          "Font.Awesome": "5.15.4"
+          "Font.Awesome": "5.15.4",
+          "Shared": "1.0.0"
         },
         "runtime": {
           "Web.dll": {}
@@ -19,6 +20,14 @@
       "Core/1.0.0": {
         "runtime": {
           "Core.dll": {}
+        }
+      },
+      "Shared/1.0.0": {
+        "dependencies": {
+          "Core": "1.0.0"
+        },
+        "runtime": {
+          "Shared.dll": {}
         }
       }
     }
@@ -37,6 +46,11 @@
       "hashPath": "font.awesome.5.15.4.nupkg.sha512"
     },
     "Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

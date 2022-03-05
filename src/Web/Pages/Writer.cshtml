@@ -1,6 +1,90 @@
 ﻿@page
 @model Web.Pages.WriterModel
 @{
+    ViewData["Title"] = "Writer";
 }
 
-<h2>Writer</h2>
+@section Scripts{
+<script src="https://kit.fontawesome.com/a45e1612b0.js" crossorigin="anonymous"></script>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<figure>
+    <blockquote>
+        <p>
+            I am a Writer, I love to use big words in my write-ups, like utilizing garguatan expressions for simple
+            idioms.
+        </p>
+    </blockquote>
+</figure>
+
+<!-- create a blog post -->
+<div class="blog-container">
+
+    <div class="row">
+        <div class="col-md-7 pr-5">
+
+            @{
+                foreach (var blog in Model.BlogPosts)
+                {
+                    <a asp-page="/BlogPost" asp-route-id="@blog.Id">
+                        <div class="allpost-section mb-7">
+                            <div class="post-box">
+                                <div class="header-post">
+                                    <div class="header-first">
+                                        <i class="fa-solid fa-up-right-from-square"></i>
+                                    </div>
+
+                                    <div class="post-title">
+                                        <h5>@blog.Title</h5>
+                                    </div>
+
+                                    <div class="post-description">
+                                        <p>@blog.Description</p>
+                                    </div>
+
+                                    <div class="post-footer">
+                                        <p>@blog.Date</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="popular-section">
+                <h3>Recent Posts</h3>
+                <div class="btnRecent">
+
+                    @{
+                        for (int i = 0; i < Model.BlogPosts.Count(); i++)
+                        {
+                            <a href="/">@Model.BlogPosts[i].Title</a>
+                        }
+                    }
+
+                </div>
+
+                <h3>Categories</h3>
+                <div class="btnRecent">
+
+                    @{
+                        for (int i = 0; i < Model.BlogPosts.Count(); i++)
+                        {
+                            <a href="/">@Model.BlogPosts[i].Category</a>
+                        }
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
