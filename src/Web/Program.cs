@@ -3,8 +3,10 @@ using Web.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddCustomServices();
+builder.Services.AddCustomServiceBuilder();
+
 var app = builder.Build();
-app.UseCustomBuilder(app.Environment);
+
+app.UseCustomServiceBuilder(app.Environment);
 
 app.Run();

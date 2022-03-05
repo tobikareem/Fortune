@@ -3,7 +3,7 @@ namespace Web.Extensions
 {
     public static class DependentAppBuilder
     {
-        public static IApplicationBuilder UseCustomBuilder(this IApplicationBuilder app, IWebHostEnvironment env)
+        public static IApplicationBuilder UseCustomServiceBuilder(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             //app.UseStatusCodePagesWithReExecute("/{0}");
             app.UseStatusCodePages();

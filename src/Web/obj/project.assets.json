@@ -14,6 +14,19 @@
         "runtime": {
           "bin/placeholder/Core.dll": {}
         }
+      },
+      "Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Shared.dll": {}
+        }
       }
     }
   },
@@ -76,12 +89,18 @@
       "type": "project",
       "path": "../Core/Core.csproj",
       "msbuildProject": "../Core/Core.csproj"
+    },
+    "Shared/1.0.0": {
+      "type": "project",
+      "path": "../Shared/Shared.csproj",
+      "msbuildProject": "../Shared/Shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Core >= 1.0.0",
-      "Font.Awesome >= 5.15.4"
+      "Font.Awesome >= 5.15.4",
+      "Shared >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -120,6 +139,9 @@
           "projectReferences": {
             "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
               "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj"
+            },
+            "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj": {
+              "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj"
             }
           }
         }

@@ -1,8 +1,332 @@
 ﻿@page
 @model Web.Pages.DeveloperModel
 @{
+    ViewData["Title"] = "Developer";
 }
+<h2>.Tech Stack</h2>
 
-<h2>Developer</h2>
+<div class="software-tools">
+    <div class="software-tool">
+        <i class="devicon-csharp-plain software-tool-icon"></i>
+        <p class="software-tool-text">C#</p>
+    </div>
 
-<partial name="_ContactMePartial" model="@Model.Input" />
+    <div class="software-tool">
+        <i class="devicon-dotnetcore-plain software-tool-icon"></i>
+        <p class="software-tool-text">Asp.Net Core</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-typescript-plain software-tool-icon"></i>
+        <p class="software-tool-text">Typescript</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-go-original-wordmark software-tool-icon"></i>
+        <p class="software-tool-text">Go Lang</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-java-plain software-tool-icon"></i>
+        <p class="software-tool-text">Java</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-python-plain software-tool-icon"></i>
+        <p class="software-tool-text">Python</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-angularjs-plain software-tool-icon"></i>
+        <p class="software-tool-text">Angular</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-microsoftsqlserver-plain software-tool-icon"></i>
+        <p class="software-tool-text">SQL</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-android-plain software-tool-icon"></i>
+        <p class="software-tool-text">Maui Android</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-apple-original software-tool-icon"></i>
+        <p class="software-tool-text">Maui iOS</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-raspberrypi-line software-tool-icon"></i>
+        <p class="software-tool-text">Raspberry Pi</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-github-original software-tool-icon"></i>
+        <p class="software-tool-text">Github</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-vscode-plain software-tool-icon"></i>
+        <p class="software-tool-text">Vs Code</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-bitbucket-original software-tool-icon"></i>
+        <p class="software-tool-text">Bitbucket</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-css3-plain software-tool-icon"></i>
+        <p class="software-tool-text">Css3</p>
+    </div>
+
+    <div class="software-tool">
+        <i class="devicon-graphql-plain software-tool-icon"></i>
+        <p class="software-tool-text">GraphQL</p>
+    </div>
+</div>
+
+<!-- Create section for each skill -->
+<div class="software-experience">
+    <div class="company-name">
+        <h3>. Background </h3>
+    </div>
+
+    <div class="company-section">
+        <div class="company-section-left">
+            <p class="company-section-text">
+                I am an IT professional with over 10 years of experience in computer programming - Application Design,
+                Website Creation and Cross platform Mobile Apps.
+                I have also garnered experience in the areas of Telecommunication and Networking. My work experience at
+                Aviat Networks availed me this opportunity as a technical support Engineer
+                for leased line communications used in major bank sectors in Nigeria.
+
+            </p>
+            <p class="company-section-text">
+                Initially, I grew up with a career interest for Mechanical Engineer but ended up pursuing a B.Sc degree
+                in Computer Science at the time. My first experience at programming was during the summer
+                extracurricular activies at Aptech Computer Eduction.
+                Here, I learnt the basics of Web Development - HTML, CSS and Javascript and this expereience propelled
+                me further into PHP. I delved into the languages of C, C++ and Java during course works. Passing course
+                works was all that mattered.
+
+            </p>
+
+            <p class="company-section-text">
+                Eventually, I found a soft spot for Microsoft tech stacks and started with the ASP.NET web forms
+                framework for web development. C# became an essential tool for this development and its syntax were a
+                thing of beauty to me.
+                My first job in the United States as a software developer relied mostly on C# and in my quest of
+                learning more things, I picked up Xamarins along the line which now enable me build Mobile Apps for
+                Android, iOS and Windows. As time goes on, I found much interests
+                with Go Lang and Python which I now currently use for mostly learning purposes and looking forward to
+                build applications business applications with them.
+            </p>
+        </div>
+        <div class="company-section-right">
+            <img src="~/lib/images/developer.png" alt="developer.png" />
+        </div>
+    </div>
+</div>
+
+<div class="developer-experience">
+    <div class="company-name">
+        <h3>. Developer Experience </h3>
+    </div>
+
+    <div class="resume-section" onload="tabsloaded()">
+        <div class="tab">
+            <button class="tablinks" onclick="openJob(event, '@Model.JobExperiences[0].ElementId')">Tesla</button>
+            <button class="tablinks" onclick="openJob(event, '@Model.JobExperiences[1].ElementId')">Advantasure</button>
+            <button class="tablinks" onclick="openJob(event, '@Model.JobExperiences[2].ElementId')">
+                Black
+                Knight
+            </button>
+            <button class="tablinks" onclick="openJob(event, '@Model.JobExperiences[3].ElementId')">
+                Aviat
+                Networks
+            </button>
+            <button class="tablinks" onclick="openJob(event, '@Model.JobExperiences[4].ElementId')">Antra</button>
+            <button class="tablinks" onclick="openJob(event, '@Model.JobExperiences[5].ElementId')">Aptech</button>
+        </div>
+
+        @{
+            foreach (var job in Model.JobExperiences)
+            {
+                <div id="@job.ElementId" class="tabcontent">
+                    <h3>@job.CompanyName</h3>
+
+                    <ul>
+                        @{
+                            foreach (var exp in @job.Responsiblites)
+                            {
+                                <li>@exp</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@* <partial name="_ContactMePartial" model="@Model.Input" /> *@
+
+<div class="dev-exp-mobile">
+    <div class="company-name">
+        <h3>. Developer Experience </h3>
+    </div>
+</div>
+
+<div class="dev-exp-slideshow-mobile">
+
+    @{
+        foreach (var job in Model.JobExperiences)
+        {
+            <h4 class="mobile-title">@job.CompanyName</h4>
+            <ul class="slide-mobile">
+                @{
+
+                    foreach (var exp in @job.Responsiblites)
+                    {
+                        <li>@exp</li>
+                    }
+                }
+            </ul>
+        }
+    }
+
+    <a class="prev" onclick="plusSlide(-1)"> &lt;</a>
+    <a class="next" onclick="plusSlide(1)">&gt;</a>
+</div>
+
+
+<div class="my-reviews">
+    <div class="company-name">
+        <h3>. What people say about me </h3>
+    </div>
+</div>
+<div class="slideshow-container">
+
+    @{
+        foreach (var r in Model.Reviews)
+        {
+            <div class="slide">
+                <q>@r.ReviewMessage</q>
+                <p class="saidBy">@r.ReviewedBy - @r.ReviewedPersonCompany</p>
+            </div>
+        }
+    }
+
+    <a class="prev" onclick="plusSlide(-1)"> &lt;</a>
+    <a class="next" onclick="plusSlide(1)">&gt;</a>
+</div>
+<div class="dot-container">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+</div>
+
+<div class="mobile-reviews">
+    <div class="company-name">
+        <h3>. What people say about me </h3>
+    </div>
+    @{
+        foreach (var r in Model.Reviews)
+        {
+            <div class="contain-review">
+                <img src="~/lib/images/@r.CompanyLogoName" alt="@r.CompanyLogoName" class="companyLogo" asp-append-version=true />
+                <p><span>@r.ReviewedBy</span> @r.ReviewedPersonCompany</p>
+                <p>@r.ReviewMessage</p>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+<script>
+
+    // jquery currentSlide button onclick function
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+
+    function plusSlide(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+
+    function showSlides(n) {
+        var i;
+
+        var slides = document.getElementsByClassName("slide");
+        var dots = document.getElementsByClassName("dot");
+
+        var slideMobile = document.getElementsByClassName("slide-mobile");
+        var mobileTitle = document.getElementsByClassName("mobile-title");
+
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+
+
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+
+        for (i = 0; i < slideMobile.length; i++) {
+            slideMobile[i].style.display = "none";
+            mobileTitle[i].style.display = "none";
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+
+        slideMobile[slideIndex - 1].style.display = "block";
+        mobileTitle[slideIndex - 1].style.display = "block";
+    }
+
+
+    // when the document is loaded, use jquery display the first tab content
+    $(document).ready(function () {
+        // jquery get the first tab content
+        var firstTab = $(".tabcontent").first();
+        // jquery display the first tab content
+        firstTab.show();
+        // add a class to the first tab
+        $(".tablinks").first().addClass("active");
+
+    });
+
+    function openJob(evt, jobName) {
+
+        let i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        const tab = document.getElementById(jobName);
+        tab.style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+}
