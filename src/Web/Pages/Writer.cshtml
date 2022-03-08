@@ -21,38 +21,44 @@
 
 <!-- create a blog post -->
 <div class="blog-container">
-
     <div class="row">
-        <div class="col-md-7 pr-5">
+        <div class="col-md-9 mt-3 mb-3">
+            <div class="row mt-1 g-4">
 
-            @{
-                foreach (var blog in Model.BlogPosts)
-                {
-                    <a asp-page="/BlogPost" asp-route-id="@blog.Id">
-                        <div class="allpost-section mb-7">
-                            <div class="post-box">
-                                <div class="header-post">
-                                    <div class="header-first">
-                                        <i class="fa-solid fa-up-right-from-square"></i>
-                                    </div>
+                @{
+                    foreach (var blog in Model.BlogPosts)
+                    {
 
-                                    <div class="post-title">
-                                        <h5>@blog.Title</h5>
-                                    </div>
+                        <div class="col-md-4">
+                            <a asp-page="/BlogPost" asp-route-id="@blog.Id">
+                                <div class="card p-2 mb-7">
+                                    <div class="post-box">
+                                        <div class="header-post">
+                                            <div class="header-first">
+                                                <i class="fa-solid fa-up-right-from-square"></i>
+                                            </div>
 
-                                    <div class="post-description">
-                                        <p>@blog.Description</p>
-                                    </div>
+                                            <div class="post-title">
+                                                <h5>@blog.Title</h5>
+                                            </div>
 
-                                    <div class="post-footer">
-                                        <p>@blog.Date</p>
+                                            <div class="post-description">
+                                                <p>@blog.Description</p>
+                                            </div>
+
+                                            <div class="post-footer">
+                                                <p>@blog.Date</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                    </a>
+
+                    }
                 }
-            }
+
+            </div>
 
         </div>
 
@@ -66,7 +72,7 @@
                     @{
                         for (int i = 0; i < Model.BlogPosts.Count(); i++)
                         {
-                            <a href="/">@Model.BlogPosts[i].Title</a>
+                            <a asp-page="/BlogPost" asp-route-id="@Model.BlogPosts[i].Id">@Model.BlogPosts[i].Title</a>
                         }
                     }
 

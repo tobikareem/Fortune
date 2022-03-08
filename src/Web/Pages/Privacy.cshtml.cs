@@ -14,6 +14,12 @@ namespace Web.Pages
 
         public void OnGet()
         {
+            Console.WriteLine("hello");
+        }
+
+        public IActionResult OnPost()
+        {
+           return RedirectToPage("./Contact");
         }
     }
 }

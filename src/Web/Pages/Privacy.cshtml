@@ -1,8 +1,214 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Home";
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-3 profilePic">
+                <img src="~/lib/images/tobiAtTesla.png" alt="tobiAtTesla.jpg" asp-append-version=true>
+
+            </div>
+
+            <div class="col-md-9 profileInfo">
+                <h4>Kareem Oluwatobi</h4>
+                <h6>Developer | Writer | Entrepreneur</h6>
+                <div class="floatingText">
+                    <span>... and a car enthusiast</span>
+                </div>
+
+                <p> I am a man of Fortune, And I must seek my Fortune</p>
+
+                <div class="contactArea">
+                    <ul class="social_footer_ul">
+                        <li>
+                            <a href="https://www.linkedin.com/in/oluwatobikareem/" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.twitter.com/captainoath/" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/captainoath/" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <form method="post">
+                                <button type="submit">Contact Me</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-4 profilePic">
+                <h4>Catch What I am up to</h4>
+
+                <div class="containAccord">
+                    <div class="bg-blue"></div>
+
+                    <div class="row rowstart">
+                        <div class="col-12 border-bottom px-4 py-2">
+                            <div class="row p-0 rowstart">
+                                <div class=" col-md-2 d-flex justify-content-center">
+                                    <img class="pic mb-md-0 mb-3"
+                                         src="https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                                         alt="">
+                                </div>
+                                <div class="col-md-10 ps-5">
+                                    <p class="h-blue">... more like, what's on my mind.</p>
+                                    <p class="textmuted">Give your suggesstion and feel free to invite me to an event by clicking the plus icon below:</p>
+                                    <div class="box d-flex justify-content-between align-items-center mt-3">
+                                        <p class="">
+                                            <button class="fas fa-thumbs-up"></button> <button class="fas fa-plus"></button>
+                                        </p>
+                                        <div class="d-flex align-items-center">
+                                            <p class="textmuted">my weekly productivity score: 0%</p>
+                                            <div class="progress-bar">
+                                                <div data-size="" class="progress"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                        <div class="border-bottom py-2">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="p-blue">Doing Some Kind of sent off</p>
+                                                    <p class="textmuted">~15 mins</p>
+                                                </div>
+                                                <div class="arrow">
+                                                    <div class="btn btn-primary fas fa-arrow-right"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                        <div class="border-bottom py-2">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <p class="p-blue">I am so happy to called you</p>
+                                                    <p class="textmuted">~15 mins</p>
+                                                </div>
+                                                <div class="arrow">
+                                                    <div class="btn btn-primary fas fa-arrow-right"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="hide">
+                                <button class="btn btn-primary px-1" type="button"
+                                        data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="true"
+                                        aria-controls="multiCollapseExample1 multiCollapseExample2">
+                                    <p class="p-blue"><span class="fas fa-chevron-up pe-2"></span>Hide 3 Units</p>
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--Do not delete -->
+            @* <div class="callout">
+                <div class="callout-header">I am hungry</div>
+                <div class="callout-container">
+                <p>
+                My friend invited me to a party this saturday, which potentially I might be going. <a href="#">more</a>
+                </p>
+                </div>
+                </div>
+            *@
+
+
+            <div class="col-md-8 homeContents">
+
+                <div class="aboutMe">
+                    <h3>About Me</h3>
+                    <p>
+                        I am a Full-Stack Software Developer, a Poet and an Entrepreneur. I am passionate about what I
+                        do. My most recent work experience is at Tesla Inc. as a Senior Software Engineer.
+                    <p>
+                    <p>
+                        I am confident in my abilities to produce and my main strength is my leadership and ability to
+                        engage in teamwork,
+                        which is evident in various team projects I have done on the job... <a asp-page="/About"
+                                                                                               class="m-1">Read more</a>
+                    </p>
+                </div>
+
+                <div class="developer">
+                    <h3>Developer</h3>
+                    <p>
+                        When I was 15 years old, my father bought a windows desktop and set it up at home. I was
+                        fascinated with the way Microsoft Word works at the time. It was my first experience at typing.
+                        It became even fascinating that
+                        I could save the words and come back to it later.
+                    </p>
+
+                    <p>
+                        This joyful experience became something that would change my life forever... <a asp-page="/Developer" class="m-1">Explore</a>
+                    </p>
+                </div>
+
+                <div class="writer">
+                    <h3>Writer</h3>
+                    <p>
+                        I have some kind of passion for writing. I love writing software codes, storytelling,
+                        copywriting, review writing and more specifically, I love poems.
+                    </p>
+
+                    <p>
+                        I would say I am extremely fluent in Web Development tech stacks - Angular, Razor, Blazor and
+                        .Net.
+                        So, If you are looking for someone with a lot of knowledge and excitement, you are lucky to have
+                        found me on this site... <a asp-page="/Writer" class="m-1">Read more</a>
+                    </p>
+                </div>
+
+                <div class="entrepreneur">
+                    <h3>Entrepreneur</h3>
+                    <p>
+                        I have some kind of passion for writing. I love writing software codes, storytelling,
+                        copywriting, review writing and more specifically, I love poems.
+                    </p>
+
+                    <p>
+                        I would say I am extremely fluent in Web Development tech stacks - Angular, Razor, Blazor and
+                        .Net.
+                        So, If you are looking for someone with a lot of knowledge and excitement, you are lucky to have
+                        found me on this site... <a asp-page="/About" class="m-1">Read more</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

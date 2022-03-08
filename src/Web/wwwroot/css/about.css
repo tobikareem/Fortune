@@ -15,7 +15,10 @@
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    height: 953px;
+}
+
+div.aboutRow {
+    margin-bottom: 69px;
 }
 
 .side {
@@ -33,7 +36,6 @@
 }
 
 .fakeimg {
-    background-color: #aaa;
     width: 100%;
     padding: 20px;
 }
@@ -59,7 +61,7 @@ textarea{
 }
 
 button.sendMe {
-    background-color: #04AA6D;
+    background-color: #2a9d8f;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -78,7 +80,7 @@ button.sendMe {
 @media (max-width: 576px) {
     .header {
         padding: 5px;
-        height: 180px;
+        height: auto;
     }
     input[type=text], input[type=email], select, textarea {
         width: 100%;

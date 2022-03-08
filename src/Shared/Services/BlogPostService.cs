@@ -6,14 +6,14 @@ namespace Shared.Services
 {
     public class BlogPostService : IBlogPostService
     {
-        BlogPost BlogPost { get; set; }
+        public BlogPost BlogPost { get; set; }
 
         public BlogPostService()
         {
             BlogPost = new BlogPost();
         }
 
-        IEnumerable<BlogPost> BlogPostList { get; set; }
+        public IEnumerable<BlogPost> BlogPostList { get; set; }
 
         public IEnumerable<BlogPost> GetAllBlogPosts()
         {

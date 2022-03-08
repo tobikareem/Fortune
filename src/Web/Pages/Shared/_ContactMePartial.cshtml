@@ -4,28 +4,47 @@
 @model UserForm
 
 
-<h3>Contact Me</h3>
-<form method="post" class="form-group">
+<div class="contact1">
+    <div class="container-contact1">
+        <div class="contact1-pic js-tilt" data-tilt=""
+             style="will-change: transform; transform: perspective(300px) rotateX(0deg) rotateY(0deg); transition: all 400ms cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s;">
+            <img src="~/lib/images/contactbox.png" alt="IMG" asp-append-version=true>
+        </div>
 
-    <label asp-for="FirstName"></label>
-    <input asp-for="FirstName" />
-    <span asp-validation-for="FirstName" class="text-danger"></span>
+        <form method="post" class="contact1-form">
+            <span class="contact1-form-title">
+                Contact Me
+            </span>
 
-    <label asp-for="LastName"></label>
-    <input asp-for="LastName" />
-    <span asp-validation-for="LastName" class="text-danger"></span>
+            <div class="wrap-input1">
+                <label asp-for="FirstName"></label>
+                <input class="input1" asp-for="FirstName">
+                <span class="shawdow-input1 text-danger" asp-validation-for="FirstName"></span>
+            </div>
+            <div class="wrap-input1">
+                <label asp-for="LastName"></label>
+                <input class="input1" asp-for="LastName">
+                <span class="shawdow-input1 text-danger" asp-validation-for="LastName"></span>
+            </div>
+            <div class="wrap-input1">
+                <label asp-for="Email"></label>
+                <input class="input1" asp-for="Email">
+                <span class="shawdow-input1 text-danger" asp-validation-for="Email"></span>
+            </div>
+            <div class="wrap-input1">
+                <label asp-for="Message"></label>
+                <textarea class="input1" asp-for="Message"> </textarea>
+                <span class="shawdow-input1 text-danger" asp-validation-for="Message"></span>
+            </div>
+            <div class="container-contact1-form-btn">
+                <button class="contact1-form-btn" type="submit">
+                    <span>
+                        Send Email
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </div>
+        </form>
 
-
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
-    <span asp-validation-for="Email" class="text-danger"></span>
-
-
-    <label asp-for="Subject"></label>
-    <textarea asp-for="Subject"></textarea>
-    <span asp-validation-for="Subject" class="text-danger"></span>
-
-
-    <button type="submit" class="sendMe btn">Send</button>
-
-</form>
+    </div>
+</div>
