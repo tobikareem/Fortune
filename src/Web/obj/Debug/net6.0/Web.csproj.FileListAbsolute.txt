@@ -29,3 +29,5 @@ C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\obj\Debug\net6.0\Web.pdb
 C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\obj\Debug\net6.0\Web.genruntimeconfig.cache
 C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\Shared.dll
 C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\Shared.pdb
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\appsettings.Production.json
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\appsettings.Staging.json
