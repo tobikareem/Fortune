@@ -31,3 +31,6 @@ C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\Shared.
 C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\Shared.pdb
 C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\appsettings.Production.json
 C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\appsettings.Staging.json
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\MailKit.dll
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\MimeKit.dll
+C:\Users\Tobi Kareem\OneDrive\Documents\Fortune\src\Web\bin\Debug\net6.0\BouncyCastle.Crypto.dll
