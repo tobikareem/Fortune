@@ -15,16 +15,14 @@ namespace Web.Pages
         private readonly IMailMessage mailMessage;
 
         private readonly EmailProp appSetting;
-        private readonly ConnectionStrings connString;
 
 
-        public ContactModel(IMailMessage message, IOptions<EmailProp> conAppsetting, IOptions<ConnectionStrings> conString)
+        public ContactModel(IMailMessage message, IOptions<EmailProp> conAppsetting)
         {
             Input = new UserForm();
 
             mailMessage = message;
             appSetting = conAppsetting.Value;
-            connString = conString.Value;
         }
 
         public void OnGet()

@@ -1,8 +1,7 @@
 ﻿namespace Core.Models
 {
-    public class BlogPost
+    public class BlogPost: GeneralEntity
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public CategoryEnum Category { get; set; }

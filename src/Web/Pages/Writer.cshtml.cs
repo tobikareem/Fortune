@@ -1,26 +1,25 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core.Interfaces.Repository;
-using Core.Models;
+using Data.Entity;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Pages
 {
     public class WriterModel : PageModel
     {
+        private readonly IDataStore<Post> blogPostRepo;
+        public List<Post> BlogPosts { get; set; }
 
-        private readonly IBlogPostService blogPostService;
-
-        public List<BlogPost> BlogPosts { get; set; }
-
-        public WriterModel(IBlogPostService blogPostService)
+        public WriterModel(IDataStore<Post> blogPostRepo)
         {
-            this.blogPostService = blogPostService;
+            this.blogPostRepo = blogPostRepo;
         }
+
         public void OnGet()
         {
-            BlogPosts = blogPostService.GetAllBlogPosts().ToList();
-        }
+            var blog = blogPostRepo.GetAll();
 
+            BlogPosts = blog.Where(x => x.Category.Category1.ToLower() != "mindfeed").ToList();
+        }
 
     }
 }

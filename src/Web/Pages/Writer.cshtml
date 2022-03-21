@@ -47,7 +47,7 @@
                                             </div>
 
                                             <div class="post-footer">
-                                                <p>@blog.Date</p>
+                                                <p>@blog.CreatedOn.ToShortDateString()</p>
                                             </div>
                                         </div>
                                     </div>
@@ -65,12 +65,16 @@
 
         <div class="col-md-3">
 
+            <div class="createPost">
+                <a asp-page="/CreatePost"> Create Post </a>
+            </div>
+
             <div class="popular-section">
                 <h3>Recent Posts</h3>
                 <div class="btnRecent">
 
                     @{
-                        for (int i = 0; i < Model.BlogPosts.Count(); i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             <a asp-page="/BlogPost" asp-route-id="@Model.BlogPosts[i].Id">@Model.BlogPosts[i].Title</a>
                         }
@@ -82,9 +86,17 @@
                 <div class="btnRecent">
 
                     @{
+                        var hasSet = new HashSet<string>();
                         for (int i = 0; i < Model.BlogPosts.Count(); i++)
                         {
-                            <a href="/">@Model.BlogPosts[i].Category</a>
+                            var category = @Model.BlogPosts[i].Category.Category1;
+                            if (hasSet.Contains(category))
+                            {
+                                continue;
+                            }
+                            hasSet.Add(category);
+
+                            <a href="/">@category</a>
                         }
                     }
                 </div>

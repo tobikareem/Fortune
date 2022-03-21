@@ -1,25 +1,150 @@
 ﻿@page "{id}"
 @model Web.Pages.BlogPostModel
 @{
-    ViewData["Title"] = "BlopPost";
+    ViewData["Title"] = "BlogPost";
 }
 
-<div class="blopPost">
-
-
-    <h2>@Model.BlogPost.Title</h2>
-
+<div class="blogPost mt-5 mb-5">
     <div class="header">
+        <img src="~/lib/images/blogpost.jpg" alt="@Model.BlogPost.CreatedBy" asp-append-version=true>
+
+        <p><span>@Model.BlogPost.CreatedBy.</span> @Model.BlogPost.CreatedOn.ToShortDateString()</p>
+        <h4>@Model.BlogPost.Description</h4>
+    </div>
+
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="justify-content-between p-2 px-3">
+                    <div class="flex-column align-items-center">
+                        @*<img src="https://i.imgur.com/UXdKE3o.jpg" width="50" class="rounded-circle">
+                            <div class="d-flex flex-column ml-2">
+                            <span class="font-weight-bold">
+                            @Model.BlogPost.Author
+                            </span>
+                            </div>
+
+                            <div class="d-flex flex-row mt-1 ellipsis">
+                            <small class="mr-2">@Model.BlogPost.Date</small>
+                            <i class="fa fa-ellipsis-h"></i>
+                            </div>*@
+
+                        <div class="content text-justify text-center">
+                            @Html.Raw(@Model.BlogPost.Content)
+                        </div>
+
+                        <div class="p-2">
+                            <hr>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex flex-row icons d-flex align-items-center">
+                                    <i class="fa fa-heart"></i>
+                                </div>
+
+                                <div class="d-flex flex-row muted-color">
+                                    <span>
+                                        2 likes
+                                    </span>
+
+                                    <span>
+                                        2 comments
+                                    </span>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="comments">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-column ml-2 ms-5 user-part">
+                                        <span class="name">Yinka Adegnaju</span>
+                                        <small class="comment-text"> I like this a lot</small>
+
+                                    </div>
+                                    <div class="flex-row align-items-center status">
+                                        <small>
+                                            18 mins ago
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-column ml-2 ms-5 user-part">
+                                        <span class="name">Yinka Adegnaju</span>
+                                        <small class="comment-text"> I like this a lot</small>
+
+                                    </div>
+                                    <div class="flex-row align-items-center status">
+                                        <small>
+                                            18 mins ago
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-column ml-2 ms-5 user-part">
+                                        <span class="name">Yinka Adegnaju</span>
+                                        <small class="comment-text"> I like this a lot</small>
+
+                                    </div>
+                                    <div class="flex-row align-items-center status">
+                                        <small>
+                                            18 mins ago
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="comment-input">
+                                    <div class="flex-row align-items-center">
+                                        <div class="d-flex flex-column ml-2">
+                                            <form method="post" class="form-check">
+
+                                                <label asp-for="CommentUser.CreatedBy"></label>
+
+                                                <input asp-for="CommentUser.CreatedBy" class="form-control" />
+                                                <span asp-validation-for="CommentUser.CreatedBy" class="text-danger"></span>
+
+                                                <textarea class="form-control" placeholder="Write a comment..." asp-for="CommentUser.Content"></textarea>
+
+                                                <span asp-validation-for="CommentUser.CreatedBy" class="text-danger"></span>
+
+                                                <button class="contact1-form-btn" type="submit">
+                                                    <span>
+                                                        Send
+                                                    </span>
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    @* <h2>@Model.BlogPost.Title</h2> *@
+
+    @* <div class="header">
         <img src="~/lib/images/blogpost.jpg" alt="@Model.BlogPost.Author" asp-append-version=true>
 
         <p><span>@Model.BlogPost.Author.</span> @Model.BlogPost.Date</p>
         <h4>@Model.BlogPost.Description</h4>
-    </div>
-
-    <div class="row">
-        <div class="content">
-            <p>@Html.Raw(@Model.BlogPost.Content)</p>
         </div>
-    </div>
+
+        <div class="row">
+        <div class="content">
+        <p>@Html.Raw(@Model.BlogPost.Content)</p>
+        </div>
+        </div> *@
 
 </div>
