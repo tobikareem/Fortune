@@ -6,14 +6,14 @@ namespace Shared.Services
 {
     public class BlogPostService : IBlogPostService
     {
-        BlogPost BlogPost { get; set; }
+        public BlogPost BlogPost { get; set; }
 
         public BlogPostService()
         {
             BlogPost = new BlogPost();
         }
 
-        IEnumerable<BlogPost> BlogPostList { get; set; }
+        public IEnumerable<BlogPost> BlogPostList { get; set; }
 
         public IEnumerable<BlogPost> GetAllBlogPosts()
         {
@@ -51,20 +51,22 @@ namespace Shared.Services
                             "A poetry dedicated to my late brother and his improptu death",
                         Category = Core.CategoryEnum.Poetry,
                         Content =
-                            @"<p>When a hero fell</p>
-                        <p>So did the walls mystic force and pain magnified</p>
-                        <p>The greatest pain uncovered.</p>
-                        <p>You told us not to fear even though you were young</p>
-                       <p> I was confused to see you so weak on that ICU bed</p>
-                        <p> When you almost gave up</p>
-                       <p> When a hero fell</p>
-                        <p>So did the stars that followed</p>
-                        <p>And so the perception of tomorrow</p>
-                        <p>The consecrated soul voyaged the soul of the might</p>
-                        <p>We thought we were going to see forever</p>
-                        <p>But forever is no more.</p>
-                        <p>You remain in our heart forever</p>
-                        <p>R.I.P. Tolu </p>",
+                            @"
+                        When a hero fell
+                        So did the walls mystic force and pain magnified
+                        The greatest pain uncovered.
+                        You told us not to fear even though you were young
+                         I was confused to see you so weak on that ICU bed
+                         When you almost gave up
+                         When a hero fell
+                        So did the stars that followed
+                        And so the perception of tomorrow
+                        The consecrated soul voyaged the soul of the might
+                        We thought we were going to see forever
+                        But forever is no more.
+                        You remain in our heart forever
+                        R.I.P. Tolu
+                        ",
                         Author = "Oluwatobi Kareem",
                         Image = "https://picsum.photos/200/300",
                         Date = "12/12/2019",
@@ -77,20 +79,21 @@ namespace Shared.Services
                             "Worrying may endure through out the nigt, but joy comes in the morning",
                         Category = Core.CategoryEnum.Poetry,
                         Content =
-                            @"<p>My Unravel Thoughts</p>
-                            <p>Ridden of serenity, Stript of its Gilding</p>
-                            <p>To unburden my fragile mind</p>
-                            <p>To take this rare soul</p>
-                            <p>Out of the mound it reaches for.</p>
-                            <p>&nbsp;</p>
-                            <p>Can you&nbsp; keep a secret, </p>
-                            <p>Can you know a thing and never say it again?</p>
-                            <p>Shall I tell you the secret, If I do...</p>
-                            <p>Will you get me out of this bird suit?</p>
-                            <p>And If you do... then someday</p>
-                            <p>Smiles shall upload our plagued faces</p>
-                            <p>And the rain will drop to dry our tears.</p>
-                            <p>&nbsp;</p>",
+                            @"
+                            My Unravel Thoughts
+                            Ridden of serenity, Stript of its Gilding
+                            To unburden my fragile mind
+                            To take this rare soul
+                            Out of the mound it reaches for.
+                            &nbsp;
+                            Can you&nbsp; keep a secret,
+                            Can you know a thing and never say it again?
+                            Shall I tell you the secret, If I do...
+                            Will you get me out of this bird suit?
+                            And If you do... then someday
+                            Smiles shall upload our plagued faces
+                            And the rain will drop to dry our tears.
+                            &nbsp;",
                         Author = "Oluwatobi Kareem",
                         Image = "https://picsum.photos/200/300",
                         Date = "12/12/2019",

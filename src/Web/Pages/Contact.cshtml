@@ -1,7 +1,7 @@
 ﻿@page
 @model Web.Pages.ContactModel
 @{
+    ViewData["Title"] = "Contact";
 }
 
-
-<h2>Contact</h2>
+<partial name="_ContactMePartial" model="@Model.Input" />

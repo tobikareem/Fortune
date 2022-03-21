@@ -2,27 +2,29 @@ using Core.Interfaces.Repository;
 using Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq;
 
 namespace Web.Pages
 {
     public class BlogPostModel : PageModel
     {
 
-        private readonly IBlogPostService blogPostService;
+        private readonly IDataStore<Data.Entity.Post> blogPostRepo;
 
-        public BlogPost BlogPost { get; set; }
+        [BindProperty] public Comment CommentUser { get; set; }
 
-        public BlogPostModel(IBlogPostService blogPostService)
+        public Post BlogPost { get; set; }
+
+        public BlogPostModel(IDataStore<Data.Entity.Post> blogPostRepo)
         {
-            this.blogPostService = blogPostService;
+            this.blogPostRepo = blogPostRepo;
 
-            BlogPost = new BlogPost();
+            CommentUser = new Comment();
+            BlogPost = new Post();
         }
 
         public IActionResult OnGet(int id)
         {
-            var blog = blogPostService.GetAllBlogPosts().FirstOrDefault(b => b.Id == id);
+            var blog = blogPostRepo.GetById(id);
 
             if(blog == null)
             {
@@ -30,6 +32,18 @@ namespace Web.Pages
             }
 
             BlogPost = blog;
+
+            return Page();
+        }
+
+        public IActionResult OnPost()
+        {
+
+            if(!ModelState.IsValid)
+            {
+                return Page();
+            }
+
 
             return Page();
         }

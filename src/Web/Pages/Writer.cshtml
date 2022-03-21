@@ -21,52 +21,62 @@
 
 <!-- create a blog post -->
 <div class="blog-container">
-
     <div class="row">
-        <div class="col-md-7 pr-5">
+        <div class="col-md-9 mt-3 mb-3">
+            <div class="row mt-1 g-4">
 
-            @{
-                foreach (var blog in Model.BlogPosts)
-                {
-                    <a asp-page="/BlogPost" asp-route-id="@blog.Id">
-                        <div class="allpost-section mb-7">
-                            <div class="post-box">
-                                <div class="header-post">
-                                    <div class="header-first">
-                                        <i class="fa-solid fa-up-right-from-square"></i>
-                                    </div>
+                @{
+                    foreach (var blog in Model.BlogPosts)
+                    {
 
-                                    <div class="post-title">
-                                        <h5>@blog.Title</h5>
-                                    </div>
+                        <div class="col-md-4">
+                            <a asp-page="/BlogPost" asp-route-id="@blog.Id">
+                                <div class="card p-2 mb-7">
+                                    <div class="post-box">
+                                        <div class="header-post">
+                                            <div class="header-first">
+                                                <i class="fa-solid fa-up-right-from-square"></i>
+                                            </div>
 
-                                    <div class="post-description">
-                                        <p>@blog.Description</p>
-                                    </div>
+                                            <div class="post-title">
+                                                <h5>@blog.Title</h5>
+                                            </div>
 
-                                    <div class="post-footer">
-                                        <p>@blog.Date</p>
+                                            <div class="post-description">
+                                                <p>@blog.Description</p>
+                                            </div>
+
+                                            <div class="post-footer">
+                                                <p>@blog.CreatedOn.ToShortDateString()</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                    </a>
+
+                    }
                 }
-            }
+
+            </div>
 
         </div>
 
 
         <div class="col-md-3">
 
+            <div class="createPost">
+                <a asp-page="/CreatePost"> Create Post </a>
+            </div>
+
             <div class="popular-section">
                 <h3>Recent Posts</h3>
                 <div class="btnRecent">
 
                     @{
-                        for (int i = 0; i < Model.BlogPosts.Count(); i++)
+                        for (int i = 0; i < 3; i++)
                         {
-                            <a href="/">@Model.BlogPosts[i].Title</a>
+                            <a asp-page="/BlogPost" asp-route-id="@Model.BlogPosts[i].Id">@Model.BlogPosts[i].Title</a>
                         }
                     }
 
@@ -76,9 +86,17 @@
                 <div class="btnRecent">
 
                     @{
+                        var hasSet = new HashSet<string>();
                         for (int i = 0; i < Model.BlogPosts.Count(); i++)
                         {
-                            <a href="/">@Model.BlogPosts[i].Category</a>
+                            var category = @Model.BlogPosts[i].Category.Category1;
+                            if (hasSet.Contains(category))
+                            {
+                                continue;
+                            }
+                            hasSet.Add(category);
+
+                            <a href="/">@category</a>
                         }
                     }
                 </div>

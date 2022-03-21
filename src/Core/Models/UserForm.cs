@@ -15,6 +15,6 @@ namespace Core.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "*Message is required"), Display(Name = "Message")]
-        public string Subject { get; set; }
+        public string Message { get; set; }
     }
 }
