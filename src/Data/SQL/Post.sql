@@ -4,7 +4,7 @@
 	Title			varchar(50) not null,
 	[Description]	varchar(200) not null,
 	Content			text not null,
-	UserId			int not null,
+	UserId			string not null,
 	CategoryId		int null,
 	IsPublished		bit,
 	[Enabled] bit not null default 1, 

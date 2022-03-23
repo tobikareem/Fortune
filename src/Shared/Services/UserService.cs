@@ -1,77 +1,29 @@
 ﻿using Data.Entity;
-using Core.Interfaces.Repository;
+using Microsoft.AspNetCore.Identity;
+using Shared.Interfaces.Repository;
+using Shared.Interfaces.Services;
 
 namespace Shared.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        private readonly IDataStore<User> userRepository;
-        public UserService(IDataStore<User> userRepository)
+        private readonly IStringIdStore<IdentityUser> userRepository;
+        public UserService(IStringIdStore<IdentityUser> userRepository)
         {
             this.userRepository = userRepository;
         }
-        public void AddEntity(User entity)
+
+        ApplicationUser IUserService.CreateNewInstance()
         {
             try
             {
-                userRepository.AddEntity(entity);
+                return Activator.CreateInstance<ApplicationUser>();
             }
-            catch (Exception)
+            catch
             {
-
-                throw;
-            }
-        }
-
-        public void Delete(int id)
-        {
-            try
-            {
-                userRepository.Delete(id);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            try
-            {
-               return userRepository.GetAll();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public User GetById(int id)
-        {
-            try
-            {
-                return userRepository.GetById(id);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public void UpdateEntity(User entity)
-        {
-            try
-            {
-                userRepository.UpdateEntity(entity);
-            }
-            catch (Exception)
-            {
-
-                throw;
+                throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
+                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
     }

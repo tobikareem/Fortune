@@ -21,10 +21,6 @@ namespace Web.Pages
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
             return RedirectToPage("/Home");
         }

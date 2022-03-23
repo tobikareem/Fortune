@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Net.Mail;
 using System.Text;
-using Core.Interfaces.Services;
+using Shared.Interfaces.Services;
 
 namespace Shared.Services
 {
@@ -21,7 +21,12 @@ namespace Shared.Services
                 BodyEncoding = Encoding.UTF8
             };
 
-            var client = new SmtpClient("smtp.gmail.com");
+            message.IsBodyHtml = true;
+
+
+            var client = new SmtpClient("smtpout.secureserver.net");
+            client.Port = 80;
+            client.Credentials = new System.Net.NetworkCredential("", "");
 
             client.SendCompleted += (s, e) =>
             {

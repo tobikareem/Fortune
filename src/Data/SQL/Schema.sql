@@ -12,3 +12,5 @@ go
 create schema fort;
 go
 
+-- dotnet ef migrations add InitialSchema -o Migrations -c FortuneDbContext
+-- dotnet ef database update

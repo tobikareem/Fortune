@@ -8,7 +8,7 @@ namespace Core.Models
         public string Description { get; set; }
 
         public string Content { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int? CategoryId { get; set; }
         public bool IsPublished { get; set; }
 

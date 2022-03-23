@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core.Models;
-using Core.Interfaces.Repository;
+using Shared.Interfaces.Repository;
 namespace Web.Pages
 {
     public class CreatePostModel : PageModel
@@ -42,7 +42,7 @@ namespace Web.Pages
                 Title = UserPost.Title,
                 Description = UserPost.Description,
                 Content = UserPost.Content,
-                UserId = 1,
+                UserId = "",
                 CategoryId = Categories.First(x => x.Category1 == UserPost.Category.Category1).Id,
                 IsPublished = true,
                 Enabled = true,

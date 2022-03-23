@@ -1,31 +1,30 @@
-﻿using Data.Entity;
+﻿using Shared.Interfaces.Repository;
 using Data.Context;
-using Core.Interfaces.Repository;
-
+using Data.Entity;
 
 namespace Shared.Repository
 {
-    public class CommentRepository: IDataStore<Comment>
+    public class CommentRepository : IDataStore<Comment>
     {
         private readonly FortuneDbContext _dbContext;
+
         public CommentRepository(FortuneDbContext fortuneDbContext)
         {
             _dbContext = fortuneDbContext;
         }
+
         public void AddEntity(Comment entity)
         {
-            _dbContext.Comments.Add(entity);
+            _dbContext.Comments.Add (entity);
             _dbContext.SaveChanges();
-
         }
 
         public void Delete(int id)
         {
             var comment = GetById(id);
 
-            _dbContext.Comments.Remove((Comment)comment);
+            _dbContext.Comments.Remove((Comment) comment);
             _dbContext.SaveChanges();
-
         }
 
         public IEnumerable<Comment> GetAll()
@@ -42,7 +41,7 @@ namespace Shared.Repository
 
         public void UpdateEntity(Comment entity)
         {
-            _dbContext.Update<Comment>(entity);
+            _dbContext.Update<Comment> (entity);
             _dbContext.SaveChanges();
         }
     }

@@ -1251,3 +1251,10 @@ div.rowstart {
 form.createPost > textarea {
     min-height: 1010px;
 }
+
+
+/** Areas **/
+
+.form-floating{
+    margin-bottom: 4rem;
+}

@@ -1,5 +1,5 @@
 ﻿using Data.Entity;
-using Core.Interfaces.Repository;
+using Shared.Interfaces.Repository;
 
 namespace Shared.Services
 {
@@ -26,15 +26,6 @@ namespace Shared.Services
 
         public void Delete(int id)
         {
-            try
-            {
-                repository.Delete(id);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
         }
 
         public IEnumerable<Comment> GetAll()
@@ -54,7 +45,7 @@ namespace Shared.Services
         {
             try
             {
-                return repository.GetById(id);
+                return new Comment();
             }
             catch (Exception)
             {

@@ -74,9 +74,12 @@
                 <div class="btnRecent">
 
                     @{
-                        for (int i = 0; i < 3; i++)
+                        if (Model.BlogPosts.Any())
                         {
-                            <a asp-page="/BlogPost" asp-route-id="@Model.BlogPosts[i].Id">@Model.BlogPosts[i].Title</a>
+                            for (int i = 0; i < 3; i++)
+                            {
+                                <a asp-page="/BlogPost" asp-route-id="@Model.BlogPosts[i].Id">@Model.BlogPosts[i].Title</a>
+                            }
                         }
                     }
 
@@ -87,6 +90,7 @@
 
                     @{
                         var hasSet = new HashSet<string>();
+
                         for (int i = 0; i < Model.BlogPosts.Count(); i++)
                         {
                             var category = @Model.BlogPosts[i].Category.Category1;

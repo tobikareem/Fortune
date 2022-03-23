@@ -2,7 +2,7 @@ using Core.Configuration;
 using Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Core.Interfaces.Services;
+using Shared.Interfaces.Services;
 using Microsoft.Extensions.Options;
 
 
@@ -31,10 +31,6 @@ namespace Web.Pages
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
             mailMessage.SendMessage(Input.Email, appSetting.MyEmail, appSetting.Subject, Input.Message);
 

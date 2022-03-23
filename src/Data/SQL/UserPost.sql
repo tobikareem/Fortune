@@ -2,7 +2,7 @@
 (
 	Id			int not null identity,
 	PostId		int not null,
-	UserId		int not null,
+	UserId		string not null,
 
 	constraint PK_User primary key(Id),
 	constraint FK_UserPost_User foreign key(UserId) references fort.[User](Id),

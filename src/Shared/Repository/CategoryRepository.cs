@@ -1,4 +1,4 @@
-﻿using Core.Interfaces.Repository;
+﻿using Shared.Interfaces.Repository;
 using Data.Entity;
 using Data.Context;
 
@@ -15,12 +15,16 @@ namespace Shared.Repository
 
         public void AddEntity(Category entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Categories.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var category = GetById(id);
+
+            _dbContext.Categories.Remove((Category)category);
+            _dbContext.SaveChanges();
         }
 
         public IEnumerable<Category> GetAll()
@@ -30,12 +34,15 @@ namespace Shared.Repository
 
         public Category GetById(int id)
         {
-            throw new NotImplementedException();
+            var category = GetAll().FirstOrDefault(x => x.Id == id);
+
+            return category ?? new Category();
         }
 
         public void UpdateEntity(Category entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Update<Category>(entity);
+            _dbContext.SaveChanges();
         }
     }
 }
