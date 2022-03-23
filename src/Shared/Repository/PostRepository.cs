@@ -1,4 +1,4 @@
-﻿using Core.Interfaces.Repository;
+﻿using Shared.Interfaces.Repository;
 using Data.Entity;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -33,12 +33,15 @@ namespace Shared.Repository
 
         }
 
+        public void Delete(Post entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Post> GetAll()
         {
 
-            using var context = new FortuneDbContext();
-
-            return _dbContext.Posts.Include(y => y.Category).Where(x => x.Enabled).ToList();
+            return Enumerable.Empty<Post>();
         }
 
         public Post GetById(int id)
@@ -46,6 +49,11 @@ namespace Shared.Repository
             var post = GetAll().FirstOrDefault(x => x.Id == id);
 
             return post ?? new Post();
+        }
+
+        public Post GetById(Post entity)
+        {
+            throw new NotImplementedException();
         }
 
         public void UpdateEntity(Post entity)

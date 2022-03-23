@@ -1,6 +1,6 @@
 ﻿
 using Core.Models;
-using Core.Interfaces.Repository;
+using Shared.Interfaces.Repository;
 
 namespace Shared.Services
 {

@@ -12,7 +12,7 @@ namespace Data.Entity
             UserPosts = new HashSet<UserPost>();
         }
         public new virtual Category Category { get; set; }
-        public virtual User User { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<PostCategory> PostCategories { get; set; }
         public virtual ICollection<UserPost> UserPosts { get; set; }

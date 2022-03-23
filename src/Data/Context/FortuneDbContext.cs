@@ -1,14 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Core.Configuration;
+﻿using Core.Configuration;
 using Data.Entity;
 using System.Linq;
 
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
 namespace Data.Context
 {
-    public partial class FortuneDbContext : DbContext
+    public partial class FortuneDbContext : IdentityDbContext<IdentityUser>
     {
-        public FortuneDbContext()
+        private readonly ConnectionStrings connStrings;
+        public FortuneDbContext(IOptions<ConnectionStrings>options)
         {
+            connStrings = options.Value;
         }
 
         public FortuneDbContext(DbContextOptions<FortuneDbContext> options)
@@ -21,19 +27,21 @@ namespace Data.Context
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostCategory> PostCategories { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        // public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserPost> UserPosts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // optionsBuilder.UseSqlServer(connString.DefaultConnection);
+                optionsBuilder.UseSqlServer(connStrings.DefaultConnection);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Category", "fort");
@@ -158,50 +166,50 @@ namespace Data.Context
                     .HasConstraintName("FK_PostCategory_Post");
             });
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("User", "fort");
+            //modelBuilder.Entity<User>(entity =>
+            //{
+            //    entity.ToTable("User", "fort");
 
-                entity.HasIndex(e => e.DisplayName, "idx_nc_displayname");
+            //    entity.HasIndex(e => e.DisplayName, "idx_nc_displayname");
 
-                entity.Property(e => e.CreatedBy)
-                    .HasMaxLength(55)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.CreatedBy)
+            //        .HasMaxLength(55)
+            //        .IsUnicode(false);
 
-                entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
+            //    entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
 
-                entity.Property(e => e.ModifiedOn);
+            //    entity.Property(e => e.ModifiedOn);
 
-                entity.Property(e => e.DisplayName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.DisplayName)
+            //        .HasMaxLength(50)
+            //        .IsUnicode(false);
 
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.Email)
+            //        .HasMaxLength(50)
+            //        .IsUnicode(false);
 
-                entity.Property(e => e.Enabled)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+            //    entity.Property(e => e.Enabled)
+            //        .IsRequired()
+            //        .HasDefaultValueSql("((1))");
 
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.FirstName)
+            //        .HasMaxLength(50)
+            //        .IsUnicode(false);
 
-                entity.Property(e => e.Identifier)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.Identifier)
+            //        .HasMaxLength(50)
+            //        .IsUnicode(false);
 
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.LastName)
+            //        .HasMaxLength(50)
+            //        .IsUnicode(false);
 
-                entity.Property(e => e.ModifiedBy)
-                    .HasMaxLength(55)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.ModifiedBy)
+            //        .HasMaxLength(55)
+            //        .IsUnicode(false);
 
-                entity.Property(e => e.Phone).HasMaxLength(50);
-            });
+            //    entity.Property(e => e.Phone).HasMaxLength(50);
+            //});
 
             modelBuilder.Entity<UserPost>(entity =>
             {

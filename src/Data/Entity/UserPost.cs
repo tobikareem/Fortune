@@ -5,6 +5,6 @@ namespace Data.Entity
     {
         public int Id { get; set; }
         public virtual Post Post { get; set; } = null!;
-        public virtual User User { get; set; } = null!;
+        public virtual ApplicationUser User { get; set; } = null!;
     }
 }

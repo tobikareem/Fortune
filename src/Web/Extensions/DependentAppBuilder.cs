@@ -26,6 +26,8 @@ namespace Web.Extensions
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             _ = app.UseEndpoints(endPoints =>

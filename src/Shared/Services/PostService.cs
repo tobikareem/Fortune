@@ -1,6 +1,6 @@
 ﻿using Data.Entity;
 
-using Core.Interfaces.Repository;
+using Shared.Interfaces.Repository;
 
 namespace Shared.Services
 {
@@ -29,7 +29,7 @@ namespace Shared.Services
         {
             try
             {
-                postRepository.Delete(id);
+                //postRepository.Delete(id);
             }
             catch (Exception)
             {
@@ -55,7 +55,7 @@ namespace Shared.Services
         {
             try
             {
-                return postRepository.GetById(id);
+                return new Post();
             }
             catch (Exception)
             {

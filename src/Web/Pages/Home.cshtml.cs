@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Core.Interfaces.Services;
-using Core.Interfaces.Repository;
+using Shared.Interfaces.Services;
+using Shared.Interfaces.Repository;
 using Data.Entity;
 
 namespace Web.Pages
