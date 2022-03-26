@@ -11,10 +11,9 @@ namespace Data.Context
 {
     public partial class FortuneDbContext : IdentityDbContext<IdentityUser>
     {
-        private readonly ConnectionStrings connStrings;
-        public FortuneDbContext(IOptions<ConnectionStrings>options)
+        //private readonly ConnectionStrings connStrings;
+        public FortuneDbContext()
         {
-            connStrings = options.Value;
         }
 
         public FortuneDbContext(DbContextOptions<FortuneDbContext> options)
@@ -27,14 +26,13 @@ namespace Data.Context
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostCategory> PostCategories { get; set; }
-        // public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserPost> UserPosts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(connStrings.DefaultConnection);
+                optionsBuilder.UseSqlServer();
             }
         }
 
@@ -165,51 +163,6 @@ namespace Data.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PostCategory_Post");
             });
-
-            //modelBuilder.Entity<User>(entity =>
-            //{
-            //    entity.ToTable("User", "fort");
-
-            //    entity.HasIndex(e => e.DisplayName, "idx_nc_displayname");
-
-            //    entity.Property(e => e.CreatedBy)
-            //        .HasMaxLength(55)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
-
-            //    entity.Property(e => e.ModifiedOn);
-
-            //    entity.Property(e => e.DisplayName)
-            //        .HasMaxLength(50)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.Email)
-            //        .HasMaxLength(50)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.Enabled)
-            //        .IsRequired()
-            //        .HasDefaultValueSql("((1))");
-
-            //    entity.Property(e => e.FirstName)
-            //        .HasMaxLength(50)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.Identifier)
-            //        .HasMaxLength(50)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.LastName)
-            //        .HasMaxLength(50)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.ModifiedBy)
-            //        .HasMaxLength(55)
-            //        .IsUnicode(false);
-
-            //    entity.Property(e => e.Phone).HasMaxLength(50);
-            //});
 
             modelBuilder.Entity<UserPost>(entity =>
             {
