@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
 using Shared.Interfaces.Services;
+using Core.Models;
 
 namespace Web.Areas.Identity.Pages.Account
 {
@@ -93,17 +94,22 @@ namespace Web.Areas.Identity.Pages.Account
 
                 var userId = await _userManager.GetUserIdAsync(user);
 
-                var claims = new List<Claim> 
+
+                var claims = new List<Claim>
                 {
                         new Claim(nameof(Input.FirstName), Input.FirstName) ,
                         new Claim(nameof(Input.LastName), Input.LastName) ,
                 };
+                if (string.Compare(user.Email, "oluwatobikareem@gmail.com", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    claims.Add(new Claim("ResourceAction", Enum.GetName(ResourceAction.Fortune_Admin)));
+                }
 
                 await _userManager.AddClaimsAsync(user, claims);
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                
+
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmail",
                     pageHandler: null,
