@@ -1,0 +1,65 @@
+﻿@using global::Shared.Interfaces.Repository
+@using Category = Data.Entity.Category
+
+@inject IDataStore<Category> _categoryRepo;
+@model Data.Entity.Post
+
+@{
+    var categories = _categoryRepo.GetAll().Where(x => x.Category1.ToLower() != "mindfeed");
+}
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="card">
+                <a data-bs-toggle="collapse" href="#collapseContent" role="button" aria-expanded="false" aria-controls="collapseContent">
+                    <div class="card-header d-flex flex-row justify-content-between">
+                        <p class="text-sm-start">About The Write up</p>
+                        <p class="p-blue text-sm-end"><span class="fas fa-chevron-up pe-2"></span>Show/Hide</p>
+                    </div>
+                </a>
+
+                <div class="card-body collapse" id="collapseContent">
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Category.Category1" class="form-label"></label>
+                        <input class="form-control" list="categoryListOptions" asp-for="Category.Category1" />
+                        <datalist id="categoryListOptions">
+                            @{
+                                foreach (var c in categories)
+                                {
+                                    <option value="@c.Category1"></option>
+                                }
+                            }
+                        </datalist>
+                        <span asp-validation-for="Category.Category1" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="3"> </textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <textarea asp-for="Content" id="Content" name="Content"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+
+            <button class="contact1-form-btn mt-sm-4" type="submit">
+                <span>Submit</span>
+            </button>
+            
+        </form>
+    </div>
+</div>
+
+

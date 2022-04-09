@@ -1,77 +1,47 @@
+using System.Security.Claims;
+using Core.Constants;
+using Data.Entity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Core.Models;
-using Shared.Interfaces.Repository;
+using Shared.Interfaces.Services;
+
 namespace Web.Pages
 {
+    [Authorize]
     public class CreatePostModel : PageModel
     {
-
         [BindProperty] public Post UserPost { get; set; }
-        private readonly IDataStore<Data.Entity.Post> _postRepository;
-        private readonly IDataStore<Data.Entity.Category> _categoryRepo;
+        private readonly IPostService _postService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public IEnumerable<Data.Entity.Category> Categories { get; set; }
-
-        public CreatePostModel(IDataStore<Data.Entity.Post> _postRepository, IDataStore<Data.Entity.Category> _categoryRepo)
+        public CreatePostModel(IPostService postService, UserManager<ApplicationUser> userManager)
         {
-            this._postRepository = _postRepository;
-            this._categoryRepo = _categoryRepo;
+            _postService = postService;
+            _userManager = userManager;
 
-            Categories = GetAllCategories();
-            UserPost = new Post { IsPublished = true };
+            UserPost = new Post { IsPublished = true, Category = new Category()};
         }
 
 
         public IActionResult OnGet()
         {
-
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
+            var user = await _userManager.GetUserAsync(User);
+            UserPost.UserId = user.Id;
+            UserPost.CreatedBy = User.FindFirstValue(ClaimTypes.GivenName) ?? User.FindFirstValue("FirstName");
+            UserPost.Enabled = true;
+            
+            _postService.CreateNewPost(UserPost);
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
-
-            var post = new Data.Entity.Post
-            {
-                Title = UserPost.Title,
-                Description = UserPost.Description,
-                Content = UserPost.Content,
-                UserId = "",
-                CategoryId = Categories.First(x => x.Category1 == UserPost.Category.Category1).Id,
-                IsPublished = true,
-                Enabled = true,
-                IsReviewPost = false,
-                CreatedBy = "Oluwatobi Kareem",
-                CreatedOn = DateTime.UtcNow,
-
-                Category = Categories.First(x => x.Category1 == UserPost.Category.Category1) as Data.Entity.Category ?? new Data.Entity.Category(),
-
-            };
-
-            post.PostCategories.Add(new Data.Entity.PostCategory { CategoryId = post.Category.Id });
-            post.UserPosts.Add(new Data.Entity.UserPost { UserId = post.UserId });
-
-             _postRepository.AddEntity(post);
-
-
-            return Page();
+            return RedirectToPage("./Writer");
 
         }
 
-        public IEnumerable<Data.Entity.Category> GetAllCategories()
-        {
-            if (Categories == null)
-            {
-                return _categoryRepo.GetAll();
-            }
-
-            return Categories;
-        }
     }
 }

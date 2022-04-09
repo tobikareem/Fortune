@@ -68,23 +68,68 @@ $(document).ready(function () {
     // add a class to the first tab
     $(".tablinks").first().addClass("active");
 
+    // when document is ready
+    // find breadcrumbs children    
+    var breadcrumbChildren = document.getElementsByClassName("breadcrumb-item");
+
+    // find active breadcrumb child
+    var activeBreadcrumb = document.getElementsByClassName("active");
+
+    // check the id of the active breadcrumb value
+    var activeBreadcrumbId = activeBreadcrumb[0].id;
+
+
+    // if the active breadcrumb id is equal to the BloPost. then set display = block for Id = Writer
+    if (activeBreadcrumbId === "BlogPost") {
+        document.getElementById("Writer").style.display = "block";
+    }
+
+    // Find the a element child of the active breadcrumb
+    var activeBreadcrumbA = activeBreadcrumb[0].getElementsByTagName("a")[0];
+
+    
+    // set the content to the value of a
+    activeBreadcrumbA.href = "#";
+
+    //// change text-decoration to none and color to black
+    activeBreadcrumbA.style.textDecoration = "none";
+    activeBreadcrumbA.style.color = "#6c757d";
+    activeBreadcrumbA.style.display = "inline-block";
+
+    // change cursor to default
+    activeBreadcrumbA.style.cursor = "default";
+
+    // disable the activebreadcrumb a element
+    activeBreadcrumbA.disabled = true;
+
+
 });
 
 function openJob(evt, jobName) {
 
-    let i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
+    var i;
+    var tabcontent = document.getElementsByClassName("tabcontent");
 
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
 
-    tablinks = document.getElementsByClassName("tablinks");
+    var tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
 
-    const tab = document.getElementById(jobName);
+    var tab = document.getElementById(jobName);
     tab.style.display = "block";
     evt.currentTarget.className += " active";
 }
+
+(function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+ga('create', 'UA-76196878-1', 'auto');
+ga('send', 'pageview');

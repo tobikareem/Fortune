@@ -22,10 +22,6 @@ namespace Shared.Repository
         {
             var user = GetById(id);
 
-            if(user is default(IdentityUser))
-            {
-                return;
-            }
             _dbContext.Users.Remove(user);
             _dbContext.SaveChanges();
         }
@@ -42,7 +38,7 @@ namespace Shared.Repository
         }
 
         public void UpdateEntity(IdentityUser entity){
-            _dbContext.Update<IdentityUser>(entity);
+            _dbContext.Update(entity);
             _dbContext.SaveChanges();
         }
     }

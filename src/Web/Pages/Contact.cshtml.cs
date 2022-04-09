@@ -12,12 +12,12 @@ namespace Web.Pages
     {
         [BindProperty] public UserForm Input { get; set; }
 
-        private readonly IMailMessage mailMessage;
+        private readonly IServiceCalls mailMessage;
 
         private readonly EmailProp appSetting;
 
 
-        public ContactModel(IMailMessage message, IOptions<EmailProp> conAppsetting)
+        public ContactModel(IServiceCalls message, IOptions<EmailProp> conAppsetting)
         {
             Input = new UserForm();
 

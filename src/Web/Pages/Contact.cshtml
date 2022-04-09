@@ -1,7 +1,10 @@
 ﻿@page
+@using Web.Pages.Classes
 @model Web.Pages.ContactModel
 @{
     ViewData["Title"] = "Contact";
+    ViewData["ActivePage"] = BreadCrumbs.Contact;
+
 }
 
 <partial name="_ContactMePartial" model="@Model.Input" />

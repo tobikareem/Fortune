@@ -6,7 +6,7 @@ namespace Core.Models
     {
         [Required(ErrorMessage = "*Category is required"), Display(Name = "Category"), MinLength(3)]
         public string Category1 { get; set; } = null!;
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; } = null!;
 
     }
 }

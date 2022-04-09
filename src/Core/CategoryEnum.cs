@@ -10,6 +10,6 @@ namespace Core
     {
         Poetry,
         Motivation,
-        Computer
+        Programming
     }
 }

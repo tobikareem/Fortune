@@ -1,7 +1,10 @@
 ﻿@page
+@using Web.Pages.Classes
 @model Web.Pages.DeveloperModel
 @{
     ViewData["Title"] = "Developer";
+    ViewData["ActivePage"] = BreadCrumbs.Developer;
+
 }
 <h2>.Tech Stack</h2>
 
@@ -96,7 +99,7 @@
     <div class="company-section">
         <div class="company-section-left">
             <p class="company-section-text">
-                I am an IT professional with over 10 years of experience in computer programming - Application Design,
+                I am an IT professional with over 10 years of experience in Computer Programming - Application Design,
                 Website Creation and Cross platform Mobile Apps.
                 I have also garnered experience in the areas of Telecommunication and Networking. My work experience at
                 Aviat Networks availed me this opportunity as a technical support Engineer
@@ -104,24 +107,24 @@
 
             </p>
             <p class="company-section-text">
-                Initially, I grew up with a career interest for Mechanical Engineer but ended up pursuing a B.Sc degree
+                Initially, I grew up with a career interest in Mechanical Engineering but ended up pursuing a B.Sc degree
                 in Computer Science at the time. My first experience at programming was during the summer
-                extracurricular activies at Aptech Computer Eduction.
-                Here, I learnt the basics of Web Development - HTML, CSS and Javascript and this expereience propelled
-                me further into PHP. I delved into the languages of C, C++ and Java during course works. Passing course
+                extracurricular activities at Aptech Computer Education.
+                Here, I learned the basics of Web Development - HTML, CSS and Javascript and this experience propelled
+                me further into PHP. I delved into the languages of C, C++ and Java during course work. Passing course
                 works was all that mattered.
 
             </p>
 
             <p class="company-section-text">
-                Eventually, I found a soft spot for Microsoft tech stacks and started with the ASP.NET web forms
+                Eventually, I found a great interest in Microsoft tech stacks and started with the ASP.NET Web forms
                 framework for web development. C# became an essential tool for this development and its syntax were a
                 thing of beauty to me.
                 My first job in the United States as a software developer relied mostly on C# and in my quest of
-                learning more things, I picked up Xamarins along the line which now enable me build Mobile Apps for
-                Android, iOS and Windows. As time goes on, I found much interests
+                learning more things, I picked up Xamarin.NET along the line which enable me build Cross Platform Mobile Apps for
+                Android, iOS and Windows. As times went on, I found much interests
                 with Go Lang and Python which I now currently use for mostly learning purposes and looking forward to
-                build applications business applications with them.
+                build business applications with them.
             </p>
         </div>
         <div class="company-section-right">
@@ -170,8 +173,6 @@
         }
     </div>
 </div>
-
-@* <partial name="_ContactMePartial" model="@Model.Input" /> *@
 
 <div class="dev-exp-mobile">
     <div class="company-name">
@@ -244,3 +245,13 @@
         }
     }
 </div>
+
+@section Scripts {
+<script>
+    // jquery get element by class named footer
+    var footer = $('footer');
+    // jquery get element by class named footer and change position to relative
+    footer.css('position', 'relative');
+
+</script>
+}

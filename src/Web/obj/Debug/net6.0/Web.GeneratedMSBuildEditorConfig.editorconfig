@@ -187,12 +187,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGFjdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/CreateCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlQ2F0ZWdvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/CreatePost.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlUG9zdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Developer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGV2ZWxvcGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/EditPost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFBvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Error.cshtml]
@@ -207,6 +219,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Notifications.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90aWZpY2F0aW9ucy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -219,6 +235,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9Db250YWN0TWVQYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Shared/_CreatePost.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9DcmVhdGVQb3N0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Shared/_DashboardLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9EYXNoYm9hcmRMYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -227,8 +251,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Suggestions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3VnZ2VzdGlvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Writer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV3JpdGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/_ManageEditWriting.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX01hbmFnZUVkaXRXcml0aW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/_ViewImports.cshtml]
@@ -237,6 +269,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Tobi Kareem/OneDrive/Documents/Fortune/src/Web/Pages/Shared/_Layout.cshtml]

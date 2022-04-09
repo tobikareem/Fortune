@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "d2vAdPE2rsHn0YsiV5xwmdNUInoMb5yAIkILOJ++gzgfPKh3QBRek5+cIvsm1rFrWTJygVvKQDShClB2I5+Pxw==",
+  "dgSpecHash": "VnRTqkJ4yZXtMi6hec8e071o21GRhMNjSYmW3ibGPUBrxJEnRwS+MIDtlce434YfcRI/Yc5bcwB88+SFBsuDgw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj",
   "expectedPackageFiles": [
@@ -40,6 +40,7 @@
     "C:\\Users\\Tobi Kareem\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Tobi Kareem\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Tobi Kareem\\.nuget\\packages\\mimekit\\3.1.1\\mimekit.3.1.1.nupkg.sha512",
+    "C:\\Users\\Tobi Kareem\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Tobi Kareem\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\Tobi Kareem\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\Tobi Kareem\\.nuget\\packages\\system.configuration.configurationmanager\\4.7.0\\system.configuration.configurationmanager.4.7.0.nupkg.sha512",

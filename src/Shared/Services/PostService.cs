@@ -1,80 +1,43 @@
 ﻿using Data.Entity;
-
+using Shared.Interfaces.Services;
 using Shared.Interfaces.Repository;
 
 namespace Shared.Services
 {
-    public class PostService
+    public class PostService : IPostService
     {
-        private readonly IDataStore<Post> postRepository;
-        public PostService(IDataStore<Post> postRepository)
+        private readonly IDataStore<Post> _postRepository;
+        private readonly IDataStore<Category> _categoryRepository;
+        public PostService(IDataStore<Post> postRepository, IDataStore<Category> categoryRepository)
         {
-            this.postRepository = postRepository;
+            _postRepository = postRepository;
+            _categoryRepository = categoryRepository;
+        }
+        
+        public void CreateNewPost(Post post)
+        {
+            post.CategoryId = _categoryRepository.GetAll().First(x => x.Category1 == post.Category.Category1).Id;
+            post.IsReviewPost = false;
+            post.Category = _categoryRepository.GetById(post.CategoryId.GetValueOrDefault());
+            post.CreatedOn = DateTime.UtcNow;
+
+            post.PostCategories.Add(new PostCategory { CategoryId = post.Category.Id });
+            post.UserPosts.Add(new UserPost { UserId = post.UserId ?? string.Empty });
+
+
+
+            _postRepository.AddEntity(post);
         }
 
-        public void AddEntity(Post entity)
+        public void UpdatePost(Post post)
         {
-            try
-            {
-                postRepository.AddEntity(entity);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            _postRepository.UpdateEntity(post);
         }
 
-        public void Delete(int id)
+        public Post GetPostById(int postId)
         {
-            try
-            {
-                //postRepository.Delete(id);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public IEnumerable<Post> GetAll()
-        {
-            try
-            {
-                return postRepository.GetAll();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public Post GetById(int id)
-        {
-            try
-            {
-                return new Post();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public void UpdateEntity(Post entity)
-        {
-            try
-            {
-                postRepository.UpdateEntity(entity);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            var post = _postRepository.GetById(postId);
+            return post;
         }
     }
 }

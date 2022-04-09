@@ -6,8 +6,6 @@ namespace Web.Pages
 {
     public class DeveloperModel : PageModel
     {
-        [BindProperty]
-        public UserForm Input { get; set; }
 
         public List<JobExperience> JobExperiences { get; }
 
@@ -15,7 +13,6 @@ namespace Web.Pages
 
         public DeveloperModel()
         {
-            Input = new UserForm();
             JobExperiences =
                 new List<JobExperience> {
                     new JobExperience {
@@ -25,8 +22,8 @@ namespace Web.Pages
                             new List<string> {
                                 "Automate Material Requirement Planning - Materials are integral part of vehicle production. Thousands of vehicles are produced on frequent bases, This system runs different jobs to ensure there is never a shortage of material.",
                                 "Development of a Task Scheduler System - A continuous long running windows background service that automates and run software jobs to handle different modules of our ERP like Material Planning, Asset Management, Purchase Order/Sales Order requirements.",
-                                "Tesla Warp Authentication and Authorization - I took ownership of the project that ensures authorization and authentication of individuals to grant and revote permission to different application modules",
-                                "Body Shop Onboarding: This system onboards Tesla partners"
+                                "Tesla Warp Authentication and Authorization - I took ownership of the project that ensures authorization and authentication of individuals to grant and revoke permission to different application modules.",
+                                "Body Shop Onboarding: This system onboards Tesla partners."
                             }
                     },
                     new JobExperience {
@@ -34,8 +31,8 @@ namespace Web.Pages
                         CompanyName = "Advantasure. Formally Tessallate",
                         Responsiblites =
                             new List<string> {
-                                "Work in development team to develop and define application scope and objectives and prepare functional and/or technical specifications.",
-                                "Analyses and evaluates detailed business and technical requirements.",
+                                "Worked in development team to develop and define application scope and objectives and prepare functional and/or technical specifications.",
+                                "Analyzed and evaluated detail business and technical requirements.",
                                 "Coding and maintaining complex components of information systems.",
                                 "Implementing coding standards and code reviews.",
                                 "Developing and performing system testing and fix defects identified during testing and re-execute unit tests to validate results.",

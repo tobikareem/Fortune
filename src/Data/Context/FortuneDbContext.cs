@@ -1,11 +1,16 @@
 ﻿using Core.Configuration;
-using Data.Entity;
 using System.Linq;
-
+using Core.Models;
+using Data.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Category = Data.Entity.Category;
+using Comment = Data.Entity.Comment;
+using Post = Data.Entity.Post;
+using PostCategory = Data.Entity.PostCategory;
+using UserPost = Data.Entity.UserPost;
 
 namespace Data.Context
 {
@@ -27,12 +32,13 @@ namespace Data.Context
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostCategory> PostCategories { get; set; }
         public virtual DbSet<UserPost> UserPosts { get; set; }
+        public virtual DbSet<Suggestions> Suggestions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer();
+                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=FortuneDb; Trusted_Connection=True; MultipleActiveResultSets=true");
             }
         }
 
@@ -40,6 +46,38 @@ namespace Data.Context
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Suggestions>(entity =>
+            {
+                entity.ToTable("Suggestions", "fort");
+
+                entity.Property(e => e.Id).HasColumnName("Id").IsRequired();
+
+                entity.Property(e => e.Content)
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                entity.Property(e => e.HasExpiryTime);
+
+                entity.Property(e => e.Title);
+
+                entity.Property(e => e.ExpireBy);
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(55)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedOn);
+
+                entity.Property(e => e.ModifiedOn);
+
+                entity.Property(e => e.Enabled)
+                    .IsRequired();
+
+                entity.Property(e => e.ModifiedBy)
+                    .HasMaxLength(55)
+                    .IsUnicode(false);
+            });
+            
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.ToTable("Category", "fort");
@@ -55,7 +93,7 @@ namespace Data.Context
                     .HasMaxLength(55)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.CreatedOn);
 
                 entity.Property(e => e.ModifiedOn);
 
@@ -64,8 +102,7 @@ namespace Data.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.Enabled)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                    .IsRequired();
 
                 entity.Property(e => e.ModifiedBy)
                     .HasMaxLength(55)
@@ -82,13 +119,12 @@ namespace Data.Context
                     .HasMaxLength(55)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.CreatedOn);
 
                 entity.Property(e => e.ModifiedOn);
 
                 entity.Property(e => e.Enabled)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                    .IsRequired();
 
                 entity.Property(e => e.ModifiedBy)
                     .HasMaxLength(55)
@@ -97,7 +133,7 @@ namespace Data.Context
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_CommentPost");
             });
 
@@ -113,7 +149,7 @@ namespace Data.Context
                     .HasMaxLength(55)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
+                entity.Property(e => e.CreatedOn);
 
                 entity.Property(e => e.ModifiedOn);
 
@@ -124,8 +160,7 @@ namespace Data.Context
                     .IsUnicode(false);
 
                 entity.Property(e => e.Enabled)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
+                    .IsRequired();
 
                 entity.Property(e => e.ModifiedBy)
                     .HasMaxLength(55)
@@ -143,7 +178,7 @@ namespace Data.Context
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Post_User_Id");
             });
 
@@ -154,14 +189,16 @@ namespace Data.Context
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.PostCategories)
                     .HasForeignKey(d => d.CategoryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PostCategory_Category");
 
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.PostCategories)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_PostCategory_Post");
+
+
             });
 
             modelBuilder.Entity<UserPost>(entity =>
@@ -171,13 +208,13 @@ namespace Data.Context
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.UserPosts)
                     .HasForeignKey(d => d.PostId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_UserPost_Post");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserPosts)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_UserPost_User");
             });
 

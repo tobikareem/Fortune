@@ -1,14 +1,21 @@
 ﻿@page
+@using Web.Pages.Classes
 @model Web.Pages.WriterModel
 @{
     ViewData["Title"] = "Writer";
+    ViewData["ActivePage"] = BreadCrumbs.Writer;
 }
 
 @section Scripts{
 <script src="https://kit.fontawesome.com/a45e1612b0.js" crossorigin="anonymous"></script>
-}
+<script>
+    // jquery get element by class named footer
+    var footer = $('footer');
+    // jquery get element by class named footer and change position to relative
+    footer.css('position', 'relative');
 
-<h2>@ViewData["Title"]</h2>
+</script>
+}
 
 <figure>
     <blockquote>
@@ -28,7 +35,6 @@
                 @{
                     foreach (var blog in Model.BlogPosts)
                     {
-
                         <div class="col-md-4">
                             <a asp-page="/BlogPost" asp-route-id="@blog.Id">
                                 <div class="card p-2 mb-7">
@@ -47,14 +53,14 @@
                                             </div>
 
                                             <div class="post-footer">
-                                                <p>@blog.CreatedOn.ToShortDateString()</p>
+                                                <p>@Extend.GetConvertedDate(@blog.CreatedOn)</p>
+                                                <p>@blog.CreatedBy</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </div>
-
                     }
                 }
 
@@ -64,26 +70,32 @@
 
 
         <div class="col-md-3">
-
-            <div class="createPost">
-                <a asp-page="/CreatePost"> Create Post </a>
-            </div>
-
             <div class="popular-section">
+                <div class="createWriterSection">
+                    <a asp-page="/CreatePost"> Create Post </a>
+                </div>
                 <h3>Recent Posts</h3>
                 <div class="btnRecent">
 
                     @{
                         if (Model.BlogPosts.Any())
                         {
-                            for (int i = 0; i < 3; i++)
+
+                            foreach(var blog in Model.BlogPosts)
                             {
-                                <a asp-page="/BlogPost" asp-route-id="@Model.BlogPosts[i].Id">@Model.BlogPosts[i].Title</a>
+                                <a asp-page="/BlogPost" asp-route-id="@blog.Id">@blog.Title</a>
                             }
                         }
                     }
 
                 </div>
+                
+                @if (Model.IsTobiKareem)
+                {
+                    <div class="createWriterSection">
+                        <a asp-page="/CreateCategory"> Create Category </a>
+                    </div>
+                }
 
                 <h3>Categories</h3>
                 <div class="btnRecent">
