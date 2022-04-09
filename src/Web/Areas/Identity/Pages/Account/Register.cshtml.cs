@@ -3,6 +3,7 @@
 #nullable disable
 
 using Core.Models;
+using Core.Constants;
 using System.Text;
 using System.Text.Encodings.Web;
 using Data.Entity;
@@ -14,7 +15,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
 using Shared.Interfaces.Services;
-using Core.Models;
 
 namespace Web.Areas.Identity.Pages.Account
 {
@@ -27,7 +27,6 @@ namespace Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IUserService _userService;
-        private readonly IMailMessage _mailService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -35,8 +34,7 @@ namespace Web.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IUserService userService,
-            IMailMessage mailMessage)
+            IUserService userService)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -45,7 +43,6 @@ namespace Web.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _userService = userService;
-            _mailService = mailMessage;
         }
 
         /// <summary>
@@ -97,12 +94,13 @@ namespace Web.Areas.Identity.Pages.Account
 
                 var claims = new List<Claim>
                 {
-                        new Claim(nameof(Input.FirstName), Input.FirstName) ,
-                        new Claim(nameof(Input.LastName), Input.LastName) ,
+                        new(nameof(Input.FirstName), Input.FirstName),
+                        new(ClaimTypes.GivenName, $"{Input.FirstName} {Input.LastName}"),
+                        new(ClaimTypes.Role, ResourceAction.CanWritePost)
                 };
                 if (string.Compare(user.Email, "oluwatobikareem@gmail.com", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    claims.Add(new Claim("ResourceAction", Enum.GetName(ResourceAction.Fortune_Admin)));
+                    claims.Add(new Claim(ClaimTypes.Role, ResourceAction.FortuneAdmin));
                 }
 
                 await _userManager.AddClaimsAsync(user, claims);
@@ -112,16 +110,19 @@ namespace Web.Areas.Identity.Pages.Account
 
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmail",
-                    pageHandler: null,
-                    values: new { area = "Identity", userId, code, returnUrl },
-                    protocol: Request.Scheme);
+                    null,
+                    new { area = "Identity", userId, code, returnUrl },
+                    Request.Scheme);
 
-                await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                if (callbackUrl != null)
+                {
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                }
 
                 if (_userManager.Options.SignIn.RequireConfirmedAccount)
                 {
-                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl });
                 }
                 else
                 {

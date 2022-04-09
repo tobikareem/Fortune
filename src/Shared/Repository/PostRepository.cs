@@ -2,6 +2,7 @@
 using Data.Entity;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Shared.Repository
 {
@@ -14,8 +15,9 @@ namespace Shared.Repository
         }
         public void AddEntity(Post entity)
         {
-            _dbContext.Posts.Add(entity);
+            _dbContext.Attach(entity).State = EntityState.Added;
 
+            _dbContext.Posts.Add(entity);
             _dbContext.PostCategories.AddRange(entity.PostCategories);
             _dbContext.UserPosts.AddRange(entity.UserPosts);
 
@@ -33,15 +35,10 @@ namespace Shared.Repository
 
         }
 
-        public void Delete(Post entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Post> GetAll()
         {
+            return _dbContext.Posts.Include(x => x.Category).ToList();
 
-            return Enumerable.Empty<Post>();
         }
 
         public Post GetById(int id)
@@ -51,15 +48,28 @@ namespace Shared.Repository
             return post ?? new Post();
         }
 
-        public Post GetById(Post entity)
+
+        public IEnumerable<Post> GetByUserId(string userId)
         {
-            throw new NotImplementedException();
+            return _dbContext.Posts.Include(x => x.Category).Include(x => x.User)
+                .Where(x => x.User != null && x.User.Id == userId).ToList();
         }
 
         public void UpdateEntity(Post entity)
         {
-            _dbContext.Update<Post>(entity);
+            _dbContext.Attach(entity).State = EntityState.Modified;
             _dbContext.SaveChanges();
+            
+
+            //_dbContext.Posts.FromSqlRaw("UPDATE Posts SET" +
+            //                            " Title = {0}," +
+            //                            " Content = {1}, " +
+            //                            " Description = {2}, " +
+            //                            " Enabled = {3}, " +
+            //                            " IsPublished = {4}, " +
+            //                            "CategoryId = {5} " +
+            //                            "WHERE Id = {6}", 
+            //    entity.Title, entity.Content, entity.Description, entity.Enabled, entity.IsPublished, entity.Category.Id, entity.Id);
         }
     }
 }

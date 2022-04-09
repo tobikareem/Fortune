@@ -5,6 +5,7 @@ namespace Web.Extensions
     {
         public static IApplicationBuilder UseCustomServiceBuilder(this IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             //app.UseStatusCodePagesWithReExecute("/{0}");
             app.UseStatusCodePages();
 
@@ -16,10 +17,10 @@ namespace Web.Extensions
             if (!env.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseForwardedHeaders();
                 app.UseHsts();
             }
-
+            
 
             app.UseHttpsRedirection();
 

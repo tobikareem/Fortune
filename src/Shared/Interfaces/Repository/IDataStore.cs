@@ -7,5 +7,7 @@ namespace Shared.Interfaces.Repository
         void Delete(int id);
 
         T GetById(int id);
+
+        IEnumerable<T> GetByUserId(string userId);
     }
 }

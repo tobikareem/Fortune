@@ -39,6 +39,11 @@ namespace Shared.Repository
             return category ?? new Category();
         }
 
+        public IEnumerable<Category> GetByUserId(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateEntity(Category entity)
         {
             _dbContext.Update<Category>(entity);

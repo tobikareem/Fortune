@@ -1,71 +1,19 @@
 ﻿@page
+@using Web.Pages.Classes
 @model Web.Pages.CreatePostModel
 @{
+    ViewData["ActivePage"] = BreadCrumbs.CreatePost;
+
 }
 
 @section Scripts {
-<script src="https://cdn.tiny.cloud/1/nhqpzsaw0s8mm1w2jck9dy3t8w7v09y03lndpwwp87r3zn5n/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-    tinymce.init({
-      selector: '#UserPost_Content'
-    });
+    // jquery get element by class named footer
+    //var footer = $('footer');
+    //// jquery get element by class named footer and change position to relative
+    //footer.css('position', 'relative');
+
 </script>
 }
 
-<form method="post" class="createPost">
-    <div class="summary mb-4">
-        @*       <p>
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseContent" role="button" aria-expanded="false" aria-controls="collapseContent">
-            Open
-            </a>
-            </p>*@
-
-        @*    <div class="collapse" id="collapseContent">*@
-        <div class="card ">
-            <a data-bs-toggle="collapse" href="#collapseContent" role="button" aria-expanded="false" aria-controls="collapseContent">
-                <div class="card-header d-flex flex-row justify-content-between">
-                    <p class="text-sm-start">About The Write up</p>
-                    <p class="p-blue text-sm-end"><span class="fas fa-chevron-up pe-2"></span>Show/Hide</p>
-                </div>
-            </a>
-
-            <div class="card-body collapse" id="collapseContent">
-                <div class="mb-3">
-                    <label asp-for="UserPost.Title" class="form-label"></label>
-                    <input asp-for="UserPost.Title" class="form-control" />
-                    <span asp-validation-for="UserPost.Title" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="UserPost.Category.Category1" class="form-label"></label>
-                    <input class="form-control" list="categoryListOptions" asp-for="UserPost.Category.Category1" />
-                    <datalist id="categoryListOptions">
-
-                        @{
-                            foreach (var c in @Model.Categories)
-                            {
-                                <option value="@c.Category1"></option>
-                            }
-                        }
-                    </datalist>
-                    <span asp-validation-for="UserPost.Category.Category1" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="UserPost.Description" class="form-label"></label>
-                    <textarea asp-for="UserPost.Description" class="form-control" rows="3"> </textarea>
-                    <span asp-validation-for="UserPost.Description" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-        @*  </div>*@
-    </div>
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <textarea id="UserPost_Content" name="UserPost.Content" asp-for="UserPost.Content">
-    </textarea>
-    <span asp-validation-for="UserPost.Content" class="text-danger"></span>
-
-    <button class="contact1-form-btn mt-sm-4" type="submit">
-        <span>
-            Submit
-        </span>
-    </button>
-</form>
+<partial name="Shared/_CreatePost" model="Model.UserPost" />

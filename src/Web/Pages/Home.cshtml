@@ -1,10 +1,13 @@
 ﻿@page
+@using Web.Pages.Classes
 @model Web.Pages.HomeModel
 @{
     ViewData["Title"] = "Home";
-}
+    ViewData["ActivePage"] = BreadCrumbs.Home;
 
-<h1>@ViewData["Title"]</h1>
+}
+@*
+<h1>@ViewData["Title"]</h1>*@
 
 <div class="container">
     <div class="jumbotron">
@@ -70,11 +73,23 @@
                                 </div>
                                 <div class="col-md-10 ps-5">
                                     <p class="h-blue">... more like, what's on my mind.</p>
-                                    <p class="textmuted">Give your suggesstion and feel free to invite me to an event by clicking the plus icon below:</p>
+                                    <p class="textmuted">Give your suggestion and feel free to invite me to an event by clicking the plus icon below:</p>
                                     <div class="box d-flex justify-content-between align-items-center mt-3">
-                                        <p class="">
-                                            <a role="button" class="mindfeed" asp-page="/CreatePost"><i class="fas fa-plus mindfeed"></i></a>
-                                        </p>
+                                        
+                                        @{
+                                            if (Model.IsTobiKareem)
+                                            {
+                                                <p class="">
+                                                    <a role="button" class="mindfeed" asp-page="/CreatePost"><i class="fas fa-plus mindfeed"></i></a>
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="">
+                                                    <a role="button" class="mindfeed" asp-page="/Suggestions"><i class="fas fa-plus mindfeed"></i></a>
+                                                </p>
+                                            }
+                                        }
                                         <div class="d-flex align-items-center">
                                             <p class="textmuted">my weekly productivity score: 0%</p>
                                             <div class="progress-bar">
@@ -91,35 +106,17 @@
                             @{
                                 foreach (var p in Model.DisplayPosts)
                                 {
-
-                                    var totalTime = DateTime.UtcNow.Subtract(@p.CreatedOn);
-                                    var time = string.Empty;
-
-                                    if (totalTime.Minutes < 60)
-                                    {
-                                        time = $"~{totalTime.Minutes} mins ago";
-                                    }
-
-                                    else if (totalTime.Hours < 24)
-                                    {
-                                        time = $"~{totalTime.Hours} hrs ago";
-                                    }
-                                    else
-                                    {
-                                        time = $"~{totalTime.Days} days ago";
-                                    }
-
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                            <div class="collapse show multi-collapse" id="multiCollapseExample1">
                                                 <div class="border-bottom py-2">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <div>
                                                             <p class="p-blue">@p.Title</p>
-                                                            <p class="textmuted">@time </p>
+                                                            <p class="textmuted">@Extend.GetTimeDifference(@p.CreatedOn)</p>
                                                         </div>
                                                         <div class="arrow">
-                                                            <a role="button" class="mindfeed"> <i class="fas fa-thumbs-up"></i></a>
+                                                            @* <a role="button" class="mindfeed"> <i class="fas fa-thumbs-up"></i></a> *@
                                                             <a asp-page="/BlogPost" asp-route-id="@p.Id"><div class="btn btn-primary fas fa-arrow-right"></div> </a>
                                                         </div>
                                                     </div>
@@ -162,26 +159,24 @@
                     <h3>Developer</h3>
                     <p>
                         When I was 15 years old, my father bought a windows desktop and set it up at home. I was
-                        fascinated with the way Microsoft Word works at the time. It was my first experience at typing.
-                        It became even fascinating that
-                        I could save the words and come back to it later.
+                        fascinated by the way Microsoft Word works at the time. It was my first experience at typing.
+                        It became even more fascinating that I could save the words and come back to it later.
                     </p>
 
                     <p>
-                        This joyful experience became something that would change my life forever... <a asp-page="/Developer" class="m-1">Explore</a>
+                        I can most likely say my love and habit for coding was a transition from the excitement at typing on Microsoft Word. The joyful experience became something that would change my life forever... <a asp-page="/Developer" class="m-1">Explore</a>
                     </p>
                 </div>
 
                 <div class="writer">
                     <h3>Writer</h3>
                     <p>
-                        I have some kind of passion for writing. I love writing software codes, storytelling,
-                        copywriting, review writing and more specifically, I love poems.
+                        I have a passion for writing. I love writing software codes, I love to write abstract stories,
+                        copy writing, review writing and more specifically, poems.
                     </p>
 
                     <p>
-                        I would say I am extremely fluent in Web Development tech stacks - Angular, Razor, Blazor and
-                        .Net.
+                        I love to use a lot of big words in my write ups to make me look and sound smart. Like utilizing gargantuan expressions for simple idioms.
                         So, If you are looking for someone with a lot of knowledge and excitement, you are lucky to have
                         found me on this site... <a asp-page="/Writer" class="m-1">Read more</a>
                     </p>
@@ -190,15 +185,12 @@
                 <div class="entrepreneur">
                     <h3>Entrepreneur</h3>
                     <p>
-                        I have some kind of passion for writing. I love writing software codes, storytelling,
-                        copywriting, review writing and more specifically, I love poems.
+                        In my college days, I had a desire to start a business. I was always interested in the idea of selling stuffs. My first business was selling shoes and flip flops. 
+                        Then selling edible plantain chips. Ohh boy, Need I mention my profit margin was so great that It just became a thing of joy to make profit selling stuffs.
                     </p>
 
                     <p>
-                        I would say I am extremely fluent in Web Development tech stacks - Angular, Razor, Blazor and
-                        .Net.
-                        So, If you are looking for someone with a lot of knowledge and excitement, you are lucky to have
-                        found me on this site... <a asp-page="/About" class="m-1">Read more</a>
+                        I enjoyed being a sales man at the end, As I was often told, my charisma was a delight. And then, I boast to myself that, I can sell water to a well. <a asp-page="/About" class="m-1">Read more</a>
                     </p>
                 </div>
             </div>

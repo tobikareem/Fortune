@@ -1,0 +1,19 @@
+﻿@page "{id}"
+@using Web.Pages.Classes
+@model Web.Pages.EditPostModel
+
+@{
+    ViewBag.Title = "Edit Post";
+    ViewData["ActivePage"] = WritingLinks.EditPage;
+    Layout = "Shared/_DashboardLayout";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <partial name="Shared/_CreatePost" model="Model.Post" />
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

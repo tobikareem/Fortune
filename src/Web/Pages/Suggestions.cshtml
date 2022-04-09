@@ -1,0 +1,107 @@
+@page
+@using Web.Pages.Classes
+@model Web.Pages.SuggestionsModel
+
+@{
+    ViewData["Title"] = "Suggestions";
+    ViewData["ActivePage"] = BreadCrumbs.Suggestions;
+}
+<h4>Suggestions</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+
+            <div class="form-group mb-4">
+                <label asp-for="Suggest.CreatedBy" class="control-label"></label>
+                <input asp-for="Suggest.CreatedBy" class="form-control" />
+                @*<span asp-validation-for="Suggest.CreatedBy" class="text-danger"></span>*@
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Suggest.Title" class="control-label"></label>
+                <input asp-for="Suggest.Title" class="form-control" />
+                @*<span asp-validation-for="Suggest.Title" class="text-danger"></span>*@
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Suggest.Content" class="control-label"></label>
+                <textarea asp-for="Suggest.Content" class="form-control"> </textarea>
+                @*<span asp-validation-for="Suggest.Content" class="text-danger"></span>*@
+
+            </div>
+
+            <div class="form-group form-check mb-4">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Suggest.HasExpiryTime" /> @Html.DisplayNameFor(model => model.Suggest.HasExpiryTime)
+                </label>
+            </div>
+
+
+            <div class="form-group mb-5">
+                <label asp-for="Suggest.ExpireBy" class="control-label" id="labelExpire"></label>
+                <input asp-for="Suggest.ExpireBy" class="form-control" />
+            </div>
+
+            <div class="form-group mb-5">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6" style="margin-left: auto">
+        <h5>All Suggestions</h5>
+        <div class="flex-md-column scrollSuggestion">
+            @foreach (var suggestion in Model.SuggestionsList)
+            {
+                <div class="card mb-4">
+                    <div class="card-header text-sm-end"><p class="suggestCreated">@suggestion.CreatedBy </p></div>
+                    <div class="card-body">
+                        <h5 class="card-title mb-1"> @suggestion.Title</h5>
+                        <p class="card-text"> @suggestion.Content</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="text-sm-start">
+                            @suggestion.CreatedOn.ToShortDateString()
+                        </span>
+
+                        @if (suggestion.HasExpiryTime)
+                        {
+                            <span class="text-sm-end">
+                                Expires On: @suggestion.ExpireBy.ToShortDateString()
+                            </span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts
+{
+<script>
+
+    $('#Suggest_ExpireBy').hide();
+    $('#labelExpire').hide();
+
+    // set the Suggest.expireby display to none if the checkbox is not checked
+    $(document).ready(function () {
+        $('#Suggest_HasExpiryTime').change(function () {
+            if ($(this).is(':checked')) {
+                $('#labelExpire').show();
+                $('#Suggest_ExpireBy').show();
+            } else {
+                $('#Suggest_ExpireBy').hide();
+                $('#labelExpire').hide();
+            }
+        });
+    });
+
+
+</script>
+}

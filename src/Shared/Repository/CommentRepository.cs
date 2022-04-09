@@ -39,6 +39,11 @@ namespace Shared.Repository
             return comment ?? new Comment();
         }
 
+        public IEnumerable<Comment> GetByUserId(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateEntity(Comment entity)
         {
             _dbContext.Update<Comment> (entity);

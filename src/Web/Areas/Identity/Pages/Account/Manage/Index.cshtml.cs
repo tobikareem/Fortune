@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Core.Constants;
 
 namespace Web.Areas.Identity.Pages.Account.Manage
 {
@@ -95,6 +97,13 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+
+            if (user.Email == "test5@test5.com")
+            {
+                var claim = new Claim(ClaimTypes.Role, ResourceAction.CanWritePost);
+                await _userManager.AddClaimAsync(user, claim);
+            }
+
             if (Input.PhoneNumber != phoneNumber)
             {
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);

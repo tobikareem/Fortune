@@ -24,7 +24,7 @@ namespace Shared.Services
             }
         }
 
-        public void Delete(int id)
+        public void Delete()
         {
         }
 

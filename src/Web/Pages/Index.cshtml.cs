@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Constants;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Pages
@@ -14,6 +15,7 @@ namespace Web.Pages
 
         public IActionResult OnGet()
         {
+            _logger.Log(LogLevel.Information, PageLogEventId.PageLoad,"... Index page loaded");
             return Page();
         }
     }

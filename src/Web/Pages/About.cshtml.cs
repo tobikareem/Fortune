@@ -1,28 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using Core.Models;
+using Shared.Interfaces.Services;
 
 namespace Web.Pages
 {
     public class AboutModel : PageModel
     {
-
-        [BindProperty] public UserForm Input { get; set; }
-
-        public AboutModel()
+        private readonly IServiceCalls _calls;
+        public AboutModel(IServiceCalls calls)
         {
-            Input = new UserForm();
+            _calls = calls;
         }
 
-        public void OnGet()
-        {
-        }
 
-        public IActionResult OnPost()
-        {
+        //public async Task<IActionResult> OnGetAsync()
+        //{
+        //   // await _calls.GetGoggleAnalytics();
 
-            return RedirectToPage("/Home");
-        }
+        //    return Page();
+        //}
     }
 }

@@ -1,24 +1,29 @@
-﻿<!DOCTYPE html>
+﻿@using Web.Pages.Classes
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+        integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.14.0/devicon.min.css">
 
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Captain</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -38,7 +43,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Contact">Contact</a>
                         </li>
-                        <partial name="_LoginPartial"/>
+                        <li>
+                            <partial name="_LoginPartial" />
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -46,6 +53,42 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3 col-sm-12 col-md col-sm-12  col-12 col">
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+                aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForHome(ViewContext).active"><a
+                            asp-page="/Home">Home</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForAbout(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForAbout(ViewContext).display">About</li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForDeveloper(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForDeveloper(ViewContext).display"><a
+                            asp-page="/Developer">Developer</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForWriter(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForWriter(ViewContext).display" id="@BreadCrumbs.Writer"><a
+                            asp-page="/Writer">Writer</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForContact(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForContact(ViewContext).display"><a
+                            asp-page="/Contact">Contact</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForCreatePost(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForCreatePost(ViewContext).display"><a
+                            asp-page="/CreatePost">Create Post</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForEditPost(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForEditPost(ViewContext).display"><a
+                            asp-page="/EditPost">Edit Post</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForDashboard(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForDashboard(ViewContext).display"><a
+                            asp-page="/Dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForSuggestions(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForSuggestions(ViewContext).display"><a
+                            asp-page="/Suggestions">Suggestions</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForNotifications(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForNotifications(ViewContext).display"><a
+                            asp-page="/Notifications">Notifications</a></li>
+                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForBlogPost(ViewContext).active"
+                        style="display: @BreadCrumbs.AddDisplayForBlogPost(ViewContext).display" id="@BreadCrumbs.BlogPost"><a
+                            asp-page="/BlogPost">BlogPost</a></li>
+                </ol>
+            </nav>
             @RenderBody()
         </main>
     </div>
@@ -53,12 +96,24 @@
     <footer class="border-top footer text-muted col-sm-12 col-md col-sm-12  col-12 col">
         <div class="container">
             <ul class="social_footer_ul">
-                <li><a href="https://www.linkedin.com/in/oluwatobikareem/" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-                <li><a href="https://www.twitter.com/captainoath/" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="https://www.instagram.com/captainoath/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <li>
+                    <a href="https://www.linkedin.com/in/oluwatobikareem/" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.twitter.com/captainoath/" target="_blank"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/captainoath/" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </li>
             </ul>
 
-            <p class="text-center "> &copy; 2016 - @DateTime.Now.Year | Designed by <a asp-page="/Index">Tobi Kareem</a></p>
+            <p class="text-center ">
+                &copy; 2016 - @DateTime.Now.Year | Designed by <a asp-page="/Index">Tobi Kareem</a>
+            </p>
 
 
         </div>
@@ -68,8 +123,22 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.tiny.cloud/1/nhqpzsaw0s8mm1w2jck9dy3t8w7v09y03lndpwwp87r3zn5n/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin" asp-append-version="true"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#Content',
+            height: 900,
+            width: '100%',
+            resize: false,
+            branding: false,
+
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
+
 </html>
