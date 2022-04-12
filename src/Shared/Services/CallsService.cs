@@ -10,8 +10,7 @@ namespace Shared.Services
 {
     public class CallsService : IServiceCalls
     {
-
-        GoggleAnalytics _googleAnalytics;
+        private readonly GoggleAnalytics _googleAnalytics;
         public CallsService(IOptions<GoggleAnalytics> config)
         {
             _googleAnalytics = config.Value;

@@ -2,7 +2,6 @@
 {
     public static class Extend
     {
-
         public static string GetConvertedDate(DateTime utcDate) => ConvertDateToLocalTime(utcDate);
         public static string GetTimeDifference(DateTime utcDate) => CalculateTimeDifference(utcDate);
 
