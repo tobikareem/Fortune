@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.HttpOverrides;
+
 namespace Web.Extensions
 {
     public static class DependentAppBuilder
@@ -17,10 +19,13 @@ namespace Web.Extensions
             if (!env.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
-                app.UseForwardedHeaders();
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+                });
                 app.UseHsts();
             }
-            
+
 
             app.UseHttpsRedirection();
 

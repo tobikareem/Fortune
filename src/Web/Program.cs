@@ -9,14 +9,13 @@ if (builder.Environment.IsDevelopment())
 }
 
 var envName = builder.Environment.EnvironmentName;
-
-if (!string.IsNullOrEmpty(envName)) 
+if (!string.IsNullOrEmpty(envName))
+{
     builder.Configuration.AddJsonFile($"appsettings.{envName}.json");
+}
 
 builder.Configuration.AddEnvironmentVariables();
-// Add services to the container.
 builder.Services.AddCustomServiceBuilder(builder.Configuration);
-
 builder.Host.ConfigureLogging(log =>
 {
     log.AddEventLog();
@@ -26,8 +25,9 @@ builder.Host.ConfigureLogging(log =>
     });
 });
 
+builder.WebHost.UseIIS();
+builder.WebHost.UseIISIntegration();
+
 var app = builder.Build();
-
 app.UseCustomServiceBuilder(app.Environment);
-
 app.Run();
