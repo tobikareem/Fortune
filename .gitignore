@@ -5,3 +5,16 @@
 /.vs/Fortune/DesignTimeBuild
 /.vs/Fortune/v17/.futdcache.v1
 /.vs/Fortune/project-colors.json
+/src/Web/bin/Release/net6.0
+/src/Web/obj/Release/net6.0/PubTmp/EFSQLScripts
+/src/Web/obj/Release/net6.0/PubTmp/Out/cs
+/src/Web/obj/Release/net6.0/PubTmp/Out
+/src/Web/obj/Release/net6.0
+/src/Web/obj
+/src/Web/Properties/PublishProfiles
+/src/Core/bin/Release/net6.0
+/src/Core/obj/Release/net6.0
+/src/Data/bin/Release/net6.0
+/src/Data/obj/Release/net6.0
+/src/Shared/bin/Release/net6.0
+/src/Shared/obj/Release/net6.0
