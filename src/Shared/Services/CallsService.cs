@@ -28,28 +28,30 @@ namespace Shared.Services
             message.IsBodyHtml = true;
 
 
-            var client = new SmtpClient("smtpout.secureserver.net");
-            client.Port = 80;
-            client.Credentials = new System.Net.NetworkCredential("", "");
+            var client = new SmtpClient("smtpout.secureserver.net")
+            {
+                Port = 80,
+                Credentials = new System.Net.NetworkCredential("", "")
+            };
 
             client.SendCompleted += (s, e) =>
-            {
+                {
                 // Get the unique identifier for this asynchronous operation.
                 var token = e.UserState as string;
 
-                if (e.Cancelled)
-                {
-                    Console.WriteLine("[{0}] Send canceled.", token);
-                }
-                if (e.Error != null)
-                {
-                    Console.WriteLine("[{0}] {1}", token, e.Error.ToString());
-                }
-                else
-                {
-                    Console.WriteLine("Message sent.");
-                }
-            };
+                    if (e.Cancelled)
+                    {
+                        Console.WriteLine("[{0}] Send canceled.", token);
+                    }
+                    if (e.Error != null)
+                    {
+                        Console.WriteLine("[{0}] {1}", token, e.Error.ToString());
+                    }
+                    else
+                    {
+                        Console.WriteLine("Message sent.");
+                    }
+                };
 
             string userState = "Test Message";
 
