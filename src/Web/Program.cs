@@ -1,5 +1,6 @@
 using Web.Extensions;
 using System.Reflection;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,13 @@ if (!string.IsNullOrEmpty(envName))
 }
 
 builder.Configuration.AddEnvironmentVariables();
-builder.Services.AddCustomServiceBuilder(builder.Configuration);
+builder.Configuration.AddAzureAppConfiguration(opt =>
+{
+    opt.Connect(Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION_STRING"))
+        .Select(KeyFilter.Any, "Production");
+});
+
+builder.Services.AddCustomServiceBuilder(builder.Configuration, builder.Environment);
 builder.Host.ConfigureLogging(log =>
 {
     log.AddEventLog();

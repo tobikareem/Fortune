@@ -19,7 +19,7 @@ namespace Web.Extensions
 {
     internal static class DependentServiceCollection
     {
-        internal static IServiceCollection AddCustomServiceBuilder(this IServiceCollection services, IConfiguration config)
+        internal static IServiceCollection AddCustomServiceBuilder(this IServiceCollection services, IConfiguration config, IWebHostEnvironment env)
         {
             // Add services to the container.
             services.AddRazorPages()
@@ -77,7 +77,17 @@ namespace Web.Extensions
             services.Configure<GoggleAnalytics>(config.GetSection(nameof(GoggleAnalytics)));
 
             var connString = config.GetConnectionString(ConfigString.DefaultConnection);
-            services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
+
+            if (!env.IsDevelopment())
+            {
+                var prodConnString = config["ConnectionStrings:DefaultConnection"];
+                services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(prodConnString));
+            }
+            else
+            {
+                services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
+            }
+            
 
             // Identity Service
             services.AddDefaultIdentity<ApplicationUser>(opt =>
