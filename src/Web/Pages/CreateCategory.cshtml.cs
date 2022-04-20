@@ -12,10 +12,10 @@ namespace Web.Pages
     [Authorize(ResourcePolicy.HasWriteAccess)]
     public class CreateCategoryModel : PageModel
     {
-        private readonly IBaseStore<Category> _category;
+        private readonly IDataStore<Category> _category;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CreateCategoryModel(IBaseStore<Category> context, UserManager<ApplicationUser> userManager)
+        public CreateCategoryModel(IDataStore<Category> context, UserManager<ApplicationUser> userManager)
         {
             _category = context;
             _userManager = userManager;

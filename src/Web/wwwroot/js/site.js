@@ -87,7 +87,6 @@ $(document).ready(function () {
     // Find the a element child of the active breadcrumb
     var activeBreadcrumbA = activeBreadcrumb[0].getElementsByTagName("a")[0];
 
-    
     // set the content to the value of a
     activeBreadcrumbA.href = "#";
 
@@ -101,8 +100,6 @@ $(document).ready(function () {
 
     // disable the activebreadcrumb a element
     activeBreadcrumbA.disabled = true;
-
-
 });
 
 function openJob(evt, jobName) {

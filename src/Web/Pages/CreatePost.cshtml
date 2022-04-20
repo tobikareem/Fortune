@@ -8,10 +8,14 @@
 
 @section Scripts {
 <script>
-    // jquery get element by class named footer
-    //var footer = $('footer');
-    //// jquery get element by class named footer and change position to relative
-    //footer.css('position', 'relative');
+
+var footer = $('footer');
+    
+$('#collapseContent').on('shown.bs.collapse', function () {
+    debugger;
+    footer.css('position', 'relative');
+});
+
 
 </script>
 }

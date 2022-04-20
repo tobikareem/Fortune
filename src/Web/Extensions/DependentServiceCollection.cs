@@ -24,7 +24,7 @@ namespace Web.Extensions
         internal static IServiceCollection AddCustomServiceBuilder(this IServiceCollection services, WebApplicationBuilder builder)
         {
             var config = builder.Configuration;
-            
+
             services.AddRazorPages()
                 .AddMvcOptions(options =>
                 {
@@ -43,9 +43,9 @@ namespace Web.Extensions
                 options.LowercaseUrls = true;
                 options.LowercaseQueryStrings = true;
             });
-            
+
             builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json");
-            
+
             if (builder.Environment.IsDevelopment())
             {
                 builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
@@ -72,9 +72,9 @@ namespace Web.Extensions
 
             var connString = config.GetConnectionString(nameof(ConnectionStrings.DefaultConnection));
             services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
-            
+
             #endregion
-            
+
             #region Identity/Authorization
             services.AddAuthorization(opt =>
             {
@@ -118,26 +118,22 @@ namespace Web.Extensions
 
             }).AddEntityFrameworkStores<FortuneDbContext>();
             #endregion
-            
+
             #region Code Services
 
             services.AddScoped<IServiceCalls, CallsService>();
-            services.AddScoped<DataContext>();
-            services.AddTransient<DataReposit>();
             services.AddScoped<IBlogPostService, BlogPostService>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IDataStore<Post>, PostRepository>();
             services.AddScoped<IStringIdStore<IdentityUser>, UserRepository>();
             services.AddScoped<IDataStore<Comment>, CommentRepository>();
-            services.AddScoped<IBaseStore<Category>, CategoryRepository>();
+            services.AddScoped<IDataStore<Category>, CategoryRepository>();
             services.AddScoped<IBaseStore<Suggestions>, SuggestionRepository>();
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IPostService, PostService>();
-            services.AddSingleton<IServiceCalls, CallsService>();
-
             #endregion
-            
+
             #region Host Settings / Logging / Deployment
 
             builder.Host.ConfigureLogging(log =>
