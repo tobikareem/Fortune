@@ -10,6 +10,7 @@ namespace Core.Configuration
         public Logging Logging { get; set; }
         public string AllowedHosts { get; set; }
         public EmailProp EmailProp { get; set; }
+        public string AppEndPoint { get; set; }
 
         public ConnectionStrings ConnectionStrings { get; set; }
 
@@ -48,6 +49,7 @@ namespace Core.Configuration
     public class ConnectionStrings
     {
         public string DefaultConnection { get; set; }
+        public string AppConfiguration { get; set; }
     }
 
     public class GoggleAnalytics

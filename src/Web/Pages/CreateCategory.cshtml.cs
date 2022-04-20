@@ -1,11 +1,6 @@
 #nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Core.Constants;
 using Data.Entity;
 using Shared.Interfaces.Repository;
@@ -41,15 +36,14 @@ namespace Web.Pages
             Category.CreatedBy = user.Id;
             Category.CreatedOn = DateTime.UtcNow;
 
-            var getCategory = _category.GetAll().Where(x => x.Category1 == Category.Category1);
-
-            if(!_category.GetAll().Any(x => x.Category1 == Category.Category1))
+            if (_category.GetAll().Any(x => x.Category1 == Category.Category1))
             {
-                _category.AddEntity(Category);
-                return RedirectToPage("./Index");
+                return Page();
             }
-          
-            return Page();
+            
+            _category.AddEntity(Category);
+            return RedirectToPage("./Index");
+
         }
     }
 }

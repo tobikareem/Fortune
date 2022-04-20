@@ -13,6 +13,7 @@ using Web.Customs.Filter;
 using Web.Customs.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Azure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
@@ -42,9 +43,9 @@ namespace Web.Extensions
                 options.LowercaseUrls = true;
                 options.LowercaseQueryStrings = true;
             });
-
-
+            
             builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json");
+            
             if (builder.Environment.IsDevelopment())
             {
                 builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
@@ -53,20 +54,23 @@ namespace Web.Extensions
 
             if (!builder.Environment.IsDevelopment())
             {
-                //builder.Configuration.AddAzureAppConfiguration(opt =>
-                //{
-                //    opt.Connect(Environment.GetEnvironmentVariable(ConfigAppSetting.AzureAppConfigConnString))
-                //        .Select(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter);
-                //});
-
-                builder.Configuration.AddAzureAppConfiguration(options =>
+                builder.Configuration.AddAzureAppConfiguration(opt =>
                 {
-                    options.Connect(config[ConfigAppSetting.AzureAppConfigConnString])
-                        .Select(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter);
+                    var cred = new DefaultAzureCredential();
+
+                    var appEndPoint = config[nameof(ConfigAppSetting.AppEndPoint)];
+
+                    opt.Connect(new Uri(appEndPoint), cred).Select(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter);
+
+                    opt.ConfigureRefresh(refresh =>
+                    {
+                        refresh.Register(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter, true).SetCacheExpiration(TimeSpan.FromDays(1));
+                    });
                 });
+
             }
 
-            var connString = config.GetConnectionString(nameof(ConfigAppSetting.ConnectionStrings.DefaultConnection));
+            var connString = config.GetConnectionString(nameof(ConnectionStrings.DefaultConnection));
             services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
             
             #endregion
@@ -125,7 +129,7 @@ namespace Web.Extensions
             services.AddScoped<IDataStore<Post>, PostRepository>();
             services.AddScoped<IStringIdStore<IdentityUser>, UserRepository>();
             services.AddScoped<IDataStore<Comment>, CommentRepository>();
-            services.AddScoped<IDataStore<Category>, CategoryRepository>();
+            services.AddScoped<IBaseStore<Category>, CategoryRepository>();
             services.AddScoped<IBaseStore<Suggestions>, SuggestionRepository>();
 
             services.AddScoped<IUserService, UserService>();
