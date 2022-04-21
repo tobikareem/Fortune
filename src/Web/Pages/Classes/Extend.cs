@@ -2,8 +2,7 @@
 {
     public static class Extend
     {
-
-        public static string GetConvertedDate(DateTime utcDate) => ConvertDateToLocalTime(utcDate);
+        public static string GetConvertedDate(DateTime utcDate, bool withTime = true) => ConvertDateToLocalTime(utcDate, withTime);
         public static string GetTimeDifference(DateTime utcDate) => CalculateTimeDifference(utcDate);
 
         private static string CalculateTimeDifference(DateTime utcDate)
@@ -43,13 +42,13 @@
             };
         }
 
-        private static string ConvertDateToLocalTime(DateTime utcDate)
+        private static string ConvertDateToLocalTime(DateTime utcDate, bool withTime)
         {
             var pacificTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
             var pacificDateTime = TimeZoneInfo.ConvertTimeFromUtc(utcDate, pacificTimeZone);
 
             // return date in format MM/dd/yyyy hh:mm tt
-            return pacificDateTime.ToString("MM/dd/yyyy hh:mm tt");
+            return withTime ? pacificDateTime.ToString("MM/dd/yyyy hh:mm tt") : pacificDateTime.ToString("MM/dd/yyyy");
         }
     }
 }

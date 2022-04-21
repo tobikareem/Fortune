@@ -6,7 +6,7 @@
     ViewData["Title"] = "Suggestions";
     ViewData["ActivePage"] = BreadCrumbs.Suggestions;
 }
-<h4>Suggestions</h4>
+<h4 class="display-4">Suggestions</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -52,7 +52,7 @@
     </div>
 
     <div class="col-md-6" style="margin-left: auto">
-        <h5>All Suggestions</h5>
+        <h5 class="display-5">All Suggestions</h5>
         <div class="flex-md-column scrollSuggestion">
             @foreach (var suggestion in Model.SuggestionsList)
             {

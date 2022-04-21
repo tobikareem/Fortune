@@ -5,9 +5,12 @@ namespace Core.Configuration
 {
     public class ConfigAppSetting
     {
+        public const string AzureAppConfigConnString = "APP_CONFIG_CONNECTION_STRING";
+        public const string ProductionLabelFilter = "Production";
         public Logging Logging { get; set; }
         public string AllowedHosts { get; set; }
         public EmailProp EmailProp { get; set; }
+        public string AppEndPoint { get; set; }
 
         public ConnectionStrings ConnectionStrings { get; set; }
 
@@ -46,6 +49,7 @@ namespace Core.Configuration
     public class ConnectionStrings
     {
         public string DefaultConnection { get; set; }
+        public string AppConfiguration { get; set; }
     }
 
     public class GoggleAnalytics

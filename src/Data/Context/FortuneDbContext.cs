@@ -38,7 +38,6 @@ namespace Data.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB; Database=FortuneDb; Trusted_Connection=True; MultipleActiveResultSets=true");
             }
         }
 

@@ -27,13 +27,11 @@ h3.myName {
 h2.myDesc {
     opacity: 1;
     font-size: 30px;
-    font-family: 'Permanent Marker', cursive;
 }
 
 blockquote {
     margin: 0;
     width: auto;
-    font-family: 'Permanent Marker', cursive;
 }
 
     blockquote p {
@@ -78,6 +76,15 @@ img {
 
 @media only screen and (max-width: 768px) {
     .container {
-        margin-top: 66px;
+        margin-top: 0;        
     }
+
+
+    h3.myName {
+        margin-bottom: 5px;
+    }
+
+    blockquote p {
+        padding: 5px;
+    }    
 }

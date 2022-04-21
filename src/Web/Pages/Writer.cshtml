@@ -20,7 +20,7 @@
 <figure>
     <blockquote>
         <p>
-            I am a Writer, I love to use big words in my write-ups, like utilizing garguatan expressions for simple
+            I am a Writer, I love to use big words in my write-ups, like utilizing gargantuan expressions for simple
             idioms.
         </p>
     </blockquote>
@@ -37,25 +37,18 @@
                     {
                         <div class="col-md-4">
                             <a asp-page="/BlogPost" asp-route-id="@blog.Id">
-                                <div class="card p-2 mb-7">
-                                    <div class="post-box">
-                                        <div class="header-post">
-                                            <div class="header-first">
-                                                <i class="fa-solid fa-up-right-from-square"></i>
-                                            </div>
+                                <div class="card p-2 mb-5">
+                                    <div class="card-body">
+                                        <div class="card-title">
 
-                                            <div class="post-title">
-                                                <h5>@blog.Title</h5>
+                                            <i class="fa-solid fa-up-right-from-square"></i>
+                                            <div class="row h-25 pt-3">
+                                                <span class="col-6 text-break text-wrap text-sm-start">@Extend.GetConvertedDate(@blog.CreatedOn, false)</span>
+                                                <span class="col-6 cutLongWord text-sm-end">@blog.CreatedBy</span>
                                             </div>
-
-                                            <div class="post-description">
-                                                <p>@blog.Description</p>
-                                            </div>
-
-                                            <div class="post-footer">
-                                                <p>@Extend.GetConvertedDate(@blog.CreatedOn)</p>
-                                                <p>@blog.CreatedBy</p>
-                                            </div>
+                                            
+                                            <h6 class="card-subtitle mb-2 mt-4 fs-4">@blog.Title</h6>
+                                            <p class="fs-6 card-text font-monospace text-break text-wrap cutLongWord mt-2">@blog.Description</p>
                                         </div>
                                     </div>
                                 </div>
@@ -74,14 +67,14 @@
                 <div class="createWriterSection">
                     <a asp-page="/CreatePost"> Create Post </a>
                 </div>
-                <h3>Recent Posts</h3>
+                <h6 class="fs-2">Recent Posts</h6>
                 <div class="btnRecent">
 
                     @{
                         if (Model.BlogPosts.Any())
                         {
 
-                            foreach(var blog in Model.BlogPosts)
+                            foreach (var blog in Model.BlogPosts)
                             {
                                 <a asp-page="/BlogPost" asp-route-id="@blog.Id">@blog.Title</a>
                             }
@@ -89,7 +82,7 @@
                     }
 
                 </div>
-                
+
                 @if (Model.IsTobiKareem)
                 {
                     <div class="createWriterSection">
@@ -97,13 +90,13 @@
                     </div>
                 }
 
-                <h3>Categories</h3>
+                <h6 class="fs-2">Categories</h6>
                 <div class="btnRecent">
 
                     @{
                         var hasSet = new HashSet<string>();
 
-                        for (int i = 0; i < Model.BlogPosts.Count(); i++)
+                        for (var i = 0; i < Model.BlogPosts.Count(); i++)
                         {
                             var category = @Model.BlogPosts[i].Category.Category1;
                             if (hasSet.Contains(category))
