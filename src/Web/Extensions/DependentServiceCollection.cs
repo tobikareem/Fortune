@@ -56,15 +56,13 @@ namespace Web.Extensions
             {
                 builder.Configuration.AddAzureAppConfiguration(opt =>
                 {
-                    var cred = new DefaultAzureCredential();
-
                     var appEndPoint = config[nameof(ConfigAppSetting.AppEndPoint)];
 
-                    opt.Connect(new Uri(appEndPoint), cred).Select(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter);
+                    opt.Connect(new Uri(appEndPoint), new DefaultAzureCredential()).Select(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter);
 
                     opt.ConfigureRefresh(refresh =>
                     {
-                        refresh.Register(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter, true).SetCacheExpiration(TimeSpan.FromDays(1));
+                        refresh.Register("Sentinel", true).SetCacheExpiration(TimeSpan.FromDays(1));
                     });
                 });
 

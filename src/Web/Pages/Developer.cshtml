@@ -6,7 +6,7 @@
     ViewData["ActivePage"] = BreadCrumbs.Developer;
 
 }
-<h2>.Tech Stack</h2>
+<h6 class="display-6">.Tech Stack</h6>
 
 <div class="software-tools">
     <div class="software-tool">
@@ -93,12 +93,12 @@
 <!-- Create section for each skill -->
 <div class="software-experience">
     <div class="company-name">
-        <h3>. Background </h3>
+        <h6 class="display-6">. Background </h6>
     </div>
 
     <div class="company-section">
         <div class="company-section-left">
-            <p class="company-section-text">
+            <p class="fs-6 lh-base">
                 I am an IT professional with over 10 years of experience in Computer Programming - Application Design,
                 Website Creation and Cross platform Mobile Apps.
                 I have also garnered experience in the areas of Telecommunication and Networking. My work experience at
@@ -106,7 +106,8 @@
                 for leased line communications used in major bank sectors in Nigeria.
 
             </p>
-            <p class="company-section-text">
+            
+            <p class="fs-6 lh-base">
                 Initially, I grew up with a career interest in Mechanical Engineering but ended up pursuing a B.Sc degree
                 in Computer Science at the time. My first experience at programming was during the summer
                 extracurricular activities at Aptech Computer Education.
@@ -116,7 +117,7 @@
 
             </p>
 
-            <p class="company-section-text">
+            <p class="fs-6 lh-base">
                 Eventually, I found a great interest in Microsoft tech stacks and started with the ASP.NET Web forms
                 framework for web development. C# became an essential tool for this development and its syntax were a
                 thing of beauty to me.
@@ -135,7 +136,7 @@
 
 <div class="developer-experience">
     <div class="company-name">
-        <h3>. Developer Experience </h3>
+        <h6 class="display-6">. Developer Experience </h6>
     </div>
 
     <div class="resume-section" onload="tabsloaded()">
@@ -158,13 +159,13 @@
             foreach (var job in Model.JobExperiences)
             {
                 <div id="@job.ElementId" class="tabcontent">
-                    <h3>@job.CompanyName</h3>
+                    <h6 class="display-6">@job.CompanyName</h6>
 
                     <ul>
                         @{
                             foreach (var exp in @job.Responsiblites)
                             {
-                                <li>@exp</li>
+                                <li><p class="fs-6 lh-base"> @exp </p> </li>
                             }
                         }
                     </ul>
@@ -176,7 +177,7 @@
 
 <div class="dev-exp-mobile">
     <div class="company-name">
-        <h3>. Developer Experience </h3>
+        <h6 class="display-6">. Developer Experience </h6>
     </div>
 </div>
 
@@ -205,7 +206,7 @@
 
 <div class="my-reviews">
     <div class="company-name">
-        <h3>. What people say about me </h3>
+        <h6 class="display-6">. What people say about me </h6>
     </div>
 </div>
 <div class="slideshow-container">
@@ -232,7 +233,7 @@
 
 <div class="mobile-reviews">
     <div class="company-name">
-        <h3>. What people say about me </h3>
+        <h6 class="display-6">. What people say about me </h6>
     </div>
     @{
         foreach (var r in Model.Reviews)

@@ -155,30 +155,18 @@ div.software-experience > div.company-section {
         flex: 70%;
     }
 
-div.software-experience
-div.company-section
-div.company-section-left
-p.company-section-text {
-    font-size: 17px;
-    font-weight: 400;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    text-align: justify;
-}
-
-div.software-experience > div.company-section > div.company-section-right {
-    flex: 20%;
-    margin-left: 25px;
-    width: auto;
-}
-
-    div.software-experience > div.company-section > div.company-section-right > img {
-        border-radius: 25px;
-        margin-top: 45px;
-        width: 296px;
-        height: 245px;
+    div.software-experience > div.company-section > div.company-section-right {
+        flex: 20%;
+        margin-left: 25px;
+        width: auto;
     }
+
+        div.software-experience > div.company-section > div.company-section-right > img {
+            border-radius: 25px;
+            margin-top: 45px;
+            width: 296px;
+            height: 245px;
+        }
 
 div.developer-experience {
     margin-top: 6rem;
@@ -376,35 +364,13 @@ a > div.card {
     border-radius: 8px;
     color: wheat;
     height: 250px;
-    padding: 2rem 1.75rem !important;
     cursor: pointer;
 }
 
-div.post-box > div.header-post > div.header-first {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 35px;
-    align-items: center;
-}
-
-    div.post-box > div.header-post > div.header-first > i {
-        display: flex;
-        font-size: 35px;
-    }
-
-div.post-box > div.header-post > div.post-description {
-    height: 100px;
-    margin-top: 15px;
-}
-
-    div.post-box > div.header-post > div.post-description > p {
-        font-size: 10px;
-    }
-
-div.post-box > div.header-post > div.post-footer {
-    position: absolute;
-    font-size: 13px;
-    bottom: 0;
+.cutLongWord {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 div.blog-container > div.row > div > div.popular-section {
@@ -684,18 +650,6 @@ div.arrow {
         margin-top: 0;
     }
 
-        div.software-experience
-        div.company-section
-        div.company-section-left
-        p.company-section-text {
-            font-size: 10px;
-            font-weight: 100;
-            text-align: center;
-            padding: 0;
-            text-align: justify;
-            margin-bottom: 15px;
-        }
-
         div.software-experience > div.company-section > div.company-section-right > img {
             border-radius: 25px;
             margin-top: 15px;
@@ -764,9 +718,10 @@ div.arrow {
 
             div.dev-exp-slideshow-mobile > ul.slide-mobile > li {
                 text-align: center;
-                font-size: 10px;
-                font-weight: 100;
+                font-size: 12px;
+                font-weight: 300;
                 margin-bottom: 15px;
+                list-style: none;
             }
 
         div.dev-exp-slideshow-mobile > a.prev,
@@ -907,6 +862,14 @@ div.arrow {
     div.contact1 {
         margin-bottom: 0;
     }
+
+    div.container > div.jumbotron {
+        margin-bottom: 1rem;
+    }
+
+        div.container > div.jumbotron > div.row > div.homeContents {
+            margin-top: 0;
+        }
 }
 
 /*** Contact*/
@@ -1076,7 +1039,7 @@ div.container {
 
     div.container > div.jumbotron {
         height: auto;
-        margin-bottom: 6rem;
+        margin-bottom: 3rem;
     }
 
         div.container > div.jumbotron > div.row {
@@ -1146,7 +1109,7 @@ div.container > div.jumbotron > div.row > div.homeContents {
     }
 
     div.container > div.jumbotron > div.row > div.homeContents > div > p:last-child {
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
     }
 
 .callout {

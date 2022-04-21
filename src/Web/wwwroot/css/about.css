@@ -10,12 +10,6 @@
         font-size: 40px;
     }
 
-.row {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
 
 div.aboutRow {
     margin-bottom: 69px;
@@ -35,9 +29,10 @@ div.aboutRow {
     padding: 20px;
 }
 
-.fakeimg {
+.aboutImg {
     width: 100%;
     padding: 20px;
+    height: 300px;
 }
 
 @media screen and (max-width: 700px) {
@@ -100,8 +95,4 @@ button.sendMe {
 form span {
     margin-top: -18px;
     display: block;
-}
-
-.mainContent .h3, .h4{
-    margin-top: 20px !important;
 }

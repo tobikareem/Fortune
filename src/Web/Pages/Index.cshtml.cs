@@ -16,8 +16,6 @@ namespace Web.Pages
         public IActionResult OnGet()
         {
             _logger.Log(LogLevel.Information, PageLogEventId.PageLoad,"... Index page loaded");
-            
-            
             return Page();
         }
     }
