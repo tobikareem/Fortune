@@ -1,6 +1,8 @@
 ﻿using Core.Configuration;
 using Google.Analytics.Data.V1Beta;
 using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using Shared.Interfaces.Services;
 
 namespace Shared.Services
@@ -8,11 +10,33 @@ namespace Shared.Services
     public class CallsService : IServiceCalls
     {
         private readonly GoggleAnalytics _googleAnalytics;
-        public CallsService(IOptions<GoggleAnalytics> config)
+        private readonly EmailProp _emailProp;
+        public CallsService(IOptions<EmailProp> emailOptions, IOptions<GoggleAnalytics> config)
         {
             _googleAnalytics = config.Value;
+            _emailProp = emailOptions.Value;
         }
 
+
+        public async Task<Response> SendGridEmail(string toEmail, string subject, string plainTextContent, string recipientName = "", string htmlContent = "")
+        {
+            var apiKey = _emailProp.SendGridApiKey;
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(_emailProp.FromEmail, _emailProp.MyEmailName);
+            var to = new EmailAddress(toEmail, recipientName);
+
+            // const string htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            //  msg.SetClickTracking(false, false);
+
+            var response = await client.SendEmailAsync(msg);
+
+            return response;
+
+        }
+        
         public async Task GetGoggleAnalytics()
         {
             var propertyId = _googleAnalytics.ProjectId;

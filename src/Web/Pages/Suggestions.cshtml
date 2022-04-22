@@ -28,7 +28,7 @@
 
             <div class="form-group mb-4">
                 <label asp-for="Suggest.Content" class="control-label"></label>
-                <textarea asp-for="Suggest.Content" class="form-control"> </textarea>
+                <textarea asp-for="Suggest.Content" class="form-control" cols="70"> </textarea>
                 @*<span asp-validation-for="Suggest.Content" class="text-danger"></span>*@
 
             </div>
@@ -51,34 +51,39 @@
         </form>
     </div>
 
-    <div class="col-md-6" style="margin-left: auto">
-        <h5 class="display-5">All Suggestions</h5>
-        <div class="flex-md-column scrollSuggestion">
-            @foreach (var suggestion in Model.SuggestionsList)
-            {
-                <div class="card mb-4">
-                    <div class="card-header text-sm-end"><p class="suggestCreated">@suggestion.CreatedBy </p></div>
-                    <div class="card-body">
-                        <h5 class="card-title mb-1"> @suggestion.Title</h5>
-                        <p class="card-text"> @suggestion.Content</p>
-                    </div>
-                    <div class="card-footer">
-                        <span class="text-sm-start">
-                            @suggestion.CreatedOn.ToShortDateString()
-                        </span>
-
-                        @if (suggestion.HasExpiryTime)
-                        {
-                            <span class="text-sm-end">
-                                Expires On: @suggestion.ExpireBy.ToShortDateString()
+    @if (@Model.SuggestionsList.Any())
+    {
+        <div class="col-md-6" style="margin-left: auto">
+            <h5 class="display-5">All Suggestions</h5>
+            <div class="flex-md-column scrollSuggestion">
+                @foreach (var suggestion in @Model.SuggestionsList)
+                {
+                    <div class="card mb-4">
+                        <div class="card-header text-sm-end">
+                            <p class="suggestCreated">@suggestion.CreatedBy </p>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title mb-1"> @suggestion.Title</h5>
+                            <p class="card-text"> @suggestion.Content</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="text-sm-start">
+                                @suggestion.CreatedOn.ToShortDateString()
                             </span>
-                        }
-                    </div>
-                </div>
-            }
-        </div>
 
-    </div>
+                            @if (suggestion.HasExpiryTime)
+                            {
+                                <span class="text-sm-end">
+                                    Expires On: @suggestion.ExpireBy.ToShortDateString()
+                                </span>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    }
 </div>
 
 

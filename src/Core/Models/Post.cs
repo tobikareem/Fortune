@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Core.Models
+﻿namespace Core.Models
 {
     public class Post: GeneralEntity
     {
@@ -13,6 +11,6 @@ namespace Core.Models
         public bool IsPublished { get; set; }
 
         public bool IsReviewPost { get; set; }
-        
+
     }
 }

@@ -1,5 +1,3 @@
-using Core.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Pages
@@ -68,10 +66,9 @@ namespace Web.Pages
                         CompanyName = "Antra",
                         Responsiblites =
                             new List<string> {
-                                "Analyzed business/technical requirements to design a solution using standard design patterns supported by the application.",
-                                "Maintained development environment according to specifications of application.",
-                                "Participated in project meetings with other technical staff, business owners and subject matter experts.",
-                                "Video and Oral presentations of topics as related to mortgage industry, which involved Mortgage lifecycle and going Digital."
+                                "Contract work on the development of a web application for the management of the company's internal processes.",
+                                "Contributed to development of application's architecture and design.",
+                                "Worked at Advantasure company (formally, Tessellate) - A healthcare industry to develop and define application scope and objectives and prepare functional and/or technical specifications for healthcare system.",
                             }
                     },
                     new JobExperience {
@@ -79,10 +76,9 @@ namespace Web.Pages
                         CompanyName = "Aptech",
                         Responsiblites =
                             new List<string> {
-                                "Automate Material Requirement Planning - Materials are integral part of vehicle production. Thousands of vehicles are produced on frequent bases, This system runs different jobs to ensure there is never a shortage of material.",
-                                "Development of a Task Scheduler System - A continuous long running windows background service that automates and run software jobs to handle different modules of our ERP like Material Planning, Asset Management, Purchase Order/Sales Order requirements.",
-                                "Tesla Warp Authentication and Authorization - I took ownership of the project that ensures authorization and authentication of individuals to grant and revote permission to different application modules",
-                                "Body Shop Onboarding: This system onboards Tesla partners"
+                                "Built a web application for company's internal processes.",
+                                "Leadership in the development of the application.",
+                                "Tutorials on industry trends and best practices."
                             }
                     }
                 };

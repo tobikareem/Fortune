@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id?}"
 @using Web.Pages.Classes
 @model Web.Pages.WriterModel
 @{
@@ -27,6 +27,69 @@
 </figure>
 
 <!-- create a blog post -->
+
+<br />
+<div class="dropdown filterDrop">
+
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownWrite" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+        Recent Posts
+    </button>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownWrite">
+        @{
+            if (Model.BlogPosts.Any())
+            {
+
+                foreach (var blog in Model.BlogPosts)
+                {
+                    <li>  <a asp-page="/BlogPost" asp-route-id="@blog.Id" class="dropdown-item">@blog.Title</a></li>
+                }
+            }
+        }
+    </ul>
+</div>
+
+<div class="dropdown filterDrop ms-5">
+
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownCategory" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+        Categories
+    </button>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownCategory">
+
+        <li class="dropdown-item">
+
+            <form method="post" asp-page-handler="Filter" asp-route-id="-1">
+                <button class="btn form-control mb-2 formBlogBtn">All <span class="badge bg-secondary">@Model.TotalBlogCount</span></button>
+            </form>
+        </li>
+        @{
+            var catSet = new HashSet<string>();
+            for (var i = 0; i < Model.Categories.Count(); i++)
+            {
+                var categoryModel = Model.Categories[i];
+                var category = categoryModel.Category1;
+
+                if (catSet.Contains(category))
+                {
+                    continue;
+                }
+                catSet.Add(category);
+
+                <li class="dropdown-item">
+                    <form method="post" asp-page-handler="Filter" asp-route-id="@categoryModel.Id">
+                        <button class="btn form-control mb-2 formBlogBtn">@category <span class="badge bg-secondary">@categoryModel.PostCount</span></button>
+                    </form>
+                </li>
+            }
+        }
+
+    </ul>
+</div>
+
+
 <div class="blog-container">
     <div class="row">
         <div class="col-md-9 mt-3 mb-3">
@@ -46,7 +109,7 @@
                                                 <span class="col-6 text-break text-wrap text-sm-start">@Extend.GetConvertedDate(@blog.CreatedOn, false)</span>
                                                 <span class="col-6 cutLongWord text-sm-end">@blog.CreatedBy</span>
                                             </div>
-                                            
+
                                             <h6 class="card-subtitle mb-2 mt-4 fs-4">@blog.Title</h6>
                                             <p class="fs-6 card-text font-monospace text-break text-wrap cutLongWord mt-2">@blog.Description</p>
                                         </div>
@@ -76,7 +139,7 @@
 
                             foreach (var blog in Model.BlogPosts)
                             {
-                                <a asp-page="/BlogPost" asp-route-id="@blog.Id">@blog.Title</a>
+                                <a asp-page="/BlogPost" asp-route-id="@blog.Id" class="formBlogBtn">@blog.Title</a>
                             }
                         }
                     }
@@ -92,22 +155,29 @@
 
                 <h6 class="fs-2">Categories</h6>
                 <div class="btnRecent">
-
+                    <form method="post" asp-page-handler="Filter" asp-route-id="-1">
+                        <button class="btn form-control mb-2 formBlogBtn">All <span class="badge bg-secondary">@Model.TotalBlogCount</span></button>
+                    </form>
                     @{
                         var hasSet = new HashSet<string>();
-
-                        for (var i = 0; i < Model.BlogPosts.Count(); i++)
+                        for (var i = 0; i < Model.Categories.Count(); i++)
                         {
-                            var category = @Model.BlogPosts[i].Category.Category1;
+                            var categoryModel = Model.Categories[i];
+                            var category = categoryModel.Category1;
+
                             if (hasSet.Contains(category))
                             {
                                 continue;
                             }
                             hasSet.Add(category);
 
-                            <a href="/">@category</a>
+
+                            <form method="post" asp-page-handler="Filter" asp-route-id="@categoryModel.Id">
+                                <button class="btn form-control mb-2 formBlogBtn">@category <span class="badge bg-secondary">@categoryModel.PostCount</span></button>
+                            </form>
                         }
                     }
+
                 </div>
 
             </div>

@@ -29,7 +29,7 @@ namespace Web.Extensions
             services.AddRazorPages()
                 .AddMvcOptions(options =>
                 {
-                    options.Filters.Add<ValidateFilter>();
+                    // options.Filters.Add<ValidateFilter>();
                 });
             services.AddHealthChecks();
             services.AddHsts(opt => opt.MaxAge = TimeSpan.FromHours(1));

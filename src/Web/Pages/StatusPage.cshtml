@@ -1,0 +1,16 @@
+﻿@page "{statuscode}"
+@model Web.Pages.StatusPageModel
+@{
+}
+
+
+<hr/>
+
+<h6 class="display-6 text-danger">Error: <span class="fs-3"> @Model.OriginalStatusCode </span></h6>
+
+<br />
+<br />
+
+@if (@Model.OriginalStatusCode == 404) {
+    <p class="fs-3">The Resource Page you requested at the path: @Model.OriginalPathAndQuery could not be found on the server. Please use naviagation to find the page you are looking for. </p>
+}
