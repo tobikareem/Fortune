@@ -34,19 +34,5 @@ namespace Web.Pages
             return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
         }
 
-        // call OnGet method every 5 seconds
-        public void  Call()
-        {
-           // create a timer to call the OnGet method every 5 seconds
-
-           var timer = new System.Timers.Timer(5000);
-              timer.Elapsed += (sender, e) => OnGet();
-                timer.Enabled = true;
-                
-
-
-        }
-
-        
     }
 }

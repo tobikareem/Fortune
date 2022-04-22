@@ -32,7 +32,6 @@ namespace Web.Extensions
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAzureAppConfiguration();
             app.UseAuthentication();
 
             app.UseAuthorization();

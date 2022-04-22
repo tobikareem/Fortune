@@ -1,5 +1,6 @@
 using Core.Configuration;
 using Core.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shared.Interfaces.Services;
@@ -12,17 +13,14 @@ namespace Web.Pages
     {
         [BindProperty] public UserForm Input { get; set; }
 
-        private readonly IServiceCalls mailMessage;
+        private readonly IEmailSender _mailSender;
+        private readonly EmailProp _emailProp;
 
-        private readonly EmailProp appSetting;
 
-
-        public ContactModel(IServiceCalls message, IOptions<EmailProp> conAppsetting)
+        public ContactModel(IEmailSender message, IOptions<EmailProp> appSetting)
         {
-            Input = new UserForm();
-
-            mailMessage = message;
-            appSetting = conAppsetting.Value;
+            _mailSender = message;
+            _emailProp = appSetting.Value;
         }
 
         public void OnGet()
@@ -31,8 +29,6 @@ namespace Web.Pages
 
         public IActionResult OnPost()
         {
-
-            mailMessage.SendMessage(Input.Email, appSetting.MyEmail, appSetting.Subject, Input.Message);
 
             return RedirectToPage();
         }

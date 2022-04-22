@@ -14,12 +14,11 @@ namespace Web.Pages
 
         public bool IsTobiKareem { get; set; }
         public List<Post> DisplayPosts { get; set; }
-        
-        public HomeModel( IDataStore<Post> dataStore, ILogger<HomeModel> logger)
-        {
-            _dataPost = dataStore;
-            _logger = logger;
 
+        public HomeModel(IDataStore<Post> dataStore, ILogger<HomeModel> logger)
+        {
+            _logger = logger;
+            _dataPost = dataStore;
             DisplayPosts = new List<Post>();
         }
 

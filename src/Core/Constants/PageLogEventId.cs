@@ -10,6 +10,7 @@ namespace Core.Constants
         public static int GeneralInformationCount = 1003;
         public static int DatabaseConnectionDone = 1004;
         public static int DatabaseConnectionError = 1005;
-        
+        public static int EmailMessageInformation = 1006;
+
     }
 }
