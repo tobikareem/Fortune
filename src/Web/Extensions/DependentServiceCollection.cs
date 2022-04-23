@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Azure.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 
 namespace Web.Extensions
@@ -28,7 +29,7 @@ namespace Web.Extensions
             services.AddRazorPages()
                 .AddMvcOptions(options =>
                 {
-                    options.Filters.Add<ValidateFilter>();
+                    // options.Filters.Add<ValidateFilter>();
                 });
             services.AddHealthChecks();
             services.AddHsts(opt => opt.MaxAge = TimeSpan.FromHours(1));
@@ -109,12 +110,21 @@ namespace Web.Extensions
             services.AddDefaultIdentity<ApplicationUser>(opt =>
             {
                 opt.Lockout.AllowedForNewUsers = true;
-                opt.SignIn.RequireConfirmedAccount = false;
+                opt.SignIn.RequireConfirmedAccount = true;
                 opt.Password.RequiredLength = 6;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireDigit = false;
+                opt.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+                opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
 
-            }).AddEntityFrameworkStores<FortuneDbContext>();
+            }).AddDefaultTokenProviders().AddEntityFrameworkStores<FortuneDbContext>();
+
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.ExpireTimeSpan = TimeSpan.FromDays(5);
+                opt.SlidingExpiration = true;
+            });
+            
             #endregion
 
             #region Code Services
@@ -129,6 +139,9 @@ namespace Web.Extensions
             services.AddScoped<IDataStore<Comment>, CommentRepository>();
             services.AddScoped<IDataStore<Category>, CategoryRepository>();
             services.AddScoped<IBaseStore<Suggestions>, SuggestionRepository>();
+
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             #endregion
 

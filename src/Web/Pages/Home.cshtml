@@ -7,7 +7,7 @@
 
 }
 @*
-<h1 class="display-1 display-1">@ViewData["Title"]</h1>*@
+    <h1 class="display-1 display-1">@ViewData["Title"]</h1>*@
 
 <div class="container">
     <div class="jumbotron">
@@ -43,11 +43,11 @@
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </li>
-                        @*<li>
-                            <form method="post">
-                                <button type="submit">Contact Me</button>
-                            </form>
-                        </li>*@
+                        <li>
+                            <a target="_self" asp-page="/Contact">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        </li>
                     </ul>
                 </div>
 
@@ -75,7 +75,7 @@
                                     <p class="h-blue fs-6">... more like, what's on my mind.</p>
                                     <p class="textmuted fs-6">Give your suggestion and feel free to invite me to an event by clicking the plus icon below:</p>
                                     <div class="box d-flex justify-content-between align-items-center mt-3">
-                                        
+
                                         @{
                                             if (Model.IsTobiKareem)
                                             {
@@ -91,7 +91,7 @@
                                             }
                                         }
                                         <div class="d-flex align-items-center">
-                                            <p class="textmuted">my weekly productivity score: 0%</p>
+                                            <p class="textmuted">my weekly productivity score: 90%</p>
                                             <div class="progress-bar">
                                                 <div data-size="" class="progress"></div>
                                             </div>
@@ -185,8 +185,8 @@
                 <div class="entrepreneur">
                     <h6 class="display-6">Entrepreneur</h6>
                     <p class="fs-6 lh-base">
-                        In my college days, I had a desire to start a business. I was always interested in the idea of selling stuffs. My first business was selling shoes and flip flops. 
-                        Then selling edible plantain chips. Ohh boy, Need I mention my profit margin was so great that It just became a thing of joy to make profit selling stuffs.
+                        In my college days, I had a desire to start a business. I was always interested in the idea of selling stuffs. My first business was selling shoes and flip flops.
+                        Then selling edible plantain chips (popularly known as "Dodo Ikire"). Ohh boy, Need I mention my profit margin was so great that It just became a thing of joy to make profit selling stuffs.
                     </p>
 
                     <p class="fs-6 lh-base">
@@ -200,11 +200,11 @@
 </div>
 
 @section Scripts {
-    <script>
-        // jquery get element by class named footer
-        var footer = $('footer');
-        // jquery get element by class named footer and change position to relative
-        footer.css('position', 'relative');
+<script>
+    // jquery get element by class named footer
+    var footer = $('footer');
+    // jquery get element by class named footer and change position to relative
+    footer.css('position', 'relative');
 
-    </script>
+</script>
 }

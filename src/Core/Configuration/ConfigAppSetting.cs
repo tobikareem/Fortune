@@ -11,7 +11,6 @@ namespace Core.Configuration
         public string AllowedHosts { get; set; }
         public EmailProp EmailProp { get; set; }
         public string AppEndPoint { get; set; }
-
         public ConnectionStrings ConnectionStrings { get; set; }
 
         public ConfigAppSetting()
@@ -42,8 +41,11 @@ namespace Core.Configuration
 
     public class EmailProp
     {
-        public string MyEmail { get; set; }
-        public string Subject { get; set; }
+        public string FromEmail { get; set; }
+        public string EmailSubject { get; set; }
+
+        public string MyEmailName { get; set; }
+        public string SendGridApiKey { get; set; }
     }
 
     public class ConnectionStrings

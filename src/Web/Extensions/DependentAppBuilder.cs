@@ -7,13 +7,12 @@ namespace Web.Extensions
     {
         public static IApplicationBuilder UseCustomServiceBuilder(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
-            //app.UseStatusCodePagesWithReExecute("/{0}");
-            app.UseStatusCodePages();
+            app.UseStatusCodePagesWithReExecute("/StatusPage/{0}");
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage(new DeveloperExceptionPageOptions { SourceCodeLineCount = 10 }); //to display more details and where the error came from
 
-            // TODO: Use this to display a razor page generic error.
-            //  Use app.UseDeveloperExceptionPage(new DeveloperExceptionPageOptions { SourceCodeLineCount = 5 }); to display more details and where the error came from
-            // app.UseExceptionHandler("/Error");  
+            }
 
             // Configure the HTTP request pipeline.
             if (!env.IsDevelopment())
@@ -26,13 +25,11 @@ namespace Web.Extensions
                 app.UseHsts();
             }
 
-
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
             app.UseRouting();
-            app.UseAzureAppConfiguration();
             app.UseAuthentication();
 
             app.UseAuthorization();

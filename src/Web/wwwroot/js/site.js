@@ -3,20 +3,17 @@
 
 // Write your JavaScript code.
 
-
 // jquery currentSlide button onclick function
 var slideIndex = 1;
 showSlides(slideIndex);
 
-
 function plusSlide(n) {
-    showSlides(slideIndex += n);
+    showSlides((slideIndex += n));
 }
 
 function currentSlide(n) {
-    showSlides(slideIndex = n);
+    showSlides((slideIndex = n));
 }
-
 
 function showSlides(n) {
     var i;
@@ -32,12 +29,11 @@ function showSlides(n) {
     }
 
     if (n > slides.length) {
-        slideIndex = 1
+        slideIndex = 1;
     }
     if (n < 1) {
-        slideIndex = slides.length
+        slideIndex = slides.length;
     }
-
 
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
@@ -58,7 +54,6 @@ function showSlides(n) {
     mobileTitle[slideIndex - 1].style.display = "block";
 }
 
-
 // when the document is loaded, use jquery display the first tab content
 $(document).ready(function () {
     // jquery get the first tab content
@@ -69,19 +64,44 @@ $(document).ready(function () {
     $(".tablinks").first().addClass("active");
 
     // when document is ready
-    // find breadcrumbs children    
+    // find breadcrumbs children
     var breadcrumbChildren = document.getElementsByClassName("breadcrumb-item");
+    var about = breadcrumbChildren[1];
+    var developer = breadcrumbChildren[2];
+    var writer = breadcrumbChildren[3];
+
 
     // find active breadcrumb child
     var activeBreadcrumb = document.getElementsByClassName("active");
 
+    if (activeBreadcrumb.length === 0 || activeBreadcrumb[0].id === undefined) {
+        return;
+    }
+
     // check the id of the active breadcrumb value
     var activeBreadcrumbId = activeBreadcrumb[0].id;
 
-
     // if the active breadcrumb id is equal to the BloPost. then set display = block for Id = Writer
     if (activeBreadcrumbId === "BlogPost") {
-        document.getElementById("Writer").style.display = "block";
+        // set display = block for the Writer
+        writer.style.display = "block";
+    }
+
+    if (activeBreadcrumbId === "About") {
+        developer.style.display = "block";
+        writer.style.display = "block";
+
+    }
+
+    if (activeBreadcrumbId === "Developer") {
+        about.style.display = "block";
+        writer.style.display = "block";
+    }
+
+    if (activeBreadcrumbId === "Writer") {
+        about.style.display = "block";
+        developer.style.display = "block";
+
     }
 
     // Find the a element child of the active breadcrumb
@@ -103,7 +123,6 @@ $(document).ready(function () {
 });
 
 function openJob(evt, jobName) {
-
     var i;
     var tabcontent = document.getElementsByClassName("tabcontent");
 
@@ -122,11 +141,24 @@ function openJob(evt, jobName) {
 }
 
 (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-        (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date(); a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    i["GoogleAnalyticsObject"] = r;
+    (i[r] =
+        i[r] ||
+        function () {
+            (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+})(
+    window,
+    document,
+    "script",
+    "https://www.google-analytics.com/analytics.js",
+    "ga"
+);
 
-ga('create', 'UA-76196878-1', 'auto');
-ga('send', 'pageview');
+ga("create", "UA-76196878-1", "auto");
+ga("send", "pageview");

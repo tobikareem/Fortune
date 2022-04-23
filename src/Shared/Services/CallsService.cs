@@ -1,9 +1,8 @@
-﻿using System.ComponentModel;
-using System.Net.Mail;
-using System.Text;
-using Core.Configuration;
+﻿using Core.Configuration;
 using Google.Analytics.Data.V1Beta;
 using Microsoft.Extensions.Options;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using Shared.Interfaces.Services;
 
 namespace Shared.Services
@@ -11,55 +10,33 @@ namespace Shared.Services
     public class CallsService : IServiceCalls
     {
         private readonly GoggleAnalytics _googleAnalytics;
-        public CallsService(IOptions<GoggleAnalytics> config)
+        private readonly EmailProp _emailProp;
+        public CallsService(IOptions<EmailProp> emailOptions, IOptions<GoggleAnalytics> config)
         {
             _googleAnalytics = config.Value;
+            _emailProp = emailOptions.Value;
         }
 
-        public void SendMessage(string from, string to, string subject, string body)
+
+        public async Task<Response> SendGridEmail(string toEmail, string subject, string plainTextContent, string recipientName = "", string htmlContent = "")
         {
+            var apiKey = _emailProp.SendGridApiKey;
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(_emailProp.FromEmail, _emailProp.MyEmailName);
+            var to = new EmailAddress(toEmail, recipientName);
 
-            var message = new MailMessage(from, to, subject, body)
-            {
-                SubjectEncoding = Encoding.UTF8,
-                BodyEncoding = Encoding.UTF8
-            };
+            // const string htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
 
-            message.IsBodyHtml = true;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
+            //  msg.SetClickTracking(false, false);
 
-            var client = new SmtpClient("smtpout.secureserver.net")
-            {
-                Port = 80,
-                Credentials = new System.Net.NetworkCredential("", "")
-            };
+            var response = await client.SendEmailAsync(msg);
 
-            client.SendCompleted += (s, e) =>
-                {
-                // Get the unique identifier for this asynchronous operation.
-                var token = e.UserState as string;
+            return response;
 
-                    if (e.Cancelled)
-                    {
-                        Console.WriteLine("[{0}] Send canceled.", token);
-                    }
-                    if (e.Error != null)
-                    {
-                        Console.WriteLine("[{0}] {1}", token, e.Error.ToString());
-                    }
-                    else
-                    {
-                        Console.WriteLine("Message sent.");
-                    }
-                };
-
-            string userState = "Test Message";
-
-            client.SendAsync(message, userState);
-
-            message.Dispose();
         }
-
+        
         public async Task GetGoggleAnalytics()
         {
             var propertyId = _googleAnalytics.ProjectId;

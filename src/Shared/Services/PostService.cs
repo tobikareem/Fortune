@@ -20,6 +20,7 @@ namespace Shared.Services
             post.IsReviewPost = false;
             post.Category = _categoryRepository.GetById(post.CategoryId.GetValueOrDefault());
             post.CreatedOn = DateTime.UtcNow;
+            post.IsPublished = true;
 
             post.PostCategories.Add(new PostCategory { CategoryId = post.Category.Id });
             post.UserPosts.Add(new UserPost { UserId = post.UserId ?? string.Empty });
