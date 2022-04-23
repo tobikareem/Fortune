@@ -353,6 +353,13 @@ div.blog-container > div.row > div:last-child {
 
 */
 
+a.editselected:active {
+    background-color: blue;
+}
+a.editselected:visited {
+    background-color: blue;
+}
+
 div > a {
     text-decoration: none !important;
     display: block;
@@ -466,7 +473,7 @@ div.blogPost > div.header {
     margin: 16px 0;
 }
 
-div.filterDrop {
+div.filterDrop, a.filterDrop {
     display: none;
 }
 
@@ -865,8 +872,28 @@ div.arrow {
         padding-left: 0 !important;
         margin-top: 0 !important;
     }
-    div.filterDrop {
+    div.filterDrop, a.filterDrop {
         display: inline-block;
+    }
+
+    a.filterDrop {
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        background-color: #6c757d;
+        border: 1px solid transparent;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        border-radius: .25rem;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
     div.container-contact1 {
         padding: 12px !important;

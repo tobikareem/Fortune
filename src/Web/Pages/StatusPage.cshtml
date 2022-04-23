@@ -14,3 +14,16 @@
 @if (@Model.OriginalStatusCode == 404) {
     <p class="fs-3">The Resource Page you requested at the path: @Model.OriginalPathAndQuery could not be found on the server. Please use naviagation to find the page you are looking for. </p>
 }
+
+@section Scripts {
+    <script>
+        // jquery get element by class named footer
+        var footer = $('footer');
+        
+        // if footer position is relative, set it to absolute
+        if (footer.css('position') == 'relative') {
+            footer.css('position', 'absolute');
+        }
+
+    </script>
+}
