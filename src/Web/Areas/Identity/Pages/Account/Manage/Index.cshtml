@@ -5,26 +5,55 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3 class="display-3">@ViewData["Title"]</h3>
+<h6 class="display-6">@ViewData["Title"]</h6>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
+
+
+<div class="row gx-3">
+    <div class="col-sm-6">
+        <form id="profile-form" method="post" enctype="multipart/form-data" class="form-floating">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
                 <input asp-for="Username" class="form-control" disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-4">
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="form-floating mb-4">
+                <input asp-for="Input.Birthday" class="form-control" />
+                <label asp-for="Input.Birthday" class="form-label"></label>
+
+            </div>
+            <div class="form-floating mb-4">
+                <input asp-for="Input.Title" class="form-control" />
+                <label asp-for="Input.Title" class="form-label"></label>
+                <span asp-validation-for="Input.Title" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-4">
+                <input asp-for="Input.Company" class="form-control" />
+                <label asp-for="Input.Company" class="form-label"></label>
+                <span asp-validation-for="Input.Company" class="text-danger"></span>
+            </div>
+            
+            <div class="mb-4 mt-3">
+                <input type="file" class="form-control" accept="image/png, image/jpeg, image/*" asp-for="Input.Upload" />
+            </div>
+
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>
+    
+    @if (!string.IsNullOrWhiteSpace(Model.UserPhotoFileLink))
+    {
+        <div class="col-sm-4 ms-5">
+            <img class="aboutImg img-thumbnail" src="@Model.UserPhotoFileLink" alt="user photo"/>
+        </div>
+    }
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }

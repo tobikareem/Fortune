@@ -4,6 +4,7 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(FortuneDbContext))]
-    partial class FortuneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220426014027_AddUserDetail")]
+    partial class AddUserDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,10 +263,11 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime");
+                    b.Property<DateTime>("Birthday")
+                        .HasColumnType("date");
 
                     b.Property<string>("Company")
+                        .IsRequired()
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)");
 
@@ -274,22 +277,21 @@ namespace Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("DriveFileId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("FacebookLink")
+                        .IsRequired()
                         .HasMaxLength(155)
                         .HasColumnType("nvarchar(155)");
 
                     b.Property<string>("InstagramLink")
+                        .IsRequired()
                         .HasMaxLength(155)
                         .HasColumnType("nvarchar(155)");
 
                     b.Property<string>("LinkedInLink")
+                        .IsRequired()
                         .HasMaxLength(155)
                         .HasColumnType("nvarchar(155)");
 
@@ -299,12 +301,18 @@ namespace Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasMaxLength(55)
                         .HasColumnType("nvarchar(55)")
                         .HasColumnName("Title");
 
                     b.Property<string>("TwitterLink")
+                        .IsRequired()
                         .HasMaxLength(155)
                         .HasColumnType("nvarchar(155)");
 
@@ -314,9 +322,11 @@ namespace Data.Migrations
                         .HasColumnName("UserId");
 
                     b.Property<string>("WebsiteUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("YoutubeLink")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

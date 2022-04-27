@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 namespace Data.Entity
 {
-    public class ApplicationUser: IdentityUser
+    public sealed class ApplicationUser: IdentityUser
     {
         public ApplicationUser()
         {
@@ -10,7 +10,8 @@ namespace Data.Entity
             UserPosts = new HashSet<UserPost>();
         }
 
-        public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<UserPost> UserPosts { get; set; }
+        public ICollection<Post> Posts { get; set; }
+        public ICollection<UserPost> UserPosts { get; set; }
+        public ICollection<UserDetail> UserDetails { get; set; }
     }
 }

@@ -9,11 +9,12 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Data.Entity;
 using Shared.Repository;
-using Web.Customs.Filter;
 using Web.Customs.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Azure.Identity;
+using Google.Apis.Auth.AspNetCore3;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
@@ -33,6 +34,9 @@ namespace Web.Extensions
                 });
             services.AddHealthChecks();
             services.AddHsts(opt => opt.MaxAge = TimeSpan.FromHours(1));
+            services.AddHttpClient();
+            services.AddMemoryCache();
+            
 
             #region Configurations And DbContext
             services.Configure<EmailProp>(config.GetSection(nameof(EmailProp)));
@@ -103,6 +107,17 @@ namespace Web.Extensions
                 });
             });
 
+            services.AddAuthentication(g =>
+            {
+                g.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+                g.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+                g.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie().AddGoogleOpenIdConnect(opt =>
+            {
+                opt.ClientId = config.GetValue<string>("GoggleAnalytics:oauthclientId");
+                opt.ClientSecret = config.GetValue<string>("GoggleAnalytics:oauthclientsecret");
+            });
+
             services.AddSingleton<IAuthorizationHandler, FullAccessHandler>();
             services.AddScoped<IAuthorizationHandler, IsPostOwnerRequirementHandler>();
 
@@ -128,8 +143,6 @@ namespace Web.Extensions
             #endregion
 
             #region Code Services
-
-            services.AddScoped<IServiceCalls, CallsService>();
             services.AddScoped<IBlogPostService, BlogPostService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
@@ -139,6 +152,11 @@ namespace Web.Extensions
             services.AddScoped<IDataStore<Comment>, CommentRepository>();
             services.AddScoped<IDataStore<Category>, CategoryRepository>();
             services.AddScoped<IBaseStore<Suggestions>, SuggestionRepository>();
+            services.AddScoped<IDataStore<UserDetail>, UserDetailRepository>();
+            services.AddScoped<IHttpRepository, HttpRepository>();
+            services.AddScoped<IExternalApiCalls, ExternalApiCalls>();
+
+            services.AddScoped<ICacheService, CacheService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();

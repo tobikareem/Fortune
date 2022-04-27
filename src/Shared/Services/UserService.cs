@@ -1,18 +1,16 @@
 ﻿using System.Security.Claims;
 using Data.Entity;
 using Microsoft.AspNetCore.Identity;
-using Shared.Interfaces.Repository;
 using Shared.Interfaces.Services;
 
 namespace Shared.Services
 {
     public class UserService : IUserService
     {
-        private readonly IStringIdStore<IdentityUser> userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
-        public UserService(IStringIdStore<IdentityUser> userRepository, UserManager<ApplicationUser> userManager)
+
+        public UserService(UserManager<ApplicationUser> userManager)
         {
-            this.userRepository = userRepository;
             _userManager = userManager;
         }
 
