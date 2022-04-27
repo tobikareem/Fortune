@@ -4,11 +4,11 @@ namespace Core.Constants
 {
     public static class PageLogEventId
     {
-        public static int PageLoad = 1000;
-        public static int GeneralInformationCount = 1003;
-        public static int EmailMessageInformation = 1006;
-        public static int MakingAnApiCall = 1007;
-
-        public static int ApiCallFailed = 1008;
+        public const int GeneralInformationCount = 1003;
+        public const int CacheInformation = 1004;
+        public const int CustomErrorLogMiddleWare = 1005;
+        public const int EmailMessageInformation = 1006;
+        public const int MakingAnApiCall = 1007;
+        public const int ApiCallFailed = 1008;
     }
 }

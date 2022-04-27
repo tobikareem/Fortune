@@ -4,6 +4,7 @@
     {
         GoogleDriveAccessToken,
         DrivePhotos,
-        GetAllFriends
+        GetAllFriends,
+        GetAllPosts
     }
 }

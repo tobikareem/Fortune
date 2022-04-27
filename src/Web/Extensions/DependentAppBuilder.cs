@@ -29,6 +29,7 @@ namespace Web.Extensions
 
             app.UseStaticFiles();
 
+            app.UseMiddleware(typeof(CustomErrorLogMiddleware));
             app.UseRouting();
             app.UseAuthentication();
 

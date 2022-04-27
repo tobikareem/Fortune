@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.Extensions.Logging.AzureAppServices;
 
 namespace Web.Extensions
 {
@@ -164,14 +165,20 @@ namespace Web.Extensions
             #endregion
 
             #region Host Settings / Logging / Deployment
-
-            builder.Host.ConfigureLogging(log =>
+            
+            builder.Logging.AddFile(f =>
             {
-                log.AddEventLog();
-                log.AddFile(f =>
-                {
-                    f.FileName = $"File_Log.{DateTime.Now:d}";
-                });
+                f.FileName = $"File_Log.{DateTime.Now:d}";
+            });
+            builder.Logging.AddAzureWebAppDiagnostics();
+
+            // Default log location: D:\\home\\LogFiles\\Application
+            // Default file name: diagnostics-yyyymmdd.txt
+            // Default blob name: {app-name}{timestamp}/yyyy/mm/dd/hh/{guid}-applicationLog.txt.
+            builder.Services.Configure<AzureFileLoggerOptions>(options =>
+            {
+                options.FileSizeLimit = 50 * 1024;
+                options.RetainedFileCountLimit = 5;
             });
 
             builder.WebHost.UseIIS();

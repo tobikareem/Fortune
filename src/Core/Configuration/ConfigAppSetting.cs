@@ -96,7 +96,6 @@ namespace Core.Configuration
         public string GoogleDriveTokenRequestUrl { get; set; }
 
         public string RefreshToken { get; set; }
-        public string TokenType => "Bearer";
         public string ProjectName => "ProjectFortune";
         public string MyGoogleEmail => "oluwatobikareem@gmail.com";
     }

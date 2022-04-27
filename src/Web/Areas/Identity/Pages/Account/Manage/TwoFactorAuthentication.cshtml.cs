@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ComponentModel.DataAnnotations;
+using Core.Constants;
 using Data.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -69,24 +70,24 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             [Url]
             [Display(Name = "Have a website?")]
-            public string? WebsiteUrl { get; set; }
+            public string WebsiteUrl { get; set; }
 
             [Url]
             [Display(Name = "Have a Youtube channel?")]
-            public string? YoutubeLink { get; set; }
+            public string YoutubeLink { get; set; }
 
             [Display(Name = "Have a Facebook Account Name?")]
-            public string? FacebookLink { get; set; }
+            public string FacebookLink { get; set; }
 
             [Display(Name = "Have a Twitter Account Name?")]
-            public string? TwitterLink { get; set; }
+            public string TwitterLink { get; set; }
 
             [Display(Name = "Have an Instagram Account?")]
-            public string? InstagramLink { get; set; }
+            public string InstagramLink { get; set; }
 
             [Url]
             [Display(Name = "Have a LinkedIn URL?")]
-            public string? LinkedInLink { get; set; }
+            public string LinkedInLink { get; set; }
         }
 
         private UserDetail GetUserDetail(string userId)
@@ -115,6 +116,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
+                _logger.LogWarning(PageLogEventId.ApiCallFailed, "Unable to load user with ID '{UserId}'.", _userManager.GetUserId(User));
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
