@@ -177,8 +177,13 @@ namespace Web.Extensions
             // Default blob name: {app-name}{timestamp}/yyyy/mm/dd/hh/{guid}-applicationLog.txt.
             builder.Services.Configure<AzureFileLoggerOptions>(options =>
             {
+                options.FileName = "app-diagnostics-";
                 options.FileSizeLimit = 50 * 1024;
                 options.RetainedFileCountLimit = 5;
+            });
+            builder.Services.Configure<AzureBlobLoggerOptions>(options =>
+            {
+                options.BlobName = "app-log.txt";
             });
 
             builder.WebHost.UseIIS();

@@ -1,6 +1,7 @@
 ﻿@page "{statuscode}"
 @model Web.Pages.StatusPageModel
 @{
+    ViewData["Title"] = "Page Error";
 }
 
 
@@ -12,7 +13,7 @@
 <br />
 
 @if (@Model.OriginalStatusCode == 404) {
-    <p class="fs-3">The Resource Page you requested at the path: @Model.OriginalPathAndQuery could not be found on the server. Please use naviagation to find the page you are looking for. </p>
+    <p class="fs-3">The Resource Page you requested at the path: @Model.OriginalPathAndQuery could not be found on the server. Please use navigation to find the page you are looking for. </p>
 }
 
 @section Scripts {
