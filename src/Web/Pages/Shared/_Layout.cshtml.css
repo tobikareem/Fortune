@@ -83,10 +83,4 @@ button.accept-policy {
             height: 20px;
             text-align: center;
         }
-
-/*   Small devices (desktop, 992px)*/
-@media (max-width: 576px) {
-    .footer{
-        position:relative;
-    }
-}
+        

@@ -5,22 +5,28 @@
     ViewData["Title"] = "Home page";
 }
 
-<div d-flex justify-content-center align-items-center banner>
+<div class="container px-4 px-lg-0">
     <div class="row">
-        <div class="col-md-6">
-            <div class="p-1 mt-2">
-                <h3 class="myName toUpper">Tobi Kareem</h3>
+        <div class="col-xl-5 col-md-12 pb-5 pb-xl-0">
+            <div class="mb-5 text-center text-xl-start px-md-8 px-lg-19 px-xl-0">
+                <h3 class="mb-5 display-3 text-dark">Tobi Kareem</h3>
 
-                <h2 class="myDesc toUpper">Developer | Writer | Entrepreneur </h2>
+                <p class="fs-2 ls-sm mb-5 devtitle">Developer | Writer | Entrepreneur </p>
             </div>
+            
+            <div class="text-center text-xl-start mt-md-5 mt-xl-5">
+                <a id="demo" class="btn btn-primary text-center" asp-page="/Home"> Enter Here </a>
+            </div>
+            
         </div>
 
-        <div class="col-md-6">
+        <div class="col-xl-7 col-md-12 d-flex justify-content-start">
             <div class="p-3 pt-0 pb-0">
                 <img src="~/lib/images/TobiAtTesla.png" class="homeImage" alt="tobi1.jpg" asp-append-version=true />
                 <figure>
                     <blockquote cite="https://www.huxley.net/bnw/four.html">
-                        <p>Life is precious beyond words, and when you get a second chance - every morning, every
+                        <p>
+                            Life is precious beyond words, and when you get a second chance - every morning, every
                             decision,
                             can be that second chance. Take a moment to define who you really are and what you really
                             want.
@@ -30,12 +36,6 @@
                     <figcaption>— Oluwatobi Kareem <cite>(Captain Oath)</cite></figcaption>
                 </figure>
             </div>
-        </div>
-    </div>
-
-    <div class="row mt-2">
-        <div class="col-md-12 text-center">
-            <a class="btn btn-md enterHere" asp-page="/Home"> Enter Here </a>
         </div>
     </div>
 </div>
