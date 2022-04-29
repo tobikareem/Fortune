@@ -3,17 +3,7 @@
 body {
     /*background-color: #e2e8ff;*/
     background-color: #fefaf6;
-    overflow: hidden;
-    font-weight: 500;
 }
-
-div.container {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-}
-
 
 h3.myName {
     opacity: 1;
@@ -22,6 +12,13 @@ h3.myName {
     letter-spacing: 4px;
     margin-bottom: 75px;
     font-family: 'Permanent Marker', cursive;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 h2.myDesc {
@@ -70,7 +67,7 @@ blockquote {
 /*Extra large devices (large desktops, 1200px and up)*/
 @media (min-width: 1200px) {
     .devtitle {
-        margin-top: 7rem !important;
+        margin-top: 3rem !important;
     }
 }
 
