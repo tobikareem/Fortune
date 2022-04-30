@@ -55,7 +55,7 @@ namespace Web.Pages
                 CreatedBy = Suggest.CreatedBy,
                 HasExpiryTime = Suggest.HasExpiryTime,
                 ExpireBy = Suggest.ExpireBy,
-                Title = Suggest.Title,
+                Title = "Suggestion from Web",
                 Content = Suggest.Content
             };
 
@@ -74,9 +74,6 @@ namespace Web.Pages
 
             [Display(Name = "Expire By")]
             public DateTime ExpireBy { get; set; }
-            
-            [Required]
-            public string Title { get; set; }
 
             [Display(Name = "Has Time Limit")]
             public bool HasExpiryTime { get; set; }

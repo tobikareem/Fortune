@@ -18,6 +18,8 @@ namespace Web.Pages
 
         private readonly IDataStore<UserDetail> _userDetail;
 
+        public bool CanShowLink { get; set; }
+
         public List<DriveFiles> GoggleDriveFiles { get; set; }
         public FriendsModel(IExternalApiCalls serviceCalls, ICacheService cacheService, UserManager<ApplicationUser> userManager,IDataStore<UserDetail> userDetail)
         {
@@ -30,15 +32,34 @@ namespace Web.Pages
 
         public async Task<IActionResult> OnGet()
         {
-            await PopulateFriendsDetails();
+            var friendDetails = await PopulateFriendsDetails();
+
+            var isUserAuthenticated = false;
+            var isSameUser = false;
+
+            // check if user is authenticated
+            if (User.Identity is { IsAuthenticated: true })
+            {
+                isUserAuthenticated = true;
+            }
+
+            var userId = _userManager.GetUserId(User);
+
+            if (friendDetails.FirstOrDefault(x => x.UserId == userId) != null)
+            {
+                isSameUser = true;
+            }
+
+            CanShowLink = !isUserAuthenticated && !isSameUser;
+
             return Page();
         }
 
-        private async Task PopulateFriendsDetails()
+        private async Task<List<UserDetail>> PopulateFriendsDetails()
         {
-            var friends = _cacheService.GetOrCreate(CacheEntry.GetAllFriends, _userDetail.GetAll, 120).Where(x => x.User?.UserName != "oluwatobikareem@gmail.com");
+            var friends = _cacheService.GetOrCreate(CacheEntry.GetAllFriends, _userDetail.GetAll, 120).Where(x => x.User?.UserName != "oluwatobikareem@gmail.com").ToList();
             var files = await _cacheService.GetOrCreate(CacheEntry.DrivePhotos, _serviceCalls.GetAllGoogleDrivePhotosAsync, 120);
-
+            
             foreach (var userDetail in friends)
             {
                 var userClaims = await _userManager.GetClaimsAsync(new ApplicationUser { Id =  userDetail.UserId, UserName = userDetail?.User?.UserName });
@@ -62,6 +83,8 @@ namespace Web.Pages
 
                 });
             }
+
+            return friends;
         }
 
 
