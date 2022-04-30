@@ -15,11 +15,11 @@ namespace Web.Pages
         [BindProperty] public UserForm Input { get; set; }
         
         private readonly EmailProp _emailProp;
-        private readonly IServiceCalls _serviceCalls;
+        private readonly IExternalApiCalls _serviceCalls;
         private readonly ILogger<ContactModel> _logger;
 
 
-        public ContactModel(IOptions<EmailProp> appSetting, IServiceCalls serviceCalls, ILogger<ContactModel> logger)
+        public ContactModel(IOptions<EmailProp> appSetting, IExternalApiCalls serviceCalls, ILogger<ContactModel> logger)
         {
             _emailProp = appSetting.Value;
             _serviceCalls = serviceCalls;

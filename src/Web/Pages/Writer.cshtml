@@ -7,14 +7,7 @@
 }
 
 @section Scripts{
-<script src="https://kit.fontawesome.com/a45e1612b0.js" crossorigin="anonymous"></script>
-<script>
-    // jquery get element by class named footer
-    var footer = $('footer');
-    // jquery get element by class named footer and change position to relative
-    footer.css('position', 'relative');
-
-</script>
+    <script src="https://kit.fontawesome.com/a45e1612b0.js" crossorigin="anonymous"></script>
 }
 
 <figure>
@@ -101,7 +94,7 @@
                     {
                         <div class="col-md-4">
                             <a asp-page="/BlogPost" asp-route-id="@blog.Id">
-                                <div class="card p-2 mb-5">
+                                <div class="card p-2 mb-3">
                                     <div class="card-body">
                                         <div class="card-title">
 
@@ -128,7 +121,7 @@
 
         <div class="col-md-3">
             <div class="popular-section">
-                <div class="createWriterSection">
+                <div class="createWriterSection mb-2">
                     <a asp-page="/CreatePost"> Create Post </a>
                 </div>
                 <h6 class="fs-2">Recent Posts</h6>
@@ -137,10 +130,11 @@
                     @{
                         if (Model.BlogPosts.Any())
                         {
-
-                            foreach (var blog in Model.BlogPosts)
+                            var count = 0;
+                            foreach (var blog in Model.BlogPosts.TakeWhile(blog => count != 4))
                             {
                                 <a asp-page="/BlogPost" asp-route-id="@blog.Id" class="formBlogBtn">@blog.Title</a>
+                                count++;
                             }
                         }
                     }
@@ -154,7 +148,7 @@
                     </div>
                 }
 
-                <h6 class="fs-2">Categories</h6>
+                <h6 class="fs-2 mt-2">Categories</h6>
                 <div class="btnRecent">
                     <form method="post" asp-page-handler="Filter" asp-route-id="-1">
                         <button class="btn form-control mb-2 formBlogBtn">All <span class="badge bg-secondary">@Model.TotalBlogCount</span></button>

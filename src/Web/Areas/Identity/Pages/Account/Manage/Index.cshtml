@@ -5,26 +5,72 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3 class="display-3">@ViewData["Title"]</h3>
+<h6 class="display-6">@ViewData["Title"]</h6>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
+
+
+<div class="row gx-3">
+    <div class="col-sm-6">
+        <form id="profile-form" method="post" enctype="multipart/form-data" class="form-floating">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
                 <input asp-for="Username" class="form-control" disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
-            <div class="form-floating">
+            <div class="form-floating mb-4">
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="mb-4 row row-cols-2 g-3">
+                <div class="form-floating col">
+                    <input asp-for="Input.Day" class="form-control" />
+                    <label asp-for="Input.Day" class="form-label"></label>
+                    <span asp-validation-for="Input.Day" class="text-danger"></span>
+                </div>
+                <div class="form-floating col">
+                    <input asp-for="Input.Month" class="form-control" />
+                    <label asp-for="Input.Month" class="form-label"></label>
+                    <span asp-validation-for="Input.Month" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-floating mb-4">
+                <input asp-for="Input.Title" class="form-control" />
+                <label asp-for="Input.Title" class="form-label"></label>
+                <span asp-validation-for="Input.Title" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-4">
+                <input asp-for="Input.Company" class="form-control" />
+                <label asp-for="Input.Company" class="form-label"></label>
+                <span asp-validation-for="Input.Company" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <input type="file" class="form-control" accept="image/png, image/jpeg, image/*"
+                    asp-for="Input.Upload" />
+            </div>
+
+            <div class="mb-4">
+                <div class="checkbox">
+                    <label asp-for="Input.IsSubscribed" class="form-label">
+                        <input class="form-check-input" asp-for="Input.IsSubscribed" />
+                        @Html.DisplayNameFor(m => m.Input.IsSubscribed)
+                    </label>
+                </div>
+            </div>
+
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.UserPhotoFileLink))
+    {
+        <div class="col-sm-4 ms-5">
+            <img class="aboutImg img-thumbnail" src="@Model.UserPhotoFileLink" alt="user photo" />
+        </div>
+    }
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }

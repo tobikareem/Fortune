@@ -9,6 +9,7 @@ namespace Web.Pages.Classes
         public static string About => "About";
         public static string BlogPost => "BlogPost";
         public static string Contact => "Contact";
+        public static string Connections => "Connections";
         public static string CreatePost => "CreatePost";
         public static string Dashboard => "Dashboard";
         public static string Developer => "Developer";
@@ -28,6 +29,7 @@ namespace Web.Pages.Classes
         public static (string display, string active) AddDisplayForNotifications(ViewContext context) => AddingDisplayClass(context, Notifications);
         public static (string display, string active) AddDisplayForSuggestions(ViewContext context) => AddingDisplayClass(context, Suggestions);
         public static (string display, string active) AddDisplayForWriter(ViewContext context) => AddingDisplayClass(context, Writer);
+        public static (string display, string active) AddDisplayForConnections(ViewContext context) => AddingDisplayClass(context, Connections);
 
 
         private static (string display, string active) AddingDisplayClass(ViewContext viewContext, string page)

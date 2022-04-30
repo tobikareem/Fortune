@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using Core.Constants;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,13 @@ namespace Web.Pages
     {
         private readonly IPostService _postService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICacheService _cacheService;
 
-        public EditPostModel(IPostService postService, UserManager<ApplicationUser> userManager)
+        public EditPostModel(IPostService postService, UserManager<ApplicationUser> userManager, ICacheService cacheService)
         {
             _postService = postService;
             _userManager = userManager;
+            _cacheService = cacheService;
         }
 
         [BindProperty]
@@ -58,6 +61,7 @@ namespace Web.Pages
                 existingPost.ModifiedBy = user;
 
                 _postService.UpdatePost(existingPost);
+                _cacheService.Remove(CacheEntry.GetAllPosts);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -65,8 +69,6 @@ namespace Web.Pages
                 {
                     return NotFound();
                 }
-
-                throw;
             }
 
             return RedirectToPage("./Writer");

@@ -3,21 +3,7 @@
 @model Web.Pages.CreatePostModel
 @{
     ViewData["ActivePage"] = BreadCrumbs.CreatePost;
-
-}
-
-@section Scripts {
-<script>
-
-var footer = $('footer');
-    
-$('#collapseContent').on('shown.bs.collapse', function () {
-    debugger;
-    footer.css('position', 'relative');
-});
-
-
-</script>
+    ViewData["Title"] = "Create Post";
 }
 
 <partial name="Shared/_CreatePost" model="Model.UserPost" />

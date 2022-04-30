@@ -85,8 +85,18 @@ namespace Core.Configuration
 
         [JsonProperty("client_x509_cert_url")]
         public string ClientX509CertUrl { get; set; }
+
+        public string AccessToken { get; set; }
+        public string GoogleDriveScope { get; set; }
+
+        [JsonProperty("oauthclientId")]
+        public string OauthClientId { get; set; }
+        [JsonProperty("oauthclientsecret")]
+        public string OauthClientSecret { get; set; }
+        public string GoogleDriveTokenRequestUrl { get; set; }
+
+        public string RefreshToken { get; set; }
+        public string ProjectName => "ProjectFortune";
+        public string MyGoogleEmail => "oluwatobikareem@gmail.com";
     }
-    
-
-
 }

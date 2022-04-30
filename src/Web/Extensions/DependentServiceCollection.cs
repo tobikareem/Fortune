@@ -9,7 +9,6 @@ using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Data.Entity;
 using Shared.Repository;
-using Web.Customs.Filter;
 using Web.Customs.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
@@ -17,6 +16,7 @@ using Azure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
+using Microsoft.Extensions.Logging.AzureAppServices;
 
 namespace Web.Extensions
 {
@@ -33,6 +33,9 @@ namespace Web.Extensions
                 });
             services.AddHealthChecks();
             services.AddHsts(opt => opt.MaxAge = TimeSpan.FromHours(1));
+            services.AddHttpClient();
+            services.AddMemoryCache();
+            
 
             #region Configurations And DbContext
             services.Configure<EmailProp>(config.GetSection(nameof(EmailProp)));
@@ -128,8 +131,6 @@ namespace Web.Extensions
             #endregion
 
             #region Code Services
-
-            services.AddScoped<IServiceCalls, CallsService>();
             services.AddScoped<IBlogPostService, BlogPostService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
@@ -139,6 +140,11 @@ namespace Web.Extensions
             services.AddScoped<IDataStore<Comment>, CommentRepository>();
             services.AddScoped<IDataStore<Category>, CategoryRepository>();
             services.AddScoped<IBaseStore<Suggestions>, SuggestionRepository>();
+            services.AddScoped<IDataStore<UserDetail>, UserDetailRepository>();
+            services.AddScoped<IHttpRepository, HttpRepository>();
+            services.AddScoped<IExternalApiCalls, ExternalApiCalls>();
+
+            services.AddScoped<ICacheService, CacheService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();
@@ -146,14 +152,25 @@ namespace Web.Extensions
             #endregion
 
             #region Host Settings / Logging / Deployment
-
-            builder.Host.ConfigureLogging(log =>
+            
+            builder.Logging.AddFile(f =>
             {
-                log.AddEventLog();
-                log.AddFile(f =>
-                {
-                    f.FileName = $"File_Log.{DateTime.Now:d}";
-                });
+                f.FileName = $"File_Log.{DateTime.Now:d}";
+            });
+            builder.Logging.AddAzureWebAppDiagnostics();
+
+            // Default log location: D:\\home\\LogFiles\\Application
+            // Default file name: diagnostics-yyyymmdd.txt
+            // Default blob name: {app-name}{timestamp}/yyyy/mm/dd/hh/{guid}-applicationLog.txt.
+            builder.Services.Configure<AzureFileLoggerOptions>(options =>
+            {
+                options.FileName = "app-diagnostics-";
+                options.FileSizeLimit = 50 * 1024;
+                options.RetainedFileCountLimit = 5;
+            });
+            builder.Services.Configure<AzureBlobLoggerOptions>(options =>
+            {
+                options.BlobName = "app-log.txt";
             });
 
             builder.WebHost.UseIIS();

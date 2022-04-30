@@ -1,11 +1,7 @@
-﻿using Core.Configuration;
-using System.Linq;
-using Core.Models;
-using Data.Entity;
+﻿using Data.Entity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Category = Data.Entity.Category;
 using Comment = Data.Entity.Comment;
 using Post = Data.Entity.Post;
@@ -33,6 +29,7 @@ namespace Data.Context
         public virtual DbSet<PostCategory> PostCategories { get; set; }
         public virtual DbSet<UserPost> UserPosts { get; set; }
         public virtual DbSet<Suggestions> Suggestions { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,6 +41,55 @@ namespace Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserDetail>(entity =>
+            {
+                entity.ToTable("UserDetails", "fort");
+
+                entity.Property(e => e.Id).HasColumnName("Id").IsRequired();
+
+                entity.Property(e => e.UserId).HasColumnName("UserId").IsRequired();
+
+                entity.Property(e => e.Title).HasColumnName("Title").HasMaxLength(55);
+
+                entity.Property(e => e.Company).HasMaxLength(55);
+
+                entity.Property(e => e.Birthday).HasColumnType("datetime");
+
+                entity.Property(e => e.WebsiteUrl);
+
+                entity.Property(e => e.FacebookLink).HasMaxLength(155);
+
+                entity.Property(e => e.TwitterLink).HasMaxLength(155);
+
+                entity.Property(e => e.LinkedInLink).HasMaxLength(155);
+
+                entity.Property(e => e.InstagramLink).HasMaxLength(155);
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedBy);
+
+                entity.Property(e => e.ModifiedBy);
+
+                entity.Property(e => e.DriveFileId);
+
+                entity.Property(e => e.Enabled);
+                
+                entity.Property(e => e.IsSubscribed);
+
+                // create a foreign key to aspnetusers
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserDetails)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("FK_UserDetails_AspNetUsers");
+
+
+
+            });
 
             modelBuilder.Entity<Suggestions>(entity =>
             {

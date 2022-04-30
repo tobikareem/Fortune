@@ -1,0 +1,56 @@
+﻿@page
+@using Web.Pages.Classes
+@model Web.Pages.FriendsModel
+@{
+    ViewData["Title"] = "Connections";
+    ViewData["ActivePage"] = BreadCrumbs.Connections;
+}
+
+<hr />
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2 g-md-2 g-lg-3">
+
+        @{
+            foreach (var fileInfo in Model.GoggleDriveFiles)
+            {
+                <div class="col p-3">
+                    <div class="card connect">
+                       
+                        
+                        @if (!string.IsNullOrEmpty(fileInfo.ThumbnailLink))
+                        {
+                            <img src="@fileInfo.ThumbnailLink" alt="@fileInfo.FileName" class="img-thumbnail connect" />
+                        }
+                        else
+                        {
+                            <img src="~/lib/images/accountAvatar.png" alt="@fileInfo.FileName" class="img-thumbnail connect" />
+                        }
+                        <p class="fs-3">@fileInfo.FullName</p>
+                        <p class="fs-5 text-muted"> @fileInfo.Title</p>
+                        <p class="fs-6">@fileInfo.Company</p>
+
+                        <div class="connect socials">
+                            @{
+                                <a href="@fileInfo.WebsiteUrl" class="connect" target="_blank"><i class="fab fa-dribbble"></i></a>
+
+                                <a href="@fileInfo.InstagramLink" class="connect" target="_blank"><i class="fab fa-instagram"></i></a>
+
+                                <a href="@fileInfo.TwitterLink" class="connect" target="_blank"><i class="fab fa-twitter"></i></a>
+
+                                <a href="@fileInfo.LinkedInLink" class="connect" target="_blank"><i class="fab fa-linkedin"></i></a>
+
+                                <a href="#" class="connect" target="_blank"><i class="fab fa-facebook"></i></a>
+                                <a href="@fileInfo.YoutubeLink" class="connect" target="_blank"><i class="fab fa-youtube"></i></a>
+
+                            }
+
+                        </div>
+                        @*   <p><button class="connect">Contact</button></p> *@
+
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>

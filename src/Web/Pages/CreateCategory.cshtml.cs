@@ -6,19 +6,22 @@ using Data.Entity;
 using Shared.Interfaces.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Shared.Interfaces.Services;
 
 namespace Web.Pages
 {
-    [Authorize(ResourcePolicy.HasWriteAccess)]
+    [Authorize(ResourcePolicy.IsTobiKareem)]
     public class CreateCategoryModel : PageModel
     {
         private readonly IDataStore<Category> _category;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICacheService _cacheService;
 
-        public CreateCategoryModel(IDataStore<Category> context, UserManager<ApplicationUser> userManager)
+        public CreateCategoryModel(IDataStore<Category> context, UserManager<ApplicationUser> userManager, ICacheService cacheService)
         {
             _category = context;
             _userManager = userManager;
+            _cacheService = cacheService;
         }
 
         public IActionResult OnGet()
@@ -35,13 +38,18 @@ namespace Web.Pages
 
             Category.CreatedBy = user.Id;
             Category.CreatedOn = DateTime.UtcNow;
+            Category.Enabled = true;
 
-            if (_category.GetAll().Any(x => x.Category1 == Category.Category1))
+            var allCategories =  _cacheService.GetOrCreate(CacheEntry.GetAllCategories, _category.GetAll, 120);
+
+            if (allCategories.Any(x => x.Category1 == Category.Category1))
             {
                 return Page();
             }
             
             _category.AddEntity(Category);
+            _cacheService.Remove(CacheEntry.GetAllCategories);
+            
             return RedirectToPage("./Index");
 
         }
