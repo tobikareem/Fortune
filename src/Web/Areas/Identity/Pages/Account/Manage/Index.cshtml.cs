@@ -70,15 +70,17 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
 
-            [Display(Name = "Job Title, Career Field")]
+            [Display(Name = "Job Title, Career field or aspiration")]
             public string Title { get; set; }
 
             [Display(Name = "Company, School, Industry")]
             public string Company { get; set; }
 
-            [Display(Name = "Birthday")]
+            [Display(Name = "Birthday"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MM-dd}", ApplyFormatInEditMode = true)]
             public DateTime Birthday { get; set; }
-            
+
+            [Display(Name = "Check to subscribe for email notifications")]
+            public bool IsSubscribed { get; set; }
             public IFormFile Upload { get; set; }
         }
         private UserDetail GetUserDetail(string userId)
@@ -101,6 +103,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 Input.Company = userDetail.Company;
                 Input.Title = userDetail.Title;
                 Input.Birthday = userDetail.Birthday.GetValueOrDefault();
+                Input.IsSubscribed = userDetail.IsSubscribed;
 
                 var files = await _cacheService.GetOrCreate(CacheEntry.DrivePhotos, _serviceCalls.GetAllGoogleDrivePhotosAsync, 120);
                 var file = files.FirstOrDefault(x => x.Id == userDetail.DriveFileId);
@@ -218,6 +221,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 detail.Company = Input.Company;
                 detail.Birthday = Input.Birthday;
                 detail.DriveFileId = string.IsNullOrWhiteSpace(fileId) ? detail.DriveFileId : fileId;
+                detail.IsSubscribed = Input.IsSubscribed;
 
                 _userDetail.UpdateEntity(detail);
             }
@@ -232,7 +236,8 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                     CreatedBy = user.Id,
                     Enabled = true,
                     User = user,
-                    DriveFileId = fileId
+                    DriveFileId = fileId,
+                    IsSubscribed = Input.IsSubscribed
                 };
 
                 _userDetail.AddEntity(detail);

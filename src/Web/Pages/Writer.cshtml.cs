@@ -69,7 +69,7 @@ namespace Web.Pages
             }
 
             TotalBlogCount = blog.Count;
-            return blog.OrderByDescending(x => x.ModifiedOn).ThenBy(x => x.Id).ToList();
+            return blog.OrderByDescending(x => x.Id).ThenBy(x => x.ModifiedOn).ToList();
         }
 
         public class CustomCategory : Category

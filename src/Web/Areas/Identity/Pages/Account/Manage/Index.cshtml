@@ -37,19 +37,28 @@
                 <label asp-for="Input.Company" class="form-label"></label>
                 <span asp-validation-for="Input.Company" class="text-danger"></span>
             </div>
-            
-            <div class="mb-4 mt-3">
+
+            <div class="mb-4">
                 <input type="file" class="form-control" accept="image/png, image/jpeg, image/*" asp-for="Input.Upload" />
+            </div>
+
+            <div class="mb-4">
+                <div class="checkbox">
+                    <label asp-for="Input.IsSubscribed" class="form-label">
+                        <input class="form-check-input" asp-for="Input.IsSubscribed" />
+                        @Html.DisplayNameFor(m => m.Input.IsSubscribed)
+                    </label>
+                </div>
             </div>
 
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </form>
     </div>
-    
+
     @if (!string.IsNullOrWhiteSpace(Model.UserPhotoFileLink))
     {
         <div class="col-sm-4 ms-5">
-            <img class="aboutImg img-thumbnail" src="@Model.UserPhotoFileLink" alt="user photo"/>
+            <img class="aboutImg img-thumbnail" src="@Model.UserPhotoFileLink" alt="user photo" />
         </div>
     }
 </div>

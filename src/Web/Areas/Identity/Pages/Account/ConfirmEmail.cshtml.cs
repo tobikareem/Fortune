@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
+using Core.Constants;
 using Data.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,12 @@ namespace Web.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<ConfirmEmailModel> _logger;
 
-        public ConfirmEmailModel(UserManager<ApplicationUser> userManager)
+        public ConfirmEmailModel(UserManager<ApplicationUser> userManager, ILogger<ConfirmEmailModel> logger)
         {
             _userManager = userManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -41,8 +44,16 @@ namespace Web.Areas.Identity.Pages.Account
 
             //code = WebEncoders.Base64UrlDecode(code).ToString();
             var result = await _userManager.ConfirmEmailAsync(user, code);
+
+            if (!result.Succeeded)
+            {
+                _logger.Log(LogLevel.Error, PageLogEventId.ApiCallFailed, "Unable to confirm Email. {reason}", result);
+            }
             StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
-            return Page();
+            //redirect to the dashboard page
+
+
+            return RedirectToPage("/Account/Manage/Index", new { area = "Identity" });
         }
     }
 }

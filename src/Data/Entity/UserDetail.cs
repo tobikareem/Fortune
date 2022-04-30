@@ -41,7 +41,9 @@ namespace Data.Entity
         public string? UserId { get; set; }
 
         public string DriveFileId { get; set; }
-        
+
+        public bool IsSubscribed { get; set; }
+
         public virtual ApplicationUser? User { get; set; } = null!;
     }
 }

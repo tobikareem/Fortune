@@ -6,18 +6,4 @@
     ViewData["Title"] = "Create Post";
 }
 
-@section Scripts {
-<script>
-
-var footer = $('footer');
-    
-$('#collapseContent').on('shown.bs.collapse', function () {
-    debugger;
-    footer.css('position', 'relative');
-});
-
-
-</script>
-}
-
 <partial name="Shared/_CreatePost" model="Model.UserPost" />

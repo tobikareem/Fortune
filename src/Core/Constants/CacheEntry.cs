@@ -5,6 +5,7 @@
         GoogleDriveAccessToken,
         DrivePhotos,
         GetAllFriends,
-        GetAllPosts
+        GetAllPosts,
+        GetAllCategories
     }
 }

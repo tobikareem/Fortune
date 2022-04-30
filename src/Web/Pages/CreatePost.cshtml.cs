@@ -15,11 +15,13 @@ namespace Web.Pages
         [BindProperty] public Post UserPost { get; set; }
         private readonly IPostService _postService;
         private readonly UserManager<ApplicationUser> _userManager;
-
-        public CreatePostModel(IPostService postService, UserManager<ApplicationUser> userManager)
+        private readonly ICacheService _cacheService;
+        
+        public CreatePostModel(IPostService postService, UserManager<ApplicationUser> userManager, ICacheService cacheService)
         {
             _postService = postService;
             _userManager = userManager;
+            _cacheService = cacheService;
 
             UserPost = new Post { IsPublished = true, Category = new Category()};
         }
@@ -38,7 +40,7 @@ namespace Web.Pages
             UserPost.Enabled = true;
             
             _postService.CreateNewPost(UserPost);
-
+            _cacheService.Remove(CacheEntry.GetAllPosts);
             return RedirectToPage("./Writer");
 
         }

@@ -13,8 +13,6 @@ using Web.Customs.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Azure.Identity;
-using Google.Apis.Auth.AspNetCore3;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
@@ -106,17 +104,6 @@ namespace Web.Extensions
                 {
                     pol.AddRequirements(new IsPostOwnerRequirement());
                 });
-            });
-
-            services.AddAuthentication(g =>
-            {
-                g.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-                g.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
-                g.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie().AddGoogleOpenIdConnect(opt =>
-            {
-                opt.ClientId = config.GetValue<string>("GoggleAnalytics:oauthclientId");
-                opt.ClientSecret = config.GetValue<string>("GoggleAnalytics:oauthclientsecret");
             });
 
             services.AddSingleton<IAuthorizationHandler, FullAccessHandler>();

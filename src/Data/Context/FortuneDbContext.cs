@@ -77,6 +77,8 @@ namespace Data.Context
                 entity.Property(e => e.DriveFileId);
 
                 entity.Property(e => e.Enabled);
+                
+                entity.Property(e => e.IsSubscribed);
 
                 // create a foreign key to aspnetusers
                 entity.HasOne(d => d.User)

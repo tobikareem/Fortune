@@ -11,6 +11,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    
     <link rel="icon" type="image/x-icon" href="~/lib/images/favicon.ico">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -24,162 +25,166 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Captain</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav navbar-right flex-grow-1 ml-auto justify-content-end">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/About">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Developer">Developer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Writer">Writer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Friends">Friends</a>
-                        </li>
-                        @if (_signInManager.IsSignedIn(User))
-                        {
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" asp-area="" asp-page="/Index">Captain</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav navbar-right flex-grow-1 ml-auto justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/About">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Developer">Developer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Writer">Writer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Friends">Connections</a>
+                    </li>
+                    @if (_signInManager.IsSignedIn(User))
+                    {
                             @*<li class="nav-item">
                                 <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.FindFirstValue("FirstName")</a>
                                 </li>*@
 
-                            <li class="nav-item">
-                                <form id="dashboard" class="form-inline" asp-page="/Dashboard" method="get">
-                                    <button id="dashboardBtn" type="submit" class="nav-link btn btn-link text-dark">Dashboard</button>
-                                </form>
-                            </li>
-                            <li class="nav-item">
-                                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
-                                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                                </form>
-                            </li>
+                        <li class="nav-item">
+                            <form id="dashboard" class="form-inline" asp-page="/Dashboard" method="get">
+                                <button id="dashboardBtn" type="submit" class="nav-link btn btn-link text-dark">Dashboard</button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                            </form>
+                        </li>
 
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                    }
+                </ul>
             </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+    <main role="main" class="pb-3 col-sm-12 col-md col-sm-12  col-12 col">
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
+             aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForHome(ViewContext).active">
+                    <a asp-page="/Home">Home</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForAbout(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForAbout(ViewContext).display" id="@BreadCrumbs.About">
+                    <a asp-page="/About"> About</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForDeveloper(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForDeveloper(ViewContext).display" id="@BreadCrumbs.Developer">
+                    <a asp-page="/Developer">Developer</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForWriter(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForWriter(ViewContext).display" id="@BreadCrumbs.Writer">
+                    <a asp-page="/Writer">Writer</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForConnections(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForConnections(ViewContext).display" id="@BreadCrumbs.Connections">
+                    <a asp-page="/Friends">Connections</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForContact(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForContact(ViewContext).display" id="@BreadCrumbs.Contact">
+                    <a asp-page="/Contact">Contact</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForCreatePost(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForCreatePost(ViewContext).display" id="@BreadCrumbs.CreatePost">
+                    <a asp-page="/CreatePost">Create Post</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForEditPost(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForEditPost(ViewContext).display" id="@BreadCrumbs.EditPost">
+                    <a asp-page="/EditPost">Edit Post</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForDashboard(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForDashboard(ViewContext).display" id="@BreadCrumbs.Dashboard">
+                    <a asp-page="/Dashboard">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForSuggestions(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForSuggestions(ViewContext).display" id="@BreadCrumbs.Suggestions">
+                    <a asp-page="/Suggestions">Suggestions</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForNotifications(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForNotifications(ViewContext).display" id="@BreadCrumbs.Notifications">
+                    <a asp-page="/Notifications">Notifications</a>
+                </li>
+                <li class="breadcrumb-item @BreadCrumbs.AddDisplayForBlogPost(ViewContext).active"
+                    style="display: @BreadCrumbs.AddDisplayForBlogPost(ViewContext).display" id="@BreadCrumbs.BlogPost">
+                    <a asp-page="/BlogPost">BlogPost</a>
+                </li>
+            </ol>
         </nav>
-    </header>
+        @RenderBody()
+    </main>
+</div>
+
+<footer class="border-top footer text-muted col-sm-12 col-md col-sm-12  col-12 col" id="footer">
     <div class="container">
-        <main role="main" class="pb-3 col-sm-12 col-md col-sm-12  col-12 col">
-            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
-                 aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForHome(ViewContext).active">
-                        <a asp-page="/Home">Home</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForAbout(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForAbout(ViewContext).display" id="@BreadCrumbs.About">
-                        <a asp-page="/About"> About</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForDeveloper(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForDeveloper(ViewContext).display" id="@BreadCrumbs.Developer">
-                        <a asp-page="/Developer">Developer</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForWriter(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForWriter(ViewContext).display" id="@BreadCrumbs.Writer">
-                        <a asp-page="/Writer">Writer</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForContact(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForContact(ViewContext).display" id="@BreadCrumbs.Contact">
-                        <a asp-page="/Contact">Contact</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForCreatePost(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForCreatePost(ViewContext).display" id="@BreadCrumbs.CreatePost">
-                        <a asp-page="/CreatePost">Create Post</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForEditPost(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForEditPost(ViewContext).display" id="@BreadCrumbs.EditPost">
-                        <a asp-page="/EditPost">Edit Post</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForDashboard(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForDashboard(ViewContext).display" id="@BreadCrumbs.Dashboard">
-                        <a asp-page="/Dashboard">Dashboard</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForSuggestions(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForSuggestions(ViewContext).display" id="@BreadCrumbs.Suggestions">
-                        <a asp-page="/Suggestions">Suggestions</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForNotifications(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForNotifications(ViewContext).display" id="@BreadCrumbs.Notifications">
-                        <a asp-page="/Notifications">Notifications</a>
-                    </li>
-                    <li class="breadcrumb-item @BreadCrumbs.AddDisplayForBlogPost(ViewContext).active"
-                        style="display: @BreadCrumbs.AddDisplayForBlogPost(ViewContext).display" id="@BreadCrumbs.BlogPost">
-                        <a asp-page="/BlogPost">BlogPost</a>
-                    </li>
-                </ol>
-            </nav>
-            @RenderBody()
-        </main>
+        <ul class="social_footer_ul">
+            <li>
+                <a href="https://www.linkedin.com/in/oluwatobikareem/" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.twitter.com/captainoath/" target="_blank"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/captainoath/" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+        </ul>
+
+        <p class="text-center ">
+            &copy; 2016 - @DateTime.Now.Year | Designed by <a asp-page="/Index">Tobi Kareem</a>
+        </p>
+
+
     </div>
 
-    <footer class="border-top footer text-muted col-sm-12 col-md col-sm-12  col-12 col">
-        <div class="container">
-            <ul class="social_footer_ul">
-                <li>
-                    <a href="https://www.linkedin.com/in/oluwatobikareem/" target="_blank">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.twitter.com/captainoath/" target="_blank"><i class="fab fa-twitter"></i></a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com/captainoath/" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </li>
-            </ul>
+</footer>
 
-            <p class="text-center ">
-                &copy; 2016 - @DateTime.Now.Year | Designed by <a asp-page="/Index">Tobi Kareem</a>
-            </p>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://cdn.tiny.cloud/1/nhqpzsaw0s8mm1w2jck9dy3t8w7v09y03lndpwwp87r3zn5n/tinymce/5/tinymce.min.js"
+        referrerpolicy="origin" asp-append-version="true"></script>
 
+<script>
+    tinymce.init({
+        selector: '#Content',
+        height: 920,
+        width: '100%',
+        resize: false,
+        branding: false,
 
-        </div>
+    });
+</script>
 
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdn.tiny.cloud/1/nhqpzsaw0s8mm1w2jck9dy3t8w7v09y03lndpwwp87r3zn5n/tinymce/5/tinymce.min.js"
-            referrerpolicy="origin" asp-append-version="true"></script>
-
-    <script>
-        tinymce.init({
-            selector: '#Content',
-            height: 920,
-            width: '100%',
-            resize: false,
-            branding: false,
-
-        });
-    </script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 
 </body>
 
