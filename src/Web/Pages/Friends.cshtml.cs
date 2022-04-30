@@ -36,7 +36,7 @@ namespace Web.Pages
 
         private async Task PopulateFriendsDetails()
         {
-            var friends = _cacheService.GetOrCreate(CacheEntry.GetAllFriends, _userDetail.GetAll, 120);
+            var friends = _cacheService.GetOrCreate(CacheEntry.GetAllFriends, _userDetail.GetAll, 120).Where(x => x.User?.UserName != "oluwatobikareem@gmail.com");
             var files = await _cacheService.GetOrCreate(CacheEntry.DrivePhotos, _serviceCalls.GetAllGoogleDrivePhotosAsync, 120);
 
             foreach (var userDetail in friends)

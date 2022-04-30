@@ -76,6 +76,14 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Company, School, Industry")]
             public string Company { get; set; }
 
+            [Display(Name = "Birth Day"), Range(1, 31)]
+            public int Day { get; set; }
+
+            [Display(Name = "Birth Month"), Range(1, 12)]
+            public int Month { get; set; }
+
+            
+
             [Display(Name = "Birthday"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MM-dd}", ApplyFormatInEditMode = true)]
             public DateTime Birthday { get; set; }
 
@@ -103,6 +111,8 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 Input.Company = userDetail.Company;
                 Input.Title = userDetail.Title;
                 Input.Birthday = userDetail.Birthday.GetValueOrDefault();
+                Input.Day = userDetail.Birthday.GetValueOrDefault().Day;
+                Input.Month = userDetail.Birthday.GetValueOrDefault().Month;
                 Input.IsSubscribed = userDetail.IsSubscribed;
 
                 var files = await _cacheService.GetOrCreate(CacheEntry.DrivePhotos, _serviceCalls.GetAllGoogleDrivePhotosAsync, 120);
@@ -186,8 +196,10 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+
+            Input.Birthday = new DateTime(1990, Input.Month, Input.Day);
             // If the birthday is not set or is date time default value, then add to validation errors
-            if (Input.Birthday == DateTime.MinValue)
+            if (Input.Day != 0 && Input.Month != 0 && Input.Birthday == DateTime.MinValue)
             {
                 ModelState.AddModelError(string.Empty, "Birthday is not valid.");
             }
