@@ -22,6 +22,9 @@
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            
+            <select asp-for="Input.Location" asp-items="Model.Countries" class="form-floating mb-4"></select>
+            
             <div class="mb-4 row row-cols-2 gy-3 gx-4">
                 <div class="form-floating col">
                     <input asp-for="Input.Day" class="form-control" />

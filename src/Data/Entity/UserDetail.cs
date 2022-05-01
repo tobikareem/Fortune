@@ -44,6 +44,8 @@ namespace Data.Entity
 
         public bool IsSubscribed { get; set; }
 
+        public string? Location { get; set; }
+
         public virtual ApplicationUser? User { get; set; } = null!;
     }
 }

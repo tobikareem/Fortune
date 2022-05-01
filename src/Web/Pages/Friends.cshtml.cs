@@ -1,3 +1,4 @@
+using System.Globalization;
 using Core.Constants;
 using Data.Entity;
 using Microsoft.AspNetCore.Identity;
@@ -61,11 +62,11 @@ namespace Web.Pages
                 var userClaims = await _userManager.GetClaimsAsync(new ApplicationUser { Id =  userDetail.UserId, UserName = userDetail?.User?.UserName });
 
                 var firstName = userClaims.ToList().Find(x => x.Type == "FirstName")?.Value ?? string.Empty;
-                var lastName = userClaims.ToList().Find(x => x.Type == "LastName")?.Value ?? string.Empty;
+                // var lastName = userClaims.ToList().Find(x => x.Type == "LastName")?.Value ?? string.Empty;
 
                 GoggleDriveFiles.Add(new DriveFiles
                 {
-                    FullName = $"{firstName} {lastName}",
+                    FullName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase($"{firstName}"),
                     Birthday = userDetail?.Birthday.GetValueOrDefault(),
                     FacebookLink = userDetail?.FacebookLink,
                     TwitterLink = "https://twitter.com/" + userDetail?.TwitterLink,
@@ -74,8 +75,9 @@ namespace Web.Pages
                     WebsiteUrl = userDetail?.WebsiteUrl,
                     ThumbnailLink = files.FirstOrDefault(x => x.Id == userDetail?.DriveFileId)?.ThumbnailLink ?? string.Empty,
                     FileName = firstName,
-                    Title = userDetail?.Title,
-                    Company = userDetail?.Company
+                    Title = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(userDetail?.Title ?? string.Empty),
+                    Company = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(userDetail?.Company ?? string.Empty),
+                    Location = string.IsNullOrWhiteSpace(userDetail?.Location) ? "" : userDetail?.Location,
 
                 });
             }
