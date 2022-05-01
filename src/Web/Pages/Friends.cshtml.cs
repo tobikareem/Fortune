@@ -11,16 +11,12 @@ namespace Web.Pages
     public class FriendsModel : PageModel
     {
         private readonly IExternalApiCalls _serviceCalls;
-
         private readonly ICacheService _cacheService;
-
         private readonly UserManager<ApplicationUser> _userManager;
-
         private readonly IDataStore<UserDetail> _userDetail;
-
         public bool CanShowLink { get; set; }
-
         public List<DriveFiles> GoggleDriveFiles { get; set; }
+        
         public FriendsModel(IExternalApiCalls serviceCalls, ICacheService cacheService, UserManager<ApplicationUser> userManager,IDataStore<UserDetail> userDetail)
         {
             _serviceCalls = serviceCalls;
