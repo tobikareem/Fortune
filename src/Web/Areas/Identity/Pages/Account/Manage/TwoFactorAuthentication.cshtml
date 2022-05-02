@@ -52,36 +52,7 @@
 
                 @if (!Model.HasAuthenticator)
                 {
-                    //<a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Add authenticator app</a>
-
-                    <form id="profile-form" method="post" class="form-floating" asp-page-handler="Social">
-                        <div class="form-floating mb-4">
-                            <input class="form-control" asp-for="Input.InstagramLink">
-                            <label asp-for="Input.InstagramLink" class="form-label"></label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input class="form-control" asp-for="Input.TwitterLink">
-                            <label asp-for="Input.TwitterLink" class="form-label"></label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input class="form-control" asp-for="Input.YoutubeLink">
-                            <label asp-for="Input.YoutubeLink" class="form-label"></label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input class="form-control" asp-for="Input.LinkedInLink">
-                            <label asp-for="Input.LinkedInLink" class="form-label"></label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input class="form-control" asp-for="Input.WebsiteUrl">
-                            <label asp-for="Input.WebsiteUrl" class="form-label"></label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input class="form-control" asp-for="Input.FacebookLink">
-                            <label asp-for="Input.FacebookLink" class="form-label"></label>
-                        </div>
-
-                        <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-                    </form>
+                    <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-primary">Add authenticator app</a>
                 }
                 else
                 {

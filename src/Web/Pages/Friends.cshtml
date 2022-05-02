@@ -16,7 +16,7 @@
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2 g-md-2 g-lg-3">
 
         @{
-            foreach (var fileInfo in Model.GoggleDriveFiles)
+            foreach (var fileInfo in Model.GoggleDriveFiles.OrderBy(x => x.FullName))
             {
                 <div class="col p-3">
                     <div class="card connect">

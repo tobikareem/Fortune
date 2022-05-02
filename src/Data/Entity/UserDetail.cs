@@ -26,11 +26,9 @@ namespace Data.Entity
         [Display(Name = "Have a Facebook page?")]
         public string? FacebookLink { get; set; }
 
-        [Url]
         [Display(Name = "Have a Twitter page?")]
         public string? TwitterLink { get; set; }
 
-        [Url]
         [Display(Name = "Have an Instagram page?")]
         public string? InstagramLink { get; set; }
 
