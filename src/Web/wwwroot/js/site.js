@@ -123,6 +123,11 @@ $(document).ready(function () {
   // Find the a element child of the active breadcrumb
   var activeBreadcrumbA = activeBreadcrumb[0].getElementsByTagName("a")[0];
 
+  // if the active breadcrumb a element is undefined then return
+  if (activeBreadcrumbA === undefined) {
+    return;
+  }
+  
   // set the content to the value of a
   activeBreadcrumbA.href = "#";
 

@@ -35,12 +35,14 @@ namespace Web.Extensions
             services.AddHsts(opt => opt.MaxAge = TimeSpan.FromHours(1));
             services.AddHttpClient();
             services.AddMemoryCache();
-            
+
 
             #region Configurations And DbContext
             services.Configure<EmailProp>(config.GetSection(nameof(EmailProp)));
             services.Configure<ConnectionStrings>(config.GetSection(nameof(ConnectionStrings)));
             services.Configure<GoggleAnalytics>(config.GetSection(nameof(GoggleAnalytics)));
+            services.Configure<FacebookAuth>(config.GetSection(nameof(FacebookAuth)));
+            services.Configure<TwitterAuth>(config.GetSection(nameof(TwitterAuth)));
             services.Configure<RouteOptions>(options =>
             {
                 options.AppendTrailingSlash = true;
@@ -77,7 +79,7 @@ namespace Web.Extensions
 
             #endregion
 
-            #region Identity/Authorization
+            #region Identity/Authorization/Authentication
             services.AddAuthorization(opt =>
             {
                 opt.AddPolicy(ResourcePolicy.IsTobiKareem, pol =>
@@ -105,7 +107,21 @@ namespace Web.Extensions
                     pol.AddRequirements(new IsPostOwnerRequirement());
                 });
             });
+            services.AddAuthentication().AddFacebook(f =>
+            {
+                var facebookAuth = config.GetSection(nameof(FacebookAuth)).Get<FacebookAuth>();
 
+                f.AppId = facebookAuth.FacebookAppId;
+                f.AppSecret = facebookAuth.FacebookAppSecret;
+                f.AccessDeniedPath = "/Account/AccessDenied";
+            }).AddTwitter(t =>
+            {
+                var twitterAuth = config.GetSection(nameof(TwitterAuth)).Get<TwitterAuth>();
+
+                t.ConsumerKey = twitterAuth.TwitterConsumerKey;
+                t.ConsumerSecret = twitterAuth.TwitterConsumerSecret;
+                t.AccessDeniedPath = "/Account/AccessDenied";
+            });
             services.AddSingleton<IAuthorizationHandler, FullAccessHandler>();
             services.AddScoped<IAuthorizationHandler, IsPostOwnerRequirementHandler>();
 
@@ -122,12 +138,13 @@ namespace Web.Extensions
 
             }).AddDefaultTokenProviders().AddEntityFrameworkStores<FortuneDbContext>();
 
+
             services.ConfigureApplicationCookie(opt =>
             {
                 opt.ExpireTimeSpan = TimeSpan.FromDays(5);
                 opt.SlidingExpiration = true;
             });
-            
+
             #endregion
 
             #region Code Services
@@ -152,7 +169,7 @@ namespace Web.Extensions
             #endregion
 
             #region Host Settings / Logging / Deployment
-            
+
             builder.Logging.AddFile(f =>
             {
                 f.FileName = $"File_Log.{DateTime.Now:d}";

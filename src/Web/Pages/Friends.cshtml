@@ -8,26 +8,47 @@
 
 <hr />
 <div class="container">
+    @if (Model.CanShowLink)
+    {
+        <p class="fs-6">Please consider being a part of my connection. <a asp-page="/Account/Manage/Index" asp-area="Identity">Click Here</a> </p>
+    }
+
     <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2 g-md-2 g-lg-3">
 
         @{
-            foreach (var fileInfo in Model.GoggleDriveFiles)
+            foreach (var fileInfo in Model.GoggleDriveFiles.OrderBy(x => x.FullName))
             {
                 <div class="col p-3">
                     <div class="card connect">
-                       
-                        
-                        @if (!string.IsNullOrEmpty(fileInfo.ThumbnailLink))
+
+
+                        @if (!string.IsNullOrEmpty(fileInfo.ImageLink))
                         {
-                            <img src="@fileInfo.ThumbnailLink" alt="@fileInfo.FileName" class="img-thumbnail connect" />
+                            <img src="@fileInfo.ImageLink" alt="@fileInfo.FileName" class="img-thumbnail connect" />
                         }
                         else
                         {
                             <img src="~/lib/images/accountAvatar.png" alt="@fileInfo.FileName" class="img-thumbnail connect" />
                         }
                         <p class="fs-3">@fileInfo.FullName</p>
-                        <p class="fs-5 text-muted"> @fileInfo.Title</p>
-                        <p class="fs-6">@fileInfo.Company</p>
+                        
+                        @if (!string.IsNullOrWhiteSpace(fileInfo.Title))
+                        {
+                            <p class="fs-5 text-muted"> @fileInfo.Title</p>
+                        }
+                        else
+                        {
+                            <p class="fs-5 text-muted">&nbsp;</p>
+                        }
+                        
+                        @if (!string.IsNullOrWhiteSpace(fileInfo.Company))
+                        {
+                            <p class="fs-6">@fileInfo.Company</p>
+                        }
+                        else
+                        {
+                            <p class="fs-5 text-muted">&nbsp;</p>
+                        }
 
                         <div class="connect socials">
                             @{
@@ -45,6 +66,7 @@
                             }
 
                         </div>
+                        <p><button class="connect">@fileInfo.Location</button></p>
                         @*   <p><button class="connect">Contact</button></p> *@
 
                     </div>

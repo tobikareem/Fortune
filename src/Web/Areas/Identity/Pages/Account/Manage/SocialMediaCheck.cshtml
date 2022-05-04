@@ -1,0 +1,60 @@
+@page
+@model SocialMediaCheckModel
+
+@{
+    ViewData["Title"] = "SocialMedia";
+    ViewData["ActivePage"] = ManageNavPages.SocialMedia;
+}
+
+<h6 class="display-6">@ViewData["Title"]</h6>
+<partial name="_StatusMessage" for="StatusMessage" />
+
+<div class="row">
+    <div class="col-sm-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating mb-4">
+                <input asp-for="UserDetail.InstagramLink" class="form-control" />
+                <label asp-for="UserDetail.InstagramLink" class="control-label"></label>
+                <span asp-validation-for="UserDetail.InstagramLink" class="text-danger"></span>
+            </div>       
+            <div class="form-floating mb-4">
+                <input asp-for="UserDetail.TwitterLink" class="form-control" />
+                <label asp-for="UserDetail.TwitterLink" class="control-label"></label>
+                <span asp-validation-for="UserDetail.TwitterLink" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-4">
+                <input asp-for="UserDetail.FacebookLink" class="form-control" />
+                <label asp-for="UserDetail.FacebookLink" class="control-label"></label>
+                <span asp-validation-for="UserDetail.FacebookLink" class="text-danger"></span>
+            </div>
+    
+           
+            <div class="form-floating mb-4">
+                <input asp-for="UserDetail.LinkedInLink" class="form-control" />
+                <label asp-for="UserDetail.LinkedInLink" class="control-label"></label>
+                <span asp-validation-for="UserDetail.LinkedInLink" class="text-danger"></span>
+            </div>
+            
+            <div class="form-floating mb-4">
+                <input asp-for="UserDetail.YoutubeLink" class="form-control" />
+                <label asp-for="UserDetail.YoutubeLink" class="control-label"></label>
+                <span asp-validation-for="UserDetail.YoutubeLink" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-4">
+                <input asp-for="UserDetail.WebsiteUrl" class="form-control" />
+                <label asp-for="UserDetail.WebsiteUrl" class="control-label"></label>
+                <span asp-validation-for="UserDetail.WebsiteUrl" class="text-danger"></span>
+            </div>
+           
+            <div class="form-floating mb-4">
+                <input type="submit" value="Save" class="w-100 btn btn-lg btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+

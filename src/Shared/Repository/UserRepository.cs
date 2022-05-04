@@ -1,21 +1,30 @@
-﻿using Data.Context;
+﻿using Core.Constants;
+using Data.Context;
 using Shared.Interfaces.Repository;
 using Microsoft.AspNetCore.Identity;
+using Shared.Interfaces.Services;
 
 namespace Shared.Repository
 {
     public class UserRepository: IStringIdStore<IdentityUser>
     {
         private readonly FortuneDbContext _dbContext;
-        public UserRepository(FortuneDbContext fortuneDbContext)
+        private readonly ICacheService _cacheService;
+        public UserRepository(FortuneDbContext fortuneDbContext, ICacheService cacheService)
         {
             _dbContext = fortuneDbContext;
+            _cacheService = cacheService;
         }
 
-        public void AddEntity(IdentityUser entity)
+        public void AddEntity(IdentityUser entity, CacheEntry cacheKey, bool hasCache = false)
         {
             _dbContext.Users.Add(entity);
             _dbContext.SaveChanges();
+
+            if (hasCache)
+            {
+                _cacheService.Remove(cacheKey);
+            }            
         }
 
         public void Delete(string id)
@@ -37,9 +46,15 @@ namespace Shared.Repository
             return user ?? new IdentityUser();
         }
 
-        public void UpdateEntity(IdentityUser entity){
+        public void UpdateEntity(IdentityUser entity, CacheEntry cacheKey, bool hasCache = false)
+        {
             _dbContext.Update(entity);
             _dbContext.SaveChanges();
+
+            if (hasCache)
+            {
+                _cacheService.Remove(cacheKey);
+            }
         }
     }
 }

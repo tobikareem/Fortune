@@ -40,15 +40,14 @@ namespace Web.Pages
             Category.CreatedOn = DateTime.UtcNow;
             Category.Enabled = true;
 
-            var allCategories =  _cacheService.GetOrCreate(CacheEntry.GetAllCategories, _category.GetAll, 120);
+            var allCategories =  _cacheService.GetOrCreate(CacheEntry.Categories, _category.GetAll, 120);
 
             if (allCategories.Any(x => x.Category1 == Category.Category1))
             {
                 return Page();
             }
             
-            _category.AddEntity(Category);
-            _cacheService.Remove(CacheEntry.GetAllCategories);
+            _category.AddEntity(Category, CacheEntry.Categories, true);
             
             return RedirectToPage("./Index");
 

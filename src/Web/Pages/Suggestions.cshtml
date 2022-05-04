@@ -13,22 +13,15 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
 
-
             <div class="form-group mb-4">
-                <label asp-for="Suggest.CreatedBy" class="control-label"></label>
+                <label asp-for="Suggest.CreatedBy" class="form-label"></label>
                 <input asp-for="Suggest.CreatedBy" class="form-control" />
                 @*<span asp-validation-for="Suggest.CreatedBy" class="text-danger"></span>*@
             </div>
 
             <div class="form-group mb-4">
-                <label asp-for="Suggest.Title" class="control-label"></label>
-                <input asp-for="Suggest.Title" class="form-control" />
-                @*<span asp-validation-for="Suggest.Title" class="text-danger"></span>*@
-            </div>
-
-            <div class="form-group mb-4">
-                <label asp-for="Suggest.Content" class="control-label"></label>
-                <textarea asp-for="Suggest.Content" class="form-control" cols="70"> </textarea>
+                <label asp-for="Suggest.Content" class="form-label"></label>
+                <textarea asp-for="Suggest.Content" class="form-control input1" cols="70"> </textarea>
                 @*<span asp-validation-for="Suggest.Content" class="text-danger"></span>*@
 
             </div>

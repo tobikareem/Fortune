@@ -35,6 +35,7 @@ namespace Data.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
+               // optionsBuilder.UseSqlServer();
             }
         }
 
@@ -75,9 +76,10 @@ namespace Data.Context
                 entity.Property(e => e.ModifiedBy);
 
                 entity.Property(e => e.DriveFileId);
+                entity.Property(e => e.ProfileImage);
 
                 entity.Property(e => e.Enabled);
-                
+                entity.Property(e => e.Location);
                 entity.Property(e => e.IsSubscribed);
 
                 // create a foreign key to aspnetusers

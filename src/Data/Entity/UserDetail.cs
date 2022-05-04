@@ -26,11 +26,9 @@ namespace Data.Entity
         [Display(Name = "Have a Facebook page?")]
         public string? FacebookLink { get; set; }
 
-        [Url]
         [Display(Name = "Have a Twitter page?")]
         public string? TwitterLink { get; set; }
 
-        [Url]
         [Display(Name = "Have an Instagram page?")]
         public string? InstagramLink { get; set; }
 
@@ -38,11 +36,15 @@ namespace Data.Entity
         [Display(Name = "Have a LinkedIn page?")]
         public string? LinkedInLink { get; set; }
 
+        public byte[]? ProfileImage  { get; set; }
+
         public string? UserId { get; set; }
 
         public string DriveFileId { get; set; }
 
         public bool IsSubscribed { get; set; }
+
+        public string? Location { get; set; }
 
         public virtual ApplicationUser? User { get; set; } = null!;
     }

@@ -8,7 +8,7 @@
 @model Data.Entity.Post
 
 @{
-    var allCategories =  _cacheService.GetOrCreate(CacheEntry.GetAllCategories, _categoryRepo.GetAll, 120);
+    var allCategories =  _cacheService.GetOrCreate(CacheEntry.Categories, _categoryRepo.GetAll, 120);
     var categories = allCategories.Where(x => x.Category1.ToLower() != "mindfeed");
 }
 
@@ -55,10 +55,10 @@
                 </div>
             </div>
 
-            <textarea asp-for="Content" id="Content" name="Content"></textarea>
+            <textarea asp-for="Content" id="Content" name="Content" class="mt-3 mt-md-3 mt-lg-3"></textarea>
             <span asp-validation-for="Content" class="text-danger"></span>
 
-            <button class="contact1-form-btn mt-sm-4" type="submit">
+            <button class="contact1-form-btn mt-5 mt-md-4 mt-lg-2" type="submit">
                 <span>Submit</span>
             </button>
             

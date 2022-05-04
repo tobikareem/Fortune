@@ -1,4 +1,5 @@
-﻿using Data.Entity;
+﻿using Core.Constants;
+using Data.Entity;
 using Shared.Interfaces.Services;
 using Shared.Interfaces.Repository;
 
@@ -14,7 +15,7 @@ namespace Shared.Services
             _categoryRepository = categoryRepository;
         }
         
-        public void CreateNewPost(Post post)
+        public void CreateNewPost(Post post, CacheEntry cacheKey, bool hasCache = false)
         {
             post.CategoryId = _categoryRepository.GetAll().First(x => x.Category1 == post.Category.Category1).Id;
             post.IsReviewPost = false;
@@ -27,12 +28,12 @@ namespace Shared.Services
 
 
 
-            _postRepository.AddEntity(post);
+            _postRepository.AddEntity(post, cacheKey, hasCache);
         }
 
-        public void UpdatePost(Post post)
+        public void UpdatePost(Post post, CacheEntry cacheKey, bool hasCache = false)
         {
-            _postRepository.UpdateEntity(post);
+            _postRepository.UpdateEntity(post, cacheKey, hasCache);
         }
 
         public Post GetPostById(int postId)

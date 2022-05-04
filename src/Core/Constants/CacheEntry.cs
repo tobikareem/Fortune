@@ -2,10 +2,12 @@
 {
     public enum CacheEntry
     {
+        NoEntry,
         GoogleDriveAccessToken,
         DrivePhotos,
-        GetAllFriends,
-        GetAllPosts,
-        GetAllCategories
+        UserDetails,
+        Posts,
+        Categories,
+        Suggestions
     }
 }

@@ -30,7 +30,7 @@ namespace Web.Pages
         {
             IsTobiKareem = User.HasClaim(ClaimTypes.Role, ResourceAction.FortuneAdmin);
             
-            var posts = _cacheService.GetOrCreate(CacheEntry.GetAllPosts, _dataPost.GetAll, 180);
+            var posts = _cacheService.GetOrCreate(CacheEntry.Posts, _dataPost.GetAll, 180);
             var mindFeeds = posts.Where(x => string.Compare(x.Category.Category1, "mindfeed", StringComparison.CurrentCultureIgnoreCase) == 0 && x.Enabled).ToList();
 
             if (!mindFeeds.Any())
