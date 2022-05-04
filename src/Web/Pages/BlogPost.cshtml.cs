@@ -3,8 +3,8 @@ using Shared.Interfaces.Repository;
 using Data.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Shared.Interfaces.Services;
+using Web.Extensions;
 using Comment = Core.Models.Comment;
 using Post = Core.Models.Post;
 
@@ -33,34 +33,25 @@ namespace Web.Pages
             BlogPost = new BlogPostClass();
         }
 
-        public async Task<IActionResult> OnGet(int id)
+        public Task<IActionResult> OnGet(int id)
         {
-            var friends = _cacheService.GetOrCreate(CacheEntry.GetAllFriends, _userDetail.GetAll, 120).ToList();
-            var files = await _cacheService.GetOrCreate(CacheEntry.DrivePhotos, _serviceCalls.GetAllGoogleDrivePhotosAsync, 120);
+            var friends = _cacheService.GetOrCreate(CacheEntry.UserDetails, _userDetail.GetAll, 120).ToList();
 
             var blog = _blogPostRepo.GetById(id);
             var createdByUserId = blog.UserId;
+
+            var imageLink = string.Empty;
             
             BlogPost = new BlogPostClass
             {
                 CreatedBy = blog.CreatedBy,
                 CreatedOn = blog.CreatedOn,
                 Description = blog.Description,
-                Content = blog.Content
+                Content = blog.Content,
+                ImageThumbNail = imageLink.GetImageSrc(friends.FirstOrDefault(x => x.UserId == createdByUserId)?.ProfileImage),
             };
-
-            var driveFileId = friends.FirstOrDefault(x => x.UserId == createdByUserId)?.DriveFileId;
-            if (driveFileId == null) return Page();
-            {
-                var file = files.FirstOrDefault(x => x.Id == driveFileId)?.ThumbnailLink;
-
-                if (file != null)
-                {
-                    BlogPost.ImageThumbNail = file;
-                }
-            }
-
-            return Page();
+            
+            return Task.FromResult<IActionResult>(Page());
         }
 
         public IActionResult OnPost()

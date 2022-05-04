@@ -22,9 +22,9 @@
                     <div class="card connect">
 
 
-                        @if (!string.IsNullOrEmpty(fileInfo.ThumbnailLink))
+                        @if (!string.IsNullOrEmpty(fileInfo.ImageLink))
                         {
-                            <img src="@fileInfo.ThumbnailLink" alt="@fileInfo.FileName" class="img-thumbnail connect" />
+                            <img src="@fileInfo.ImageLink" alt="@fileInfo.FileName" class="img-thumbnail connect" />
                         }
                         else
                         {

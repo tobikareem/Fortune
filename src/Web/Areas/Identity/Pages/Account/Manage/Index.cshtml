@@ -10,7 +10,7 @@
 
 
 <div class="row gx-3">
-    <div class="col-sm-6">
+    <div class="col-md-7 col-sm-12 col-xl-7">
         <form id="profile-form" method="post" enctype="multipart/form-data" class="form-floating">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
@@ -68,7 +68,7 @@
 
     @if (!string.IsNullOrWhiteSpace(Model.UserPhotoFileLink))
     {
-        <div class="col-sm-4 ms-5">
+        <div class="col-md-5, col-sm-12, col-xl-5 mt-sm-5 mt-xl-0 mt-md-0">
             <img class="aboutImg img-thumbnail" src="@Model.UserPhotoFileLink" alt="user photo" />
         </div>
     }

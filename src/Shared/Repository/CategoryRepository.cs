@@ -1,22 +1,30 @@
-﻿using Shared.Interfaces.Repository;
+﻿using Core.Constants;
+using Shared.Interfaces.Repository;
 using Data.Entity;
 using Data.Context;
+using Shared.Interfaces.Services;
 
 namespace Shared.Repository
 {
     public class CategoryRepository : IDataStore<Category>
     {
-
+        private readonly ICacheService _cacheService;
         private readonly FortuneDbContext _dbContext;
-        public CategoryRepository(FortuneDbContext fortuneDbContext)
+        public CategoryRepository(FortuneDbContext fortuneDbContext, ICacheService cacheService)
         {
             _dbContext = fortuneDbContext;
+            _cacheService = cacheService;
         }
 
-        public void AddEntity(Category entity)
+        public void AddEntity(Category entity, CacheEntry cacheKey, bool hasCache = false)
         {
             _dbContext.Categories.Add(entity);
             _dbContext.SaveChanges();
+
+            if (hasCache)
+            {
+                _cacheService.Remove(cacheKey);
+            }
         }
 
         public void Delete(int id)
@@ -44,10 +52,15 @@ namespace Shared.Repository
             throw new NotImplementedException();
         }
 
-        public void UpdateEntity(Category entity)
+        public void UpdateEntity(Category entity, CacheEntry cacheKey, bool hasCache = false)
         {
             _dbContext.Update<Category>(entity);
             _dbContext.SaveChanges();
+
+            if (hasCache)
+            {
+                _cacheService.Remove(cacheKey);
+            }            
         }
     }
 }

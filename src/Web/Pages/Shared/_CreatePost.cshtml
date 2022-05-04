@@ -8,7 +8,7 @@
 @model Data.Entity.Post
 
 @{
-    var allCategories =  _cacheService.GetOrCreate(CacheEntry.GetAllCategories, _categoryRepo.GetAll, 120);
+    var allCategories =  _cacheService.GetOrCreate(CacheEntry.Categories, _categoryRepo.GetAll, 120);
     var categories = allCategories.Where(x => x.Category1.ToLower() != "mindfeed");
 }
 

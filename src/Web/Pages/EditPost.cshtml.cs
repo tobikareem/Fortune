@@ -60,8 +60,7 @@ namespace Web.Pages
                 existingPost.ModifiedOn = DateTime.UtcNow;
                 existingPost.ModifiedBy = user;
 
-                _postService.UpdatePost(existingPost);
-                _cacheService.Remove(CacheEntry.GetAllPosts);
+                _postService.UpdatePost(existingPost, CacheEntry.Posts, true);
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -11,6 +11,7 @@ using Core.Constants;
 using Shared.Interfaces.Repository;
 using Shared.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Web.Extensions;
 
 namespace Web.Areas.Identity.Pages.Account.Manage
 {
@@ -373,13 +374,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 Input.Month = userDetail.Birthday.GetValueOrDefault().Month;
                 Input.IsSubscribed = userDetail.IsSubscribed;
                 Input.Location = userDetail.Location;
-
-                var files = await _cacheService.GetOrCreate(CacheEntry.DrivePhotos, _serviceCalls.GetAllGoogleDrivePhotosAsync, 120);
-                var file = files.FirstOrDefault(x => x.Id == userDetail.DriveFileId);
-                if (file != null)
-                {
-                    UserPhotoFileLink = file.ThumbnailLink;
-                }
+                UserPhotoFileLink = UserPhotoFileLink.GetImageSrc(userDetail.ProfileImage);
             }
 
             if (string.IsNullOrWhiteSpace(Input.PhoneNumber))
@@ -400,54 +395,53 @@ namespace Web.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        private async Task<string> OnPostUploadFile()
+        private async Task<byte[]> OnPostUploadFile()
         {
             var file = Input.Upload;
 
             if (file is null)
             {
-                return string.Empty;
+                return (byte[])Enumerable.Empty<byte>();
             }
 
-            var fileTempPath = Path.GetTempPath();
+            #region Comment out upload to Google Drive
+            //var fileTempPath = Path.GetTempPath();
 
 
-            var fileExtInd = file.FileName.LastIndexOf('.');
+            //var fileExtInd = file.FileName.LastIndexOf('.');
 
-            var fileExt = file.FileName[fileExtInd..];
+            //var fileExt = file.FileName[fileExtInd..];
 
-            var userId = _userManager.GetUserId(User);
+            //var userId = _userManager.GetUserId(User);
 
-            var fileName = userId + fileExt;
+            //var fileName = userId + fileExt;
 
             // check if file already exists
-            var files = await _cacheService.GetOrCreate(CacheEntry.DrivePhotos, _serviceCalls.GetAllGoogleDrivePhotosAsync, 120);
+            //var files = await _cacheService.GetOrCreate(CacheEntry.DrivePhotos, _serviceCalls.GetAllGoogleDrivePhotosAsync, 120);
 
-            if (files.Any(x => x.Name == fileName))
-            {
-                // get the file id
-                var id = files.First(x => x.Name == fileName).Id;
+            //if (files.Any(x => x.Name == fileName))
+            //{
+            //    // get the file id
+            //    var id = files.First(x => x.Name == fileName).Id;
 
-                await _serviceCalls.DeleteFileOnGoogleDriveAsync(id);
-            }
+            //    await _serviceCalls.DeleteFileOnGoogleDriveAsync(id);
+            //}
 
-            var filePath = Path.Combine(fileTempPath, fileName);
+            //  var filePath = Path.Combine(fileTempPath, fileName);
 
-            await using var stream = new FileStream(filePath, FileMode.Create);
+            //  var fileId = await _serviceCalls.UploadFileToGoogleDriveAsync(stream, fileName, "image/*", string.Empty, $"Friend: {fileName} uploaded.");
+
+            //   _cacheService.Remove(CacheEntry.DrivePhotos);
+            #endregion
+
+            await using var stream = new MemoryStream();
             await file.CopyToAsync(stream);
-
-
-            var fileId = await _serviceCalls.UploadFileToGoogleDriveAsync(stream, fileName, "image/*", string.Empty, $"Friend: {fileName} uploaded.");
-
-            _cacheService.Remove(CacheEntry.DrivePhotos);
-
-            return fileId;
+            return stream.ToArray();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-            var fileId = await OnPostUploadFile();
+            var byteImage = await OnPostUploadFile();
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -491,11 +485,12 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 detail.Title = Input.Title;
                 detail.Company = Input.Company;
                 detail.Birthday = Input.Birthday;
-                detail.DriveFileId = string.IsNullOrWhiteSpace(fileId) ? detail.DriveFileId : fileId;
+                detail.DriveFileId = string.Empty;
                 detail.IsSubscribed = Input.IsSubscribed;
                 detail.Location = Input.Location;
+                detail.ProfileImage = byteImage;
 
-                _userDetail.UpdateEntity(detail);
+                _userDetail.UpdateEntity(detail, CacheEntry.UserDetails, true);
             }
             else
             {
@@ -508,12 +503,13 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                     CreatedBy = user.Id,
                     Enabled = true,
                     User = user,
-                    DriveFileId = fileId,
+                    DriveFileId = string.Empty,
                     IsSubscribed = Input.IsSubscribed,
-                    Location = Input.Location
+                    Location = Input.Location,
+                    ProfileImage = byteImage
                 };
 
-                _userDetail.AddEntity(detail);
+                _userDetail.AddEntity(detail, CacheEntry.UserDetails, true);
             }
 
             await _signInManager.RefreshSignInAsync(user);

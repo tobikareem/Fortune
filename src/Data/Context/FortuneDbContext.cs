@@ -76,6 +76,7 @@ namespace Data.Context
                 entity.Property(e => e.ModifiedBy);
 
                 entity.Property(e => e.DriveFileId);
+                entity.Property(e => e.ProfileImage);
 
                 entity.Property(e => e.Enabled);
                 entity.Property(e => e.Location);

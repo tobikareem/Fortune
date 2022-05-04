@@ -5,25 +5,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Data.Entity;
 using Shared.Interfaces.Repository;
 using System.Security.Claims;
+using Core.Constants;
+using Shared.Interfaces.Services;
 
 namespace Web.Pages
 {
     public class SuggestionsModel : PageModel
     {
         private readonly IBaseStore<Suggestions> _context;
+        private readonly ICacheService _cacheService;
         [BindProperty] public Suggestion Suggest { get; set; }
         public List<Suggestions> SuggestionsList { get; set; }
         
-        public SuggestionsModel(IBaseStore<Suggestions> context)
+        public SuggestionsModel(IBaseStore<Suggestions> context, ICacheService cacheService)
         {
             _context = context;
-            Suggest = new Suggestion();
+            _cacheService = cacheService;
             
-            SuggestionsList = _context.GetAll().OrderByDescending(x => x.CreatedOn).ToList();
+            Suggest = new Suggestion();
+
         }
 
         public IActionResult OnGet()
         {
+            SuggestionsList = _cacheService.GetOrCreate(CacheEntry.Suggestions, _context.GetAll, 120).OrderByDescending(x => x.CreatedOn).ToList();
             // Check if the user is logged in
             if (User.Identity is not { IsAuthenticated: true })
             {
@@ -59,7 +64,7 @@ namespace Web.Pages
                 Content = Suggest.Content
             };
 
-            _context.AddEntity(suggestion);
+            _context.AddEntity(suggestion, CacheEntry.Suggestions, true);
             return RedirectToPage("./Home");
         }
 

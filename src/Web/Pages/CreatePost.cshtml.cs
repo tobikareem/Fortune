@@ -39,8 +39,7 @@ namespace Web.Pages
             UserPost.CreatedBy = User.FindFirstValue(ClaimTypes.GivenName) ?? User.FindFirstValue("FirstName");
             UserPost.Enabled = true;
             
-            _postService.CreateNewPost(UserPost);
-            _cacheService.Remove(CacheEntry.GetAllPosts);
+            _postService.CreateNewPost(UserPost, CacheEntry.Posts, true);
             return RedirectToPage("./Writer");
 
         }

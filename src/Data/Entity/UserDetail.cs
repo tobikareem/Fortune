@@ -36,6 +36,8 @@ namespace Data.Entity
         [Display(Name = "Have a LinkedIn page?")]
         public string? LinkedInLink { get; set; }
 
+        public byte[]? ProfileImage  { get; set; }
+
         public string? UserId { get; set; }
 
         public string DriveFileId { get; set; }

@@ -99,4 +99,22 @@ namespace Core.Configuration
         public string ProjectName => "ProjectFortune";
         public string MyGoogleEmail => "oluwatobikareem@gmail.com";
     }
+
+    public class FacebookAuth
+    {
+        [JsonProperty("facebookappid")]
+        public string FacebookAppId { get; set; }
+
+        [JsonProperty("facebookappsecret")]
+        public string FacebookAppSecret { get; set; }
+    }
+
+    public class TwitterAuth
+    {
+        [JsonProperty("twitterconsumerkey")]
+        public string TwitterConsumerKey { get; set; }
+        [JsonProperty("twitterconsumersecret")]
+        public string TwitterConsumerSecret { get; set; }
+    }
+
 }

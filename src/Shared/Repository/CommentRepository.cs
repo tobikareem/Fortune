@@ -1,22 +1,30 @@
-﻿using Shared.Interfaces.Repository;
+﻿using Core.Constants;
+using Shared.Interfaces.Repository;
 using Data.Context;
 using Data.Entity;
+using Shared.Interfaces.Services;
 
 namespace Shared.Repository
 {
     public class CommentRepository : IDataStore<Comment>
     {
         private readonly FortuneDbContext _dbContext;
+        private readonly ICacheService _cacheService;
 
-        public CommentRepository(FortuneDbContext fortuneDbContext)
+        public CommentRepository(FortuneDbContext fortuneDbContext, ICacheService cacheService)
         {
             _dbContext = fortuneDbContext;
+            _cacheService = cacheService;
         }
 
-        public void AddEntity(Comment entity)
+        public void AddEntity(Comment entity, CacheEntry cacheKey, bool hasCache = false)
         {
             _dbContext.Comments.Add (entity);
             _dbContext.SaveChanges();
+            if (hasCache)
+            {
+                _cacheService.Remove(cacheKey);
+            }
         }
 
         public void Delete(int id)
@@ -44,10 +52,15 @@ namespace Shared.Repository
             throw new NotImplementedException();
         }
 
-        public void UpdateEntity(Comment entity)
+        public void UpdateEntity(Comment entity, CacheEntry cacheKey, bool hasCache = false)
         {
             _dbContext.Update<Comment> (entity);
             _dbContext.SaveChanges();
+
+            if (hasCache)
+            {
+                _cacheService.Remove(cacheKey);
+            }
         }
     }
 }

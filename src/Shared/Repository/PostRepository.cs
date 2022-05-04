@@ -1,28 +1,36 @@
-﻿using Shared.Interfaces.Repository;
+﻿using Core.Constants;
+using Shared.Interfaces.Repository;
 using Data.Entity;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Shared.Interfaces.Services;
 
 namespace Shared.Repository
 {
     public class PostRepository : IDataStore<Post>
     {
         private readonly FortuneDbContext _dbContext;
-        public PostRepository(FortuneDbContext fortuneDbContext)
+        private readonly ICacheService _cacheService;
+        public PostRepository(FortuneDbContext fortuneDbContext, ICacheService cacheService)
         {
             _dbContext = fortuneDbContext;
+            _cacheService = cacheService;
         }
-        public void AddEntity(Post entity)
+        
+        public void AddEntity(Post entity, CacheEntry cacheKey, bool hasCache = false)
         {
             _dbContext.Attach(entity).State = EntityState.Added;
 
             _dbContext.Posts.Add(entity);
             _dbContext.PostCategories.AddRange(entity.PostCategories);
             _dbContext.UserPosts.AddRange(entity.UserPosts);
-
             _dbContext.SaveChanges();
 
+            if (hasCache)
+            {
+                _cacheService.Remove(cacheKey);
+            }
         }
 
         public void Delete(int id)
@@ -55,11 +63,16 @@ namespace Shared.Repository
                 .Where(x => x.User != null && x.User.Id == userId).ToList();
         }
 
-        public void UpdateEntity(Post entity)
+        public void UpdateEntity(Post entity, CacheEntry cacheKey, bool hasCache = false)
         {
             _dbContext.Attach(entity).State = EntityState.Modified;
             _dbContext.SaveChanges();
-            
+
+            if (hasCache)
+            {
+                _cacheService.Remove(cacheKey);
+            }
+
 
             //_dbContext.Posts.FromSqlRaw("UPDATE Posts SET" +
             //                            " Title = {0}," +

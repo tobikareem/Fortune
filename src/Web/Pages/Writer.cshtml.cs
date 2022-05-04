@@ -53,7 +53,7 @@ namespace Web.Pages
 
         private List<Post> GetAllBlogPosts()
         {
-            var blogList = _cacheService.GetOrCreate(CacheEntry.GetAllPosts, _blogPostRepo.GetAll, 180).ToList();
+            var blogList = _cacheService.GetOrCreate(CacheEntry.Posts, _blogPostRepo.GetAll, 180).ToList();
             var blog = blogList.Where(x => x.Category.Category1.ToLower() != "mindfeed").ToList();
 
 
