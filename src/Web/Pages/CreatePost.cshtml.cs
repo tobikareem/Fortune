@@ -15,13 +15,11 @@ namespace Web.Pages
         [BindProperty] public Post UserPost { get; set; }
         private readonly IPostService _postService;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ICacheService _cacheService;
         
-        public CreatePostModel(IPostService postService, UserManager<ApplicationUser> userManager, ICacheService cacheService)
+        public CreatePostModel(IPostService postService, UserManager<ApplicationUser> userManager)
         {
             _postService = postService;
             _userManager = userManager;
-            _cacheService = cacheService;
 
             UserPost = new Post { IsPublished = true, Category = new Category()};
         }

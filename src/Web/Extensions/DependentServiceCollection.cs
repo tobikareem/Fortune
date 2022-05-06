@@ -38,11 +38,23 @@ namespace Web.Extensions
 
 
             #region Configurations And DbContext
-            services.Configure<EmailProp>(config.GetSection(nameof(EmailProp)));
-            services.Configure<ConnectionStrings>(config.GetSection(nameof(ConnectionStrings)));
-            services.Configure<GoggleAnalytics>(config.GetSection(nameof(GoggleAnalytics)));
-            services.Configure<FacebookAuth>(config.GetSection(nameof(FacebookAuth)));
-            services.Configure<TwitterAuth>(config.GetSection(nameof(TwitterAuth)));
+
+            if (!builder.Environment.IsDevelopment())
+            {
+                builder.Configuration.AddAzureAppConfiguration(opt =>
+                {
+                    opt.Connect(new Uri("https://fortuneappconfig.azconfig.io"), new DefaultAzureCredential()).Select(KeyFilter.Any, "Production");
+                });
+            }
+            
+            services.Configure<EmailProp>(config.GetSection(ConfigAppSetting.EmailPropOptions));
+            services.Configure<ConnectionStrings>(config.GetSection(ConfigAppSetting.ConnectionStringsOptions));
+            services.Configure<GoogleAnalytics>(config.GetSection(ConfigAppSetting.GoogleAnalyticsOptions));
+            services.Configure<FacebookSignIn>(config.GetSection(ConfigAppSetting.FacebookSignInOptions));
+            services.Configure<TwitterSignIn>(config.GetSection(ConfigAppSetting.TwitterSignInOptions));
+            services.Configure<GoogleDriveApi>(config.GetSection(ConfigAppSetting.GoogleDriveApiOptions));
+            services.Configure<SingleProperty>(config.GetSection(ConfigAppSetting.SinglePropertyOptions));
+            services.Configure<ConfigAppSetting>(config.GetSection(nameof(ConfigAppSetting)));
             services.Configure<RouteOptions>(options =>
             {
                 options.AppendTrailingSlash = true;
@@ -58,23 +70,12 @@ namespace Web.Extensions
             }
             builder.Configuration.AddEnvironmentVariables();
 
+            var connString = config.GetConnectionString(nameof(ConnectionStrings.DefaultConnection));
+
             if (!builder.Environment.IsDevelopment())
             {
-                builder.Configuration.AddAzureAppConfiguration(opt =>
-                {
-                    var appEndPoint = config[nameof(ConfigAppSetting.AppEndPoint)];
-
-                    opt.Connect(new Uri(appEndPoint), new DefaultAzureCredential()).Select(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter);
-
-                    opt.ConfigureRefresh(refresh =>
-                    {
-                        refresh.Register("Sentinel", true).SetCacheExpiration(TimeSpan.FromDays(1));
-                    });
-                });
-
+                connString = config.GetConnectionString(nameof(ConnectionStrings.ProductionConnection));
             }
-
-            var connString = config.GetConnectionString(nameof(ConnectionStrings.DefaultConnection));
             services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
 
             #endregion
@@ -109,17 +110,17 @@ namespace Web.Extensions
             });
             services.AddAuthentication().AddFacebook(f =>
             {
-                var facebookAuth = config.GetSection(nameof(FacebookAuth)).Get<FacebookAuth>();
+                var facebookAuth = config.GetSection(ConfigAppSetting.FacebookSignInOptions).Get<FacebookSignIn>();
 
-                f.AppId = facebookAuth.FacebookAppId;
-                f.AppSecret = facebookAuth.FacebookAppSecret;
+                f.AppId = facebookAuth.Facebookappid;
+                f.AppSecret = facebookAuth.Facebookappsecret;
                 f.AccessDeniedPath = "/Account/AccessDenied";
             }).AddTwitter(t =>
             {
-                var twitterAuth = config.GetSection(nameof(TwitterAuth)).Get<TwitterAuth>();
+                var twitterAuth = config.GetSection(ConfigAppSetting.TwitterSignInOptions).Get<TwitterSignIn>();
 
-                t.ConsumerKey = twitterAuth.TwitterConsumerKey;
-                t.ConsumerSecret = twitterAuth.TwitterConsumerSecret;
+                t.ConsumerKey = twitterAuth.Twitterconsumerkey;
+                t.ConsumerSecret = twitterAuth.Twitterconsumersecret;
                 t.AccessDeniedPath = "/Account/AccessDenied";
             });
             services.AddSingleton<IAuthorizationHandler, FullAccessHandler>();

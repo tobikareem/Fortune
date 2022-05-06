@@ -25,8 +25,10 @@ namespace Web.Pages
             _serviceCalls = serviceCalls;
             _logger = logger;
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            // await _serviceCalls.GetGoogleAnalyticsAsync();
+            return Page();
         }
 
         public async Task<IActionResult> OnPost()
