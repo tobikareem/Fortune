@@ -13,64 +13,52 @@
         <p class="fs-5">Please, consider being a part of my connection. <a asp-page="/Account/Manage/Index" asp-area="Identity">Click Here</a> </p>
     }
 
-    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2 g-md-2 g-lg-3">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-2 g-md-2 g-lg-3">
 
         @{
             foreach (var fileInfo in Model.GoggleDriveFiles.OrderBy(x => x.FullName))
             {
                 <div class="col p-3">
-                    <div class="card connect">
+                    <div class="card connect p-3">
+                        <div class="d-flex h-130">
+                            <div class="image w-50">
+                                @if (!string.IsNullOrEmpty(fileInfo.ImageLink))
+                                {
+                                    <img src="@fileInfo.ImageLink" alt="@fileInfo.FileName" class="img-thumbnail friendsPic" width="150" />
+                                }
+                                else
+                                {
+                                    <img src="~/lib/images/accountAvatar.png" alt="@fileInfo.FileName" class="img-thumbnail friendsPic" width="150" />
+                                }
+                            </div>
+
+                            <div class="ms-3 w-50">
+                                <p class="fs-5 text-start mb-0 fw-normal cutLongWord">@fileInfo.FullName</p>
+
+                                <p class="text-muted text-start cutLongWord fs-10"> @fileInfo.Title | @fileInfo.Company </p>
 
 
-                        @if (!string.IsNullOrEmpty(fileInfo.ImageLink))
-                        {
-                            <img src="@fileInfo.ImageLink" alt="@fileInfo.FileName" class="img-thumbnail connect" />
-                        }
-                        else
-                        {
-                            <img src="~/lib/images/accountAvatar.png" alt="@fileInfo.FileName" class="img-thumbnail connect" />
-                        }
-                        <p class="fs-3">@fileInfo.FullName</p>
-                        
-                        @if (!string.IsNullOrWhiteSpace(fileInfo.Title))
-                        {
-                            <p class="fs-5 text-muted"> @fileInfo.Title</p>
-                        }
-                        else
-                        {
-                            <p class="fs-5 text-muted">&nbsp;</p>
-                        }
-                        
-                        @if (!string.IsNullOrWhiteSpace(fileInfo.Company))
-                        {
-                            <p class="fs-6">@fileInfo.Company</p>
-                        }
-                        else
-                        {
-                            <p class="fs-5 text-muted">&nbsp;</p>
-                        }
+                                <div class="connect socials">
+                                    @{
+                                        <a href="@fileInfo.InstagramLink" class="connect" target="_blank"><i class="fab fa-instagram"></i></a>
 
-                        <div class="connect socials">
-                            @{
-                                <a href="@fileInfo.WebsiteUrl" class="connect" target="_blank"><i class="fab fa-dribbble"></i></a>
+                                        <a href="@fileInfo.TwitterLink" class="connect" target="_blank"><i class="fab fa-twitter"></i></a>
 
-                                <a href="@fileInfo.InstagramLink" class="connect" target="_blank"><i class="fab fa-instagram"></i></a>
+                                        <a href="@fileInfo.LinkedInLink" class="connect" target="_blank"><i class="fab fa-linkedin"></i></a>
 
-                                <a href="@fileInfo.TwitterLink" class="connect" target="_blank"><i class="fab fa-twitter"></i></a>
+                                    }
 
-                                <a href="@fileInfo.LinkedInLink" class="connect" target="_blank"><i class="fab fa-linkedin"></i></a>
-
-                                <a href="#" class="connect" target="_blank"><i class="fab fa-facebook"></i></a>
-                                <a href="@fileInfo.YoutubeLink" class="connect" target="_blank"><i class="fab fa-youtube"></i></a>
-
-                            }
-
+                                </div>
+                            </div>
                         </div>
-                        <p><button class="connect">@fileInfo.Location</button></p>
-                        @*   <p><button class="connect">Contact</button></p> *@
-
+                        <div>
+                            <button class="connect" type="button">@fileInfo.Location</button>
+                        </div>
                     </div>
+
                 </div>
+
+
             }
         }
 

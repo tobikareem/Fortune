@@ -124,24 +124,24 @@ namespace Web.Areas.Identity.Pages.Account.Manage
         {
 
             [Url]
-            [Display(Name = "Have a website?")]
+            [Display(Name = "Website link")]
             public string WebsiteUrl { get; set; }
 
             [Url]
-            [Display(Name = "Have a Youtube channel?")]
+            [Display(Name = "Youtube channel link")]
             public string YoutubeLink { get; set; }
 
-            [Display(Name = "Have a Facebook Account Name?")]
+            [Display(Name = "Facebook account name")]
             public string FacebookLink { get; set; }
 
-            [Display(Name = "Have a Twitter Account Name?")]
+            [Display(Name = "Twitter account name")]
             public string TwitterLink { get; set; }
 
-            [Display(Name = "Have an Instagram Account?")]
+            [Display(Name = "Instagram account name")]
             public string InstagramLink { get; set; }
 
             [Url]
-            [Display(Name = "Have a LinkedIn URL?")]
+            [Display(Name = "LinkedIn link")]
             public string LinkedInLink { get; set; }
         }
     }

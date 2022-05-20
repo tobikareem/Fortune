@@ -345,6 +345,8 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Check to subscribe for email notifications")]
             public bool IsSubscribed { get; set; }
+
+            [Display(Name = "Upload a picture")]
             public IFormFile Upload { get; set; }
 
             [Display(Name = "Location")]
