@@ -8,6 +8,7 @@
         UserDetails,
         Posts,
         Categories,
-        Suggestions
+        Suggestions,
+        SpotifyAccessCode,
     }
 }

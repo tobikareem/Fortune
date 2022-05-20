@@ -110,13 +110,13 @@ namespace Web.Extensions
 
             data.Error += $" (Code) - {context.Response.StatusCode}";
             
-            await context.Response.WriteAsync(JsonConvert.SerializeObject(new
-            {
-                error = new
-                {
-                    message = exception.Message
-                }
-            })).ConfigureAwait(false);
+            //await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+            //{
+            //    error = new
+            //    {
+            //        message = exception.Message
+            //    }
+            //})).ConfigureAwait(false);
         }
 
         private static PageTracking GetData(HttpContext context)

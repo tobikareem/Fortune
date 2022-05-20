@@ -11,5 +11,7 @@ namespace Shared.Interfaces.Services
         string GetUserClaim(string claimType, ClaimsPrincipal user);
 
         string GetCurrentUserId(ClaimsPrincipal user);
+
+        Task<ApplicationUser> GetTobiKareemUserAsync();
     }
 }

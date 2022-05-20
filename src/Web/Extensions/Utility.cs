@@ -1,4 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
+using Data.Entity;
+using Microsoft.AspNetCore.Identity;
 
 namespace Web.Extensions
 {
@@ -28,6 +31,30 @@ namespace Web.Extensions
             htmlText = htmlText.Replace( @"&nbsp;;", string.Empty);
             
             return htmlText;
+        }
+
+        public static async Task AddAccessAndRefreshTokens(UserManager<ApplicationUser> userManager, ExternalLoginInfo info, ApplicationUser user)
+        {
+            var newAccessToken = info.AuthenticationTokens.FirstOrDefault((x => x.Name == "access_token"))?.Value;
+            var newRefreshToken = info.AuthenticationTokens.FirstOrDefault(x => x.Name == "refresh_token")?.Value;
+            var newExpiresIn = info.AuthenticationTokens.FirstOrDefault(x => x.Name == "expires_in")?.Value;
+
+
+            if (!string.IsNullOrWhiteSpace(newAccessToken))
+            {
+                await userManager.SetAuthenticationTokenAsync(user, info.ProviderDisplayName, "access_token", newAccessToken);
+            }
+
+            if (!string.IsNullOrWhiteSpace(newRefreshToken))
+            {
+                await userManager.SetAuthenticationTokenAsync(user, info.ProviderDisplayName, "refresh_token", newRefreshToken);
+            }
+
+            if (!string.IsNullOrWhiteSpace(newExpiresIn))
+            {
+                var expiryTime = DateTime.Now.AddSeconds(Convert.ToInt32(newExpiresIn));
+                await userManager.SetAuthenticationTokenAsync(user, info.ProviderDisplayName, "expires_in", expiryTime.ToString(CultureInfo.CurrentCulture));
+            }
         }
     }
 }

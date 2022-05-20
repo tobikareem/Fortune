@@ -1186,10 +1186,6 @@ div.row > div.profileInfo > div.floatingText {
   margin-top: -6px;
 }
 
-div.row > div.profileInfo > p {
-  margin-top: 2rem;
-}
-
 div.contactArea > ul.social_footer_ul {
   display: table;
   margin: 15px auto 15px -50px;

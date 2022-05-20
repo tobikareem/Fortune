@@ -42,5 +42,12 @@ namespace Shared.Services
             var userId = _userManager.GetUserId(user);
             return userId;
         }
+
+        public async Task<ApplicationUser> GetTobiKareemUserAsync()
+        {
+            var user = await _userManager.FindByNameAsync("oluwatobikareem@gmail.com");
+
+            return user;
+        }
     }
 }

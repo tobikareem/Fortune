@@ -12,6 +12,7 @@ namespace Core.Configuration
         public const string ConnectionStringsOptions = "ConnectionStrings";
         public const string EmailPropOptions = "EmailProp";
         public const string SinglePropertyOptions = "SingleProperty";
+        public const string SpotifyOptions = "Authentications:Spotify";
 
         [JsonProperty("SingleProperty")]
         public SingleProperty SingleProperty { get; set; }
@@ -24,6 +25,12 @@ namespace Core.Configuration
 
         [JsonProperty("Authentications")]
         public Authentications Authentications { get; set; }
+
+        [JsonProperty("AppEndPoint")]
+        public string AppEndPoint { get; set; }
+        
+        [JsonProperty("ProductionLabelFilter")]
+        public string ProductionLabelFilter { get; set; }
     }
 
     public class SingleProperty
@@ -153,6 +160,29 @@ namespace Core.Configuration
 
         [JsonProperty("twitterconsumersecret")]
         public string Twitterconsumersecret { get; set; }
+        
+        [JsonProperty("twitterbearer")]
+        public string TwitterBearer { get; set; }
+
+        [JsonProperty("twitteraccesstoken")] 
+        public string TwitterAccessToken { get; set; }
+
+        [JsonProperty("twitteraccesstokensecret")]
+        public string TwitterAccessTokenSecret { get; set; }
+
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
+    }
+
+    public class Spotify
+    {
+        public string ClientId { get; set; }      
+        public string ClientSecret { get; set; }
+
+        public string RedirectUri { get; set; }
+        public string Scope { get; set; }
+
+        public string SpotifyCode { get; set; }
     }
 
     public class Authentications

@@ -8,13 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
 using System.Security.Claims;
-using System.Text;
 using System.Text.Encodings.Web;
 using Core.Constants;
 using Data.Entity;
 using Shared.Interfaces.Services;
+using Web.Extensions;
 
 namespace Web.Areas.Identity.Pages.Account
 {
@@ -101,7 +100,19 @@ namespace Web.Areas.Identity.Pages.Account
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
-                _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
+                var user = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+
+                if (string.Compare(user.Email, "toboibo@yahoo.com", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    // get access token
+                    await AddAccessAndRefreshTokens(info, user);
+
+                    // get Tobi Kareem Id
+                    user = await _userService.GetTobiKareemUserAsync();
+                    await AddAccessAndRefreshTokens(info, user);
+                }
+
+                _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity?.Name, info.LoginProvider);
                 return LocalRedirect(returnUrl);
             }
             if (result.IsLockedOut)
@@ -138,18 +149,19 @@ namespace Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.EmailConfirmed = true;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
                 var result = await _userManager.CreateAsync(user);
-                
+
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider); 
+                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
                         var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -157,7 +169,7 @@ namespace Web.Areas.Identity.Pages.Account
 
                         var givenName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
                         var firstName = info.Principal.FindFirstValue(ClaimTypes.Name);
-                        
+
 
                         var claims = new List<Claim>
                         {
@@ -181,21 +193,23 @@ namespace Web.Areas.Identity.Pages.Account
 
                         await _userManager.AddClaimsAsync(user, claims);
 
+                        await AddAccessAndRefreshTokens(info, user);
+
                         // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                         var callbackUrl = Url.Page(
                             "/Account/ConfirmEmail",
                             pageHandler: null,
-                            values: new { area = "Identity", userId = userId, code = code },
+                            values: new { area = "Identity", userId, code },
                             protocol: Request.Scheme);
 
                         await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl ?? string.Empty)}'>clicking here</a>.");
 
-                        // If account confirmation is required, we need to show the link if we don't have a real email sender
-                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                        {
-                            return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
-                        }
+                        //// If account confirmation is required, we need to show the link if we don't have a real email sender
+                        //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                        //{
+                        //    return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
+                        //}
 
                         await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
                         return LocalRedirect(returnUrl);
@@ -210,6 +224,11 @@ namespace Web.Areas.Identity.Pages.Account
             ProviderDisplayName = info.ProviderDisplayName;
             ReturnUrl = returnUrl;
             return Page();
+        }
+
+        private async Task AddAccessAndRefreshTokens(ExternalLoginInfo info, ApplicationUser user)
+        {
+            await Utility.AddAccessAndRefreshTokens(_userManager, info, user);
         }
 
         private ApplicationUser CreateUser()

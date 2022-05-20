@@ -3,14 +3,19 @@
 @using Category = Data.Entity.Category
 @using Core.Constants
 @using System.Linq
+@using System.Security.Claims
 
 @inject IDataStore<Category> _categoryRepo;
 @inject ICacheService _cacheService;
 @model Data.Entity.Post
 
 @{
-    var allCategories = _cacheService.GetOrCreate(CacheEntry.Categories, _categoryRepo.GetAll, 120);
-    var categories = allCategories.Where(x => x.Category1.ToLower() != "mindfeed").ToList();
+    var categories = _cacheService.GetOrCreate(CacheEntry.Categories, _categoryRepo.GetAll, 120).ToList();
+    
+    if (!User.HasClaim(ClaimTypes.Role, ResourceAction.FortuneAdmin))
+    {
+        categories = categories.Where(x => x.Category1.ToLower() != "mindfeed").ToList();
+    }
 
     var selectList = categories.Select(category => new SelectListItem { Text = category.Category1, Value = category.Id.ToString() }).ToList();
 

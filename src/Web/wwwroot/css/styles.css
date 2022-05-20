@@ -74,33 +74,16 @@ blockquote {
 
 a#demo {
     background-color: #83c5;
-    border-bottom-color: #83c5;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-image-outset: 0;
-    border-image-repeat: stretch;
-    border-image-slice: 100%;
-    border-image-source: none;
-    border-image-width: 1;
-    border-left-color: #83c5;
-    border-left-style: solid;
-    border-left-width: 1px;
-    border-right-color: #83c5;
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-top-color: #83c5;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    border-top-style: solid;
-    border-top-width: 1px;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #83c5;
     box-sizing: border-box;
-    color: rgb(255, 255, 255);
+    color: white;
     cursor: pointer;
     display: inline-block;
     font-family: Inter, sans-serif;
-    font-size: 14px;
+    font-size: 21px;
     font-weight: 750;
     height: 48.3984px;
     width: 169px;
@@ -110,11 +93,7 @@ a#demo {
     padding-right: 20px;
     padding-top: 12px;
     text-align: center;
-    text-decoration-color: rgb(255, 255, 255);
-    text-decoration-line: none;
 }
-
-
 
 .banner {
     height: 100vh;
