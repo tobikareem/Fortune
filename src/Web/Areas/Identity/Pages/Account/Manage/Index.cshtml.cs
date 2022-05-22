@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Core.Constants;
 using Shared.Interfaces.Repository;
 using Shared.Interfaces.Services;
@@ -403,7 +404,7 @@ namespace Web.Areas.Identity.Pages.Account.Manage
 
             if (file is null)
             {
-                return (byte[])Enumerable.Empty<byte>();
+                return null;
             }
 
             #region Comment out upload to Google Drive
@@ -512,12 +513,26 @@ namespace Web.Areas.Identity.Pages.Account.Manage
                 };
 
                 _userDetail.AddEntity(detail, CacheEntry.UserDetails, true);
+
+                await SendThankYouEmailAsync(user);
             }
 
             await _signInManager.RefreshSignInAsync(user);
             await LoadAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
+        }
+
+        private async Task SendThankYouEmailAsync(ApplicationUser user)
+        {
+            // get firstname claim
+            var firstName = User.FindFirstValue("FirstName");
+
+            var email =
+                $"<!Doctype html>\r\n<head>\r\n    <title>Thank You</title>\r\n</head>\r\n<body>\r\n    <div class=\"container bg-default\">\r\n        <h3 class=\"display-6\"> Hi {firstName},</h3>\r\n        <p class=\"lead\">Thank you for providing more details and being a part of my connection. It means a lot.</p>\r\n        <footer>\r\n            <p>Regards,</p>\r\n   <p>{EmailText.MyName}</p>\r\n      <p>Web: <a href=\"https://www.tobikareem.com\">Tobi Kareem</a></p>\r\n   <p>{EmailText.FortuneSign}</p>\r\n     </footer>\r\n        </div>\r\n</body>\r\n<footer></footer>\r\n\r\n</html>";
+
+                await _serviceCalls.SendGridEmail(user.Email, "Thank you for updating your profile", "", firstName ?? string.Empty, email);
+
         }
 
     }

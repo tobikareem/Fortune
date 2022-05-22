@@ -144,7 +144,7 @@
 
                                                                 <div>
                                                                     <img class="img-fluid me-1" src="@p.SpotifySongImage" style="margin-top: -50px" alt="spotify" />
-                                                                    <audio controls="" autoplay="" muted name="media" style="height: 64px; width: 300px;"><source src="@p.SpotifyPreviewSong" type="audio/mpeg"></audio>
+                                                                    <video controls autoplay muted name="media" style="height: 64px; width: 300px;"><source src="@p.SpotifyPreviewSong" type="audio/mpeg"></video>
                                                                 </div>
                                                             </div>
                                                         }
@@ -160,7 +160,7 @@
                                 <button class="btn btn-primary px-1" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="true"
                                         aria-controls="multiCollapseExample1">
-                                    <p class="p-blue"><span class="fas fa-chevron-up pe-2"></span>Hide @Model.DisplayPosts.Count Units</p>
+                                    <p class="p-blue"><span class="fas fa-chevron-up pe-2"></span>Hide</p>
                                 </button>
                             </p>
                         </div>

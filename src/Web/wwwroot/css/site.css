@@ -1265,7 +1265,7 @@ div.rowstart {
 .friendsPic {
     height: 112px;
     border: 1px solid #e2e8ff;
-    border-radius: 50%;
+    border-radius: 15%;
     object-fit: cover;
 }
 
