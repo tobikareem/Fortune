@@ -25,8 +25,9 @@ namespace Web.Pages
             _serviceCalls = serviceCalls;
             _logger = logger;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            return Page();
         }
 
         public async Task<IActionResult> OnPost()
@@ -46,7 +47,7 @@ namespace Web.Pages
             }
             else
             {
-                _logger.Log(LogLevel.Error, PageLogEventId.EmailMessageInformation, "Email could not be sent successfully", response.Body);
+                _logger.Log(LogLevel.Error, PageLogEventId.EmailMessageInformation, "Email could not be sent successfully. {body}", response.Body);
             }
 
             return RedirectToPage("/ContactConfirmation");

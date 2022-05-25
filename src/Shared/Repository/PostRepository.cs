@@ -3,7 +3,6 @@ using Shared.Interfaces.Repository;
 using Data.Entity;
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Shared.Interfaces.Services;
 
 namespace Shared.Repository
@@ -37,7 +36,7 @@ namespace Shared.Repository
         {
             var posts = GetById(id);
 
-            _dbContext.Posts.Remove((Post)posts);
+            _dbContext.Posts.Remove(posts);
 
             _dbContext.SaveChanges();
 
@@ -45,7 +44,7 @@ namespace Shared.Repository
 
         public IEnumerable<Post> GetAll()
         {
-            return _dbContext.Posts.Include(x => x.Category).ToList();
+            return _dbContext.Posts.Where(x => x.Enabled).Include(x => x.Category).ToList();
 
         }
 

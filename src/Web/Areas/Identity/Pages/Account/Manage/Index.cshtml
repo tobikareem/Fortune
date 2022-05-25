@@ -49,14 +49,15 @@
             </div>
 
             <div class="mb-4">
+                <label> Upload a picture </label>
                 <input type="file" class="form-control" accept="image/png, image/jpeg, image/*"
-                    asp-for="Input.Upload" />
+                       asp-for="Input.Upload"/>
             </div>
 
             <div class="mb-4">
                 <div class="checkbox">
                     <label asp-for="Input.IsSubscribed" class="form-label">
-                        <input class="form-check-input" asp-for="Input.IsSubscribed" />
+                        <input class="form-check-input" asp-for="Input.IsSubscribed"/>
                         @Html.DisplayNameFor(m => m.Input.IsSubscribed)
                     </label>
                 </div>

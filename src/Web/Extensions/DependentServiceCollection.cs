@@ -17,6 +17,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.Logging.AzureAppServices;
+using NLog;
+using NLog.Web;
+using SpotifyAPI.Web;
+using static SpotifyAPI.Web.Scopes;
+using Category = Data.Entity.Category;
 
 namespace Web.Extensions
 {
@@ -24,6 +29,38 @@ namespace Web.Extensions
     {
         internal static IServiceCollection AddCustomServiceBuilder(this IServiceCollection services, WebApplicationBuilder builder)
         {
+            #region Host Settings / Logging / Deployment
+
+            builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+            builder.Host.UseNLog();
+            // var getPathRoot = Path.GetPathRoot(Assembly.GetExecutingAssembly().Location);
+            LogManager.Configuration.Variables["myDir"] = $"C:\\home\\nlog-AspNetCore-own-{DateTime.Now:yyyy-MM-dd}.log";
+
+            builder.Logging.AddFile(f =>
+            {
+                f.FileName = $"File_Log.{DateTime.Now:d}";
+            });
+            builder.Logging.AddAzureWebAppDiagnostics();
+
+            // Default log location: D:\\home\\LogFiles\\Application
+            // Default file name: diagnostics-yyyymmdd.txt
+            // Default blob name: {app-name}{timestamp}/yyyy/mm/dd/hh/{guid}-applicationLog.txt.
+            builder.Services.Configure<AzureFileLoggerOptions>(options =>
+            {
+                options.FileName = "app-diagnostics-";
+                options.FileSizeLimit = 50 * 1024;
+                options.RetainedFileCountLimit = 5;
+            });
+            builder.Services.Configure<AzureBlobLoggerOptions>(options =>
+            {
+                options.BlobName = "app-log.txt";
+            });
+
+            builder.WebHost.UseIIS();
+            builder.WebHost.UseIISIntegration();
+
+            #endregion
+
             var config = builder.Configuration;
 
             services.AddRazorPages()
@@ -38,11 +75,27 @@ namespace Web.Extensions
 
 
             #region Configurations And DbContext
-            services.Configure<EmailProp>(config.GetSection(nameof(EmailProp)));
-            services.Configure<ConnectionStrings>(config.GetSection(nameof(ConnectionStrings)));
-            services.Configure<GoggleAnalytics>(config.GetSection(nameof(GoggleAnalytics)));
-            services.Configure<FacebookAuth>(config.GetSection(nameof(FacebookAuth)));
-            services.Configure<TwitterAuth>(config.GetSection(nameof(TwitterAuth)));
+
+            if (!builder.Environment.IsDevelopment())
+            {
+                builder.Configuration.AddAzureAppConfiguration(opt =>
+                {
+                    var endPoint = config[nameof(ConfigAppSetting.AppEndPoint)];
+                    var label = config[nameof(ConfigAppSetting.ProductionLabelFilter)];
+                    opt.Connect(new Uri(endPoint), new DefaultAzureCredential()).Select(KeyFilter.Any, label);
+                });
+            }
+
+            services.Configure<EmailProp>(config.GetSection(ConfigAppSetting.EmailPropOptions));
+            services.Configure<ConnectionStrings>(config.GetSection(ConfigAppSetting.ConnectionStringsOptions));
+            services.Configure<GoogleAnalytics>(config.GetSection(ConfigAppSetting.GoogleAnalyticsOptions));
+            services.Configure<FacebookSignIn>(config.GetSection(ConfigAppSetting.FacebookSignInOptions));
+            services.Configure<TwitterSignIn>(config.GetSection(ConfigAppSetting.TwitterSignInOptions));
+            services.Configure<GoogleDriveApi>(config.GetSection(ConfigAppSetting.GoogleDriveApiOptions));
+            services.Configure<SingleProperty>(config.GetSection(ConfigAppSetting.SinglePropertyOptions));
+            services.Configure<Spotify>(config.GetSection(ConfigAppSetting.SpotifyOptions));
+
+            services.Configure<ConfigAppSetting>(config.GetSection(nameof(ConfigAppSetting)));
             services.Configure<RouteOptions>(options =>
             {
                 options.AppendTrailingSlash = true;
@@ -58,23 +111,12 @@ namespace Web.Extensions
             }
             builder.Configuration.AddEnvironmentVariables();
 
+            var connString = config.GetConnectionString(nameof(ConnectionStrings.DefaultConnection));
+
             if (!builder.Environment.IsDevelopment())
             {
-                builder.Configuration.AddAzureAppConfiguration(opt =>
-                {
-                    var appEndPoint = config[nameof(ConfigAppSetting.AppEndPoint)];
-
-                    opt.Connect(new Uri(appEndPoint), new DefaultAzureCredential()).Select(KeyFilter.Any, ConfigAppSetting.ProductionLabelFilter);
-
-                    opt.ConfigureRefresh(refresh =>
-                    {
-                        refresh.Register("Sentinel", true).SetCacheExpiration(TimeSpan.FromDays(1));
-                    });
-                });
-
+                connString = config.GetConnectionString(nameof(ConnectionStrings.ProductionConnection));
             }
-
-            var connString = config.GetConnectionString(nameof(ConnectionStrings.DefaultConnection));
             services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
 
             #endregion
@@ -106,24 +148,46 @@ namespace Web.Extensions
                 {
                     pol.AddRequirements(new IsPostOwnerRequirement());
                 });
+
+                opt.AddPolicy("Spotify", pol =>
+                {
+                    pol.AuthenticationSchemes.Add("Spotify");
+                    pol.RequireAuthenticatedUser();
+                });
             });
             services.AddAuthentication().AddFacebook(f =>
             {
-                var facebookAuth = config.GetSection(nameof(FacebookAuth)).Get<FacebookAuth>();
+                var facebookAuth = config.GetSection(ConfigAppSetting.FacebookSignInOptions).Get<FacebookSignIn>();
 
-                f.AppId = facebookAuth.FacebookAppId;
-                f.AppSecret = facebookAuth.FacebookAppSecret;
+                f.AppId = facebookAuth.Facebookappid;
+                f.AppSecret = facebookAuth.Facebookappsecret;
                 f.AccessDeniedPath = "/Account/AccessDenied";
             }).AddTwitter(t =>
             {
-                var twitterAuth = config.GetSection(nameof(TwitterAuth)).Get<TwitterAuth>();
+                var twitterAuth = config.GetSection(ConfigAppSetting.TwitterSignInOptions).Get<TwitterSignIn>();
 
-                t.ConsumerKey = twitterAuth.TwitterConsumerKey;
-                t.ConsumerSecret = twitterAuth.TwitterConsumerSecret;
+                t.ConsumerKey = twitterAuth.Twitterconsumerkey;
+                t.ConsumerSecret = twitterAuth.Twitterconsumersecret;
                 t.AccessDeniedPath = "/Account/AccessDenied";
+            }).AddSpotify(opt =>
+            {
+                var spotifyAuth = config.GetSection(ConfigAppSetting.SpotifyOptions).Get<Spotify>();
+                opt.ClientId = spotifyAuth.ClientId;
+                opt.ClientSecret = spotifyAuth.ClientSecret;
+                opt.AccessDeniedPath = "/Account/AccessDenied";
+                opt.CallbackPath = "/callback";
+                opt.SaveTokens = true;
+                var scopes = new List<string>
+                {
+                    UserReadEmail, UserReadPrivate, PlaylistReadPrivate, PlaylistReadCollaborative,
+                    UserReadCurrentlyPlaying, UserFollowRead, UserLibraryRead, UserTopRead, UserReadRecentlyPlayed
+                };
+
+                opt.Scope.Add(string.Join(",", scopes));
             });
             services.AddSingleton<IAuthorizationHandler, FullAccessHandler>();
             services.AddScoped<IAuthorizationHandler, IsPostOwnerRequirementHandler>();
+            services.AddSingleton(SpotifyClientConfig.CreateDefault());
 
 
             services.AddDefaultIdentity<ApplicationUser>(opt =>
@@ -136,7 +200,8 @@ namespace Web.Extensions
                 opt.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
                 opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
 
-            }).AddDefaultTokenProviders().AddEntityFrameworkStores<FortuneDbContext>();
+            }).AddDefaultTokenProviders().AddEntityFrameworkStores<FortuneDbContext>()
+                .AddTokenProvider("Spotify", typeof(DataProtectorTokenProvider<ApplicationUser>));
 
 
             services.ConfigureApplicationCookie(opt =>
@@ -165,33 +230,6 @@ namespace Web.Extensions
 
 
             services.AddTransient<IEmailSender, EmailSender>();
-
-            #endregion
-
-            #region Host Settings / Logging / Deployment
-
-            builder.Logging.AddFile(f =>
-            {
-                f.FileName = $"File_Log.{DateTime.Now:d}";
-            });
-            builder.Logging.AddAzureWebAppDiagnostics();
-
-            // Default log location: D:\\home\\LogFiles\\Application
-            // Default file name: diagnostics-yyyymmdd.txt
-            // Default blob name: {app-name}{timestamp}/yyyy/mm/dd/hh/{guid}-applicationLog.txt.
-            builder.Services.Configure<AzureFileLoggerOptions>(options =>
-            {
-                options.FileName = "app-diagnostics-";
-                options.FileSizeLimit = 50 * 1024;
-                options.RetainedFileCountLimit = 5;
-            });
-            builder.Services.Configure<AzureBlobLoggerOptions>(options =>
-            {
-                options.BlobName = "app-log.txt";
-            });
-
-            builder.WebHost.UseIIS();
-            builder.WebHost.UseIISIntegration();
 
             #endregion
 

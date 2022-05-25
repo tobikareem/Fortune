@@ -1,4 +1,5 @@
 ﻿@page "{id?}"
+@using Web.Extensions
 @using Web.Pages.Classes
 @model Web.Pages.WriterModel
 @{
@@ -82,8 +83,14 @@
     </ul>
 </div>
 
-<a asp-page="/CreatePost" class="filterDrop ms-1 btn-secondary"> Create Post </a>
-
+@if (User.Identity!.IsAuthenticated)
+{
+    <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample" class="filterDrop ms-1 btn-secondary"> Create Post </a>
+}
+else
+{
+    <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Model.ReturnUrl" class="filterDrop ms-1 btn-secondary"> Create Post </a>
+}
 
 <div class="blog-container container">
     <div class="row gy-1">
@@ -103,9 +110,16 @@
                                                 <span class="col-6 text-break text-wrap text-sm-start">@Extend.GetConvertedDate(@blog.CreatedOn, false)</span>
                                                 <span class="col-6 cutLongWord text-sm-end">@blog.CreatedBy</span>
                                             </div>
-
-                                            <h6 class="card-subtitle mb-2 mt-4 fs-4">@blog.Title</h6>
-                                            <p class="fs-6 card-text font-monospace text-break text-wrap cutLongWord mt-2">@blog.Description</p>
+                                            @if (string.Compare(blog.Title, "untitled", StringComparison.OrdinalIgnoreCase) == 0)
+                                            {
+                                                <h6 class="card-subtitle mb-2 mt-4 fs-6">@blog.Title</h6>
+                                                <p class="fs-6 card-text font-monospace text-break text-wrap cutLongWord mt-2">@Utility.GetPlainTextFromHtml(@blog.Content)</p>
+                                            }
+                                            else
+                                            {
+                                                <h6 class="card-subtitle mb-2 mt-4 fs-4">@blog.Title</h6>
+                                                <p class="fs-6 card-text font-monospace text-break text-wrap cutLongWord mt-2">@blog.Description</p>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -113,16 +127,22 @@
                         </div>
                     }
                 }
-
             </div>
-
         </div>
 
 
         <div class="col-md-3">
             <div class="popular-section">
                 <div class="createWriterSection mb-2">
-                    <a asp-page="/CreatePost"> Create Post </a>
+                    
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"> Create Post </a>
+                    }
+                    else
+                    {
+                        <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Model.ReturnUrl"> Create Post </a>
+                    }
                 </div>
                 <h6 class="fs-2">Recent Posts</h6>
                 <div class="btnRecent">
@@ -179,4 +199,24 @@
         </div>
     </div>
 
+</div>
+
+
+<div class="offcanvas offcanvas-end w-100" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" data-bs-backdrop="false">
+    <div class="offcanvas-header">
+        <h6 class="offcanvas-title fs-4" id="offcanvasExampleLabel">Create a Post </h6>
+
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <hr />
+        <dl>
+            <dt>Notes</dt>
+            <dd class="fs-6 ps-3"> * You may create a post without title and description</dd>
+            <dd class="fs-6 ps-3"> * To add Title, Category and Description, collapse panel below:</dd>
+        </dl>
+
+        
+        <partial name="Shared/_CreatePost" model="Model.UserPost"/>
+    </div>
 </div>

@@ -2,66 +2,73 @@
 @using global::Shared.Interfaces.Services
 @using Category = Data.Entity.Category
 @using Core.Constants
+@using System.Linq
+@using System.Security.Claims
 
 @inject IDataStore<Category> _categoryRepo;
 @inject ICacheService _cacheService;
 @model Data.Entity.Post
 
 @{
-    var allCategories =  _cacheService.GetOrCreate(CacheEntry.Categories, _categoryRepo.GetAll, 120);
-    var categories = allCategories.Where(x => x.Category1.ToLower() != "mindfeed");
+    var categories = _cacheService.GetOrCreate(CacheEntry.Categories, _categoryRepo.GetAll, 120).ToList();
+    
+    if (!User.HasClaim(ClaimTypes.Role, ResourceAction.FortuneAdmin))
+    {
+        categories = categories.Where(x => x.Category1.ToLower() != "mindfeed").ToList();
+    }
+
+    var selectList = categories.Select(category => new SelectListItem { Text = category.Category1, Value = category.Id.ToString() }).ToList();
+
+    selectList.Insert(0, new SelectListItem { Text = "Select a category", Value = "" });
 }
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
 
 <div class="row">
     <div class="col-md-12">
-        <form method="post">
+        <form method="post" asp-page-handler="CreateNew" asp-Page="Writer">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="card">
-                <a data-bs-toggle="collapse" href="#collapseContent" role="button" aria-expanded="false" aria-controls="collapseContent">
-                    <div class="card-header d-flex flex-row justify-content-between">
-                        <p class="text-sm-start">About The Write up</p>
-                        <p class="p-blue text-sm-end"><span class="fas fa-chevron-up pe-2"></span>Show/Hide</p>
-                    </div>
-                </a>
 
-                <div class="card-body collapse show" id="collapseContent">
-                    <div class="mb-3">
-                        <label asp-for="Title" class="form-label"></label>
-                        <input asp-for="Title" class="form-control" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Category.Category1" class="form-label"></label>
-                        <input class="form-control" list="categoryListOptions" asp-for="Category.Category1" />
-                        <datalist id="categoryListOptions">
-                            @{
-                                foreach (var c in categories)
-                                {
-                                    <option value="@c.Category1"></option>
-                                }
-                            }
-                        </datalist>
-                        <span asp-validation-for="Category.Category1" class="text-danger"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Description" class="form-label"></label>
-                        <textarea asp-for="Description" class="form-control" rows="3"> </textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
+            <div class="row gy-2">
+                <div class="card col-12">
+                    <a data-bs-toggle="collapse" href="#collapseContent" role="button" aria-expanded="false" aria-controls="collapseContent">
+                        <div class="card-header d-flex flex-row justify-content-between">
+                            <p class="text-sm-start">Add More Context</p>
+                            <p class="p-blue text-sm-end"><span class="fas fa-chevron-up pe-2"></span>Show/Hide</p>
+                        </div>
+                    </a>
+
+                    <div class="card-body collapse" id="collapseContent">
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Category" class="form-label"></label>
+                            <select asp-for="CategoryId" asp-items="selectList"></select>
+                            <span asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"> </textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
+
+                <textarea asp-for="Content" id="Content" name="Content" class="mt-3 mt-md-3 mt-lg-3 col-12"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+
+                <div class="col-12">
+                    <button type="submit" class="btn createPostBtn" style="background-color: #2a9d8f"><span class="d-inline-flex m-0">Submit</span></button>
+                    <button type="button" class="btn btn-secondary createPostBtn ms-4" data-bs-dismiss="offcanvas"><span class="d-inline-flex m-0">Cancel</span></button>
+                </div>
             </div>
-
-            <textarea asp-for="Content" id="Content" name="Content" class="mt-3 mt-md-3 mt-lg-3"></textarea>
-            <span asp-validation-for="Content" class="text-danger"></span>
-
-            <button class="contact1-form-btn mt-5 mt-md-4 mt-lg-2" type="submit">
-                <span>Submit</span>
-            </button>
-            
         </form>
     </div>
 </div>

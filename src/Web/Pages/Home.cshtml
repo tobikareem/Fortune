@@ -18,8 +18,8 @@
             </div>
 
             <div class="col-md-9 profileInfo">
-                <h4 class="display-5">Kareem Oluwatobi</h4>
-                <h6 class="fs-4">Developer | Writer | Entrepreneur</h6>
+                <h4 class="fs-4">Tobi Kareem</h4>
+                <h6 class="fs-3">Developer | Writer | Entrepreneur</h6>
                 <div class="floatingText">
                     <div class="carousel slide" id="carouselEx" data-bs-ride="carousel">
                         <div class="carousel-inner">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <p class="fs-6"> I am a man of Fortune, And I must seek my Fortune</p>
+                <p class="fs-6"> I am a man of fortune, And I must seek my fortune</p>
 
                 <div class="contactArea">
                     <ul class="social_footer_ul">
@@ -76,7 +76,7 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-4 profilePic">
-                <h6 class="display-6">Catch What I am up to</h6>
+                <h6 class="display-6">Catch what I am up to</h6>
 
                 <div class="containAccord">
                     <div class="bg-blue"></div>
@@ -121,14 +121,33 @@
                                             <div class="collapse show multi-collapse" id="multiCollapseExample1">
                                                 <div class="border-bottom py-2">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <div>
-                                                            <p class="p-blue">@p.Title</p>
-                                                            <p class="textmuted">@Extend.GetTimeDifference(@p.CreatedOn)</p>
-                                                        </div>
-                                                        <div class="arrow">
-                                                            @* <a role="button" class="mindfeed"> <i class="fas fa-thumbs-up"></i></a> *@
-                                                            <a asp-page="/BlogPost" asp-route-id="@p.Id"><div class="btn btn-primary fas fa-arrow-right"></div> </a>
-                                                        </div>
+                                                        @if (!string.IsNullOrWhiteSpace(p.Title))
+                                                        {
+                                                            <div>
+                                                                <p class="p-blue">@p.Title</p>
+                                                                <p class="textmuted">@Extend.GetTimeDifference(@p.CreatedOn)</p>
+                                                            </div>
+
+                                                            <div class="arrow">
+                                                                @* <a role="button" class="mindfeed"> <i class="fas fa-thumbs-up"></i></a> *@
+                                                                <a asp-page="/BlogPost" asp-route-id="@p.Id">
+                                                                    <div class="btn btn-primary fas fa-arrow-right"></div>
+                                                                </a>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="d-block">
+                                                                <div>
+                                                                    <p class="p-blue"> <span class="textmuted">I'm currently listening to: </span>  <a href="@p.SpotifyExternalUrl" target="_blank"> @p.SpotifySongName - @p.SpotifyArtistName </a></p>
+                                                                </div>
+
+                                                                <div>
+                                                                    <img class="img-fluid me-1" src="@p.SpotifySongImage" style="margin-top: -50px" alt="spotify" />
+                                                                    <video controls autoplay muted name="media" style="height: 64px; width: 300px;"><source src="@p.SpotifyPreviewSong" type="audio/mpeg"></video>
+                                                                </div>
+                                                            </div>
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -141,7 +160,7 @@
                                 <button class="btn btn-primary px-1" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="true"
                                         aria-controls="multiCollapseExample1">
-                                    <p class="p-blue"><span class="fas fa-chevron-up pe-2"></span>Hide @Model.DisplayPosts.Count Units</p>
+                                    <p class="p-blue"><span class="fas fa-chevron-up pe-2"></span>Hide</p>
                                 </button>
                             </p>
                         </div>
@@ -155,7 +174,7 @@
                 <div class="aboutMe">
                     <h6 class="display-6">About Me</h6>
                     <p class="fs-6 lh-base">
-                        I am a Full-Stack Software Developer, a Writer and an Entrepreneur. I am passionate about what I
+                        I am a full-stack software Developer, a Writer and an Entrepreneur. I am passionate about what I
                         do. My most recent work experience is at Tesla Inc. as a Senior Software Engineer.
                     </p>
                     <p class="fs-6 lh-base">
