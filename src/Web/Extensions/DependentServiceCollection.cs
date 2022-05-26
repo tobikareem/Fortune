@@ -94,6 +94,7 @@ namespace Web.Extensions
             services.Configure<GoogleDriveApi>(config.GetSection(ConfigAppSetting.GoogleDriveApiOptions));
             services.Configure<SingleProperty>(config.GetSection(ConfigAppSetting.SinglePropertyOptions));
             services.Configure<Spotify>(config.GetSection(ConfigAppSetting.SpotifyOptions));
+            services.Configure<Instagram>(config.GetSection(ConfigAppSetting.InstagramOptions));
 
             services.Configure<ConfigAppSetting>(config.GetSection(nameof(ConfigAppSetting)));
             services.Configure<RouteOptions>(options =>
@@ -149,11 +150,11 @@ namespace Web.Extensions
                     pol.AddRequirements(new IsPostOwnerRequirement());
                 });
 
-                opt.AddPolicy("Spotify", pol =>
-                {
-                    pol.AuthenticationSchemes.Add("Spotify");
-                    pol.RequireAuthenticatedUser();
-                });
+                //opt.AddPolicy("Spotify", pol =>
+                //{
+                //    pol.AuthenticationSchemes.Add("Spotify");
+                //    pol.RequireAuthenticatedUser();
+                //});
             });
             services.AddAuthentication().AddFacebook(f =>
             {
@@ -175,7 +176,7 @@ namespace Web.Extensions
                 opt.ClientId = spotifyAuth.ClientId;
                 opt.ClientSecret = spotifyAuth.ClientSecret;
                 opt.AccessDeniedPath = "/Account/AccessDenied";
-                opt.CallbackPath = "/callback";
+               // opt.CallbackPath = "/callback";
                 opt.SaveTokens = true;
                 var scopes = new List<string>
                 {
