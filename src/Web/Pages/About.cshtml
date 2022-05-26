@@ -16,6 +16,10 @@
     <div class="side">
         <p class="fs-3">About Me</p>
         <img class="aboutImg" src="~/lib/images/tobiMe.jpg" alt="about me photo" />
+        
+        @*<form asp-page-handler="InstagramCodeRequest">
+            <button class="btn btn-sm btn-primary">Login With Instagram</button>
+        </form>*@
         @{
             foreach (var tweet in Model.AllTweets)
             {
