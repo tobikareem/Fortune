@@ -1,8 +1,12 @@
 ﻿using System.Diagnostics;
 using System.Net;
+using System.Timers;
 using Core.Constants;
 using Core.Models;
+using Data.Entity;
 using Newtonsoft.Json;
+using Tweetinvi.Core.Extensions;
+using Timer = System.Timers.Timer;
 
 namespace Web.Extensions
 {
@@ -50,11 +54,16 @@ namespace Web.Extensions
         private readonly RequestDelegate _requestDelegate;
         private readonly ILogger<CustomErrorLogMiddleware> _logger;
         #endregion
-        
+
+        private readonly Dictionary<string, LogPageViewCount> _logPageViewDictionary;
+        private static Timer _timer;
         public CustomErrorLogMiddleware(RequestDelegate next, ILogger<CustomErrorLogMiddleware> logger)
         {
             _requestDelegate = next;
             _logger = logger;
+            _logPageViewDictionary = new Dictionary<string, LogPageViewCount>();
+
+            SetTimer();
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -65,6 +74,8 @@ namespace Web.Extensions
             try
             {
                 await _requestDelegate(context);
+
+                LogBlogPostPath(context);
             }
             catch (Exception e)
             {
@@ -76,9 +87,37 @@ namespace Web.Extensions
                 _logger.Log(LogLevel.Error, PageLogEventId.CustomErrorLogMiddleWare, data.Message);
             }
 
-            data.Duration = data.Duration == 0 ?  timer.Elapsed.TotalSeconds : data.Duration;
+            //data.Duration = data.Duration == 0 ?  timer.Elapsed.TotalSeconds : data.Duration;
             
-            _logger.Log(LogLevel.Information, PageLogEventId.CustomErrorLogMiddleWare, data.Message);
+            //_logger.Log(LogLevel.Information, PageLogEventId.CustomErrorLogMiddleWare, data.Message);
+        }
+
+        private void LogBlogPostPath(HttpContext context)
+        {
+            var path = context.Request.RouteValues.TryGetValue("page", out var pathValue) ? pathValue?.ToString() : "unknown";
+
+            if (string.Compare(path, "/blogPost", StringComparison.OrdinalIgnoreCase) != 0)
+            {
+                return;
+            }
+
+            path = context.Request.Path.HasValue ? context.Request.Path.Value : "";            
+            _logPageViewDictionary.TryGetValue(path, out var pageView);
+
+            pageView ??= new LogPageViewCount();
+
+            pageView.Count++;
+            pageView.EndPoint = path;
+            pageView.CreatedAt = DateTime.UtcNow;
+
+            var user = context.User;
+            if (user.Identity is { IsAuthenticated: true })
+            {
+                pageView.UserName = user.FindFirst("FirstName")?.Value;
+            }
+
+
+            _logPageViewDictionary.AddOrUpdate(path, pageView);
         }
 
         private static async Task LogException(HttpContext context, Exception exception, PageTracking data)
@@ -130,6 +169,33 @@ namespace Web.Extensions
             }
 
             return tracking;
+        }
+
+        private void SetTimer()
+        {
+            // Create a timer with a two second interval.
+
+            var seconds = TimeSpan.FromMinutes(2).TotalSeconds;
+
+            _timer = new Timer(60000);
+            // Hook up the Elapsed event for the timer. 
+            _timer.Elapsed += OnTimedEvent;
+            _timer.AutoReset = true;
+            _timer.Enabled = true;
+        }
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            // save to database
+
+            foreach (var path in _logPageViewDictionary.Select(logPageViewCount => logPageViewCount.Key))
+            {
+                _logPageViewDictionary.TryGetValue(path, out var logPage);
+                _logger.LogInformation(PageLogEventId.PageViewCount, "Path - {path}, User - {user}, Count - {count}, SignalTime {signal}", path, logPage?.UserName, logPage?.Count, e.SignalTime);
+            }
+
+            // refresh the dictionary
+            // _logPageViewDictionary.Clear();
         }
     }
 }

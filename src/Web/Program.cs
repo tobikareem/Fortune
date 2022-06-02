@@ -1,7 +1,6 @@
 using NLog;
 using NLog.Web;
 using Web.Extensions;
-
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 logger.Debug("Initialized main method");

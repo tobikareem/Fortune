@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging.AzureAppServices;
 using NLog;
 using NLog.Web;
 using SpotifyAPI.Web;
+using Web.Customs.Filter;
 using static SpotifyAPI.Web.Scopes;
 using Category = Data.Entity.Category;
 
@@ -67,6 +68,7 @@ namespace Web.Extensions
                 .AddMvcOptions(options =>
                 {
                     // options.Filters.Add<ValidateFilter>();
+                    options.Filters.Add<LogPageViewCountPageFilter>();
                 });
             services.AddHealthChecks();
             services.AddHsts(opt => opt.MaxAge = TimeSpan.FromHours(1));
