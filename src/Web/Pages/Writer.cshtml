@@ -11,27 +11,27 @@
     <script src="https://kit.fontawesome.com/a45e1612b0.js" crossorigin="anonymous"></script>
 }
 
-<figure>
-    <blockquote>
-        <p>
-            I am a Writer, I love to use big words in my write-ups, like utilizing gargantuan expressions for simple
-            idioms.
-        </p>
-    </blockquote>
-</figure>
+    <figure>
+        <blockquote>
+            <p>
+                I am a Writer, I love to use big words in my write-ups, like utilizing gargantuan expressions for simple
+                idioms.
+            </p>
+        </blockquote>
+    </figure>
 
-<!-- create a blog post -->
+    <!-- create a blog post -->
 
-<br />
-<div class="dropdown filterDrop">
+    <br />
+    <div class="dropdown filterDrop">
 
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownWrite" data-bs-toggle="dropdown"
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownWrite" data-bs-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-        Recent Posts
-    </button>
+            Recent Posts
+        </button>
 
-    <ul class="dropdown-menu" aria-labelledby="dropdownWrite">
-        @{
+        <ul class="dropdown-menu" aria-labelledby="dropdownWrite">
+            @{
             if (Model.BlogPosts.Any())
             {
 
@@ -134,7 +134,7 @@ else
         <div class="col-md-3">
             <div class="popular-section">
                 <div class="createWriterSection mb-2">
-                    
+
                     @if (User.Identity!.IsAuthenticated)
                     {
                         <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"> Create Post </a>
@@ -216,7 +216,8 @@ else
             <dd class="fs-6 ps-3"> * To add Title, Category and Description, collapse panel below:</dd>
         </dl>
 
-        
-        <partial name="Shared/_CreatePost" model="Model.UserPost"/>
+        <form method="post" asp-page-handler="CreateNew" asp-Page="Writer">
+            <partial name="Shared/_CreatePost" model="Model.UserPost" />
+        </form>
     </div>
 </div>

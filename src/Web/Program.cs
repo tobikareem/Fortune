@@ -1,6 +1,7 @@
 using NLog;
 using NLog.Web;
 using Web.Extensions;
+using Azure.Identity;
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 logger.Debug("Initialized main method");

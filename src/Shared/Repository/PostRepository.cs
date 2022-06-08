@@ -50,7 +50,7 @@ namespace Shared.Repository
 
         public Post GetById(int id)
         {
-            var post = GetAll().FirstOrDefault(x => x.Id == id);
+            var post = _dbContext.Posts.Where(x => x.Enabled).FirstOrDefault(x => x.Id == id);
 
             return post ?? new Post();
         }
