@@ -68,7 +68,7 @@ namespace Web.Extensions
                 .AddMvcOptions(options =>
                 {
                     // options.Filters.Add<ValidateFilter>();
-                    options.Filters.Add<LogPageViewCountPageFilter>();
+                    // options.Filters.Add<LogPageViewCountPageFilter>();
                 });
             services.AddHealthChecks();
             services.AddHsts(opt => opt.MaxAge = TimeSpan.FromHours(1));

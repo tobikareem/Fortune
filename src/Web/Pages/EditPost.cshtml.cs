@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Data.Entity;
 using Microsoft.AspNetCore.Identity;
+using Shared.Interfaces.Repository;
 using Shared.Interfaces.Services;
 
 namespace Web.Pages
@@ -12,14 +13,13 @@ namespace Web.Pages
     public class EditPostModel : PageModel
     {
         private readonly IPostService _postService;
+        private readonly IDataStore<Post> _postRepository;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ICacheService _cacheService;
-
-        public EditPostModel(IPostService postService, UserManager<ApplicationUser> userManager, ICacheService cacheService)
+        public EditPostModel(IPostService postService, UserManager<ApplicationUser> userManager, IDataStore<Post> postRepository)
         {
             _postService = postService;
             _userManager = userManager;
-            _cacheService = cacheService;
+            _postRepository = postRepository;
         }
 
         [BindProperty]
@@ -52,13 +52,14 @@ namespace Web.Pages
             try
             {
                 var user = _userManager.GetUserId(User);
-                var existingPost = _postService.GetPostById(Post.Id);
+                var existingPost = _postRepository.GetById(Post.Id);
                 
                 existingPost.Content = Post.Content;
                 existingPost.Description = Post.Description;
                 existingPost.Title = Post.Title;
                 existingPost.ModifiedOn = DateTime.UtcNow;
                 existingPost.ModifiedBy = user;
+                existingPost.CategoryId = Post.CategoryId;
 
                 _postService.UpdatePost(existingPost, CacheEntry.Posts, true);
             }

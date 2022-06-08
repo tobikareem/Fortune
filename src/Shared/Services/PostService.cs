@@ -16,7 +16,7 @@ namespace Shared.Services
             _categoryRepository = categoryRepository;
             _cacheService = cacheService;
         }
-        
+
         public void CreateNewPost(Post post, CacheEntry cacheKey, bool hasCache = false)
         {
             var categories = _cacheService.GetOrCreate(CacheEntry.Categories, _categoryRepository.GetAll, 120).ToList();
@@ -31,7 +31,7 @@ namespace Shared.Services
 
             post.Title = string.IsNullOrWhiteSpace(post.Title) ? "Untitled" : post.Title.Trim();
             post.Description = string.IsNullOrWhiteSpace(post.Description) ? "No description" : post.Description;
-            
+
             post.IsReviewPost = post.Category?.Category1 == "Review";
             post.CategoryId = post.Category?.Id;
             post.CreatedOn = DateTime.UtcNow;
@@ -48,13 +48,17 @@ namespace Shared.Services
 
         public void UpdatePost(Post post, CacheEntry cacheKey, bool hasCache = false)
         {
+
+            //var categories = _cacheService.GetOrCreate(CacheEntry.Categories, _categoryRepository.GetAll, 120).ToList();
+            //post.Category = categories.First(x => x.Id == post.CategoryId.GetValueOrDefault());
             _postRepository.UpdateEntity(post, cacheKey, hasCache);
         }
 
         public Post GetPostById(int postId)
         {
-            var post = _postRepository.GetById(postId);
-            return post;
+            var blogList = _cacheService.GetOrCreate(CacheEntry.Posts, _postRepository.GetAll, 180).ToList();
+            var post = blogList.Find(x => x.Id == postId);
+            return post ?? new Post();
         }
     }
 }
