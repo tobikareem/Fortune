@@ -1,0 +1,103 @@
+﻿@page
+@using Web.Pages.Classes
+@model Web.Pages.HireModel
+@{
+}
+
+@{
+    ViewData["Title"] = "Hire Me";
+    ViewData["ActivePage"] = BreadCrumbs.Hire;
+}
+
+@{
+    var tenYearsAgo = DateTime.Now.AddYears(-10);
+    var timeSpan = DateTime.Now.Year - tenYearsAgo.Year;
+}
+
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="text-center">Hire Me</h1>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>I'm an expert software developer with over @timeSpan years of experience, currently working at Tesla. I specialize in:</p>
+            <ul>
+                <li>ASP.NET Core</li>
+                <li>Python</li>
+                <li>JavaScript and TypeScript</li>
+                <li>React and Angular</li>
+                <li>Cloud Computing (AWS, Azure, GCP)</li>
+                <li>DevOps</li>
+                <li>Mobile Development (Android, iOS)</li>
+                <li>Kafka, RabbitMQ</li>
+                <li>Software development training and mentoring</li>
+            </ul>
+
+            
+        </div>
+     
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <h3>Presentation Tier</h3>
+            <img src="~/svg/presentation.svg" alt="Data Tier Icon" class="img-fluid mb-3" style="fill: blue;">
+
+            <ul>
+                <li>HTML5 &amp; CSS3</li>
+                <li>JavaScript &amp; TypeScript</li>
+                <li>React &amp; Angular</li>
+                <li>Vue.js &amp; Svelte</li>
+                <li>Bootstrap &amp; Tailwind CSS</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h3>Business Tier</h3>
+            <img src="~/svg/business.svg" alt="Data Tier Icon" class="img-fluid mb-3" style="fill: blue;">
+            <ul>
+                <li>.NET Core</li>
+                <li>Python (Django, Flask)</li>
+                <li>Java (Spring Boot)</li>
+                <li>Node.js (Express, NestJS)</li>
+                <li>Ruby on Rails</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h3>Data Tier</h3>
+            <img src="~/svg/data.svg" alt="Data Tier Icon" class="img-fluid mb-3" style="fill: blue;">
+            <ul>
+                <li>Microsoft SQL Server</li>
+                <li>MySQL &amp; PostgreSQL</li>
+                <li>MongoDB &amp; Couchbase</li>
+                <li>Redis &amp; Memcached</li>
+                <li>Apache Cassandra &amp; Amazon DynamoDB</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <h2>Why you should hire me:</h2>
+            <p>
+                As a seasoned software developer with a proven track record, I can provide top-quality solutions to your technical challenges. My experience at Tesla and other companies has honed my skills in working with cutting-edge technologies and delivering innovative, reliable software products.
+            </p>
+
+            <h2>Portfolio</h2>
+            <p>
+                Visit my <a href="https://github.com/tobikareem">Github Page</a> page to see some of my past projects and accomplishments.
+            </p>
+
+            <h2>Contact Me</h2>
+            <p>
+                If you are interested in discussing a potential project or collaboration, please feel free to reach out to me through the <a href="/Contact">Contact</a> page or send an email to <a href="mailto:captain@tobikareem.com">captain@tobikareem.com</a>.
+            </p>
+        </div>
+    </div>
+    
+       
+
+</section>
+
