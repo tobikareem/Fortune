@@ -20,6 +20,7 @@ using Microsoft.Extensions.Logging.AzureAppServices;
 using NLog;
 using NLog.Web;
 using SpotifyAPI.Web;
+using Web.Customs.Filter;
 using static SpotifyAPI.Web.Scopes;
 using Category = Data.Entity.Category;
 
@@ -67,6 +68,7 @@ namespace Web.Extensions
                 .AddMvcOptions(options =>
                 {
                     // options.Filters.Add<ValidateFilter>();
+                    // options.Filters.Add<LogPageViewCountPageFilter>();
                 });
             services.AddHealthChecks();
             services.AddHsts(opt => opt.MaxAge = TimeSpan.FromHours(1));
@@ -94,6 +96,7 @@ namespace Web.Extensions
             services.Configure<GoogleDriveApi>(config.GetSection(ConfigAppSetting.GoogleDriveApiOptions));
             services.Configure<SingleProperty>(config.GetSection(ConfigAppSetting.SinglePropertyOptions));
             services.Configure<Spotify>(config.GetSection(ConfigAppSetting.SpotifyOptions));
+            services.Configure<Instagram>(config.GetSection(ConfigAppSetting.InstagramOptions));
 
             services.Configure<ConfigAppSetting>(config.GetSection(nameof(ConfigAppSetting)));
             services.Configure<RouteOptions>(options =>
@@ -149,11 +152,11 @@ namespace Web.Extensions
                     pol.AddRequirements(new IsPostOwnerRequirement());
                 });
 
-                opt.AddPolicy("Spotify", pol =>
-                {
-                    pol.AuthenticationSchemes.Add("Spotify");
-                    pol.RequireAuthenticatedUser();
-                });
+                //opt.AddPolicy("Spotify", pol =>
+                //{
+                //    pol.AuthenticationSchemes.Add("Spotify");
+                //    pol.RequireAuthenticatedUser();
+                //});
             });
             services.AddAuthentication().AddFacebook(f =>
             {
@@ -175,7 +178,7 @@ namespace Web.Extensions
                 opt.ClientId = spotifyAuth.ClientId;
                 opt.ClientSecret = spotifyAuth.ClientSecret;
                 opt.AccessDeniedPath = "/Account/AccessDenied";
-                opt.CallbackPath = "/callback";
+               // opt.CallbackPath = "/callback";
                 opt.SaveTokens = true;
                 var scopes = new List<string>
                 {

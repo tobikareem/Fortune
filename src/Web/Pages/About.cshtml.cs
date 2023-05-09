@@ -15,17 +15,19 @@ namespace Web.Pages
         private readonly IExternalApiCalls _serviceCalls;
         private readonly ICacheService _cacheService;
         private readonly IUserService _userService;
+        private Instagram _instagram;
 
         public List<Datum> AllTweets { get; set; }
 
-        public AboutModel(IExternalApiCalls serviceCalls, ICacheService cacheService, IUserService userService)
+        public AboutModel(IExternalApiCalls serviceCalls, ICacheService cacheService, IUserService userService, IOptions<Instagram> instagram)
         {
             _serviceCalls = serviceCalls;
             _cacheService = cacheService;
             _userService = userService;
-            AllTweets = new List<Datum>();
-        }
+            _instagram = instagram.Value;
 
+            AllTweets = new List<Datum>();            
+        }
 
         public IActionResult OnGet()
         {
@@ -64,6 +66,18 @@ namespace Web.Pages
             #endregion
             
             return Page();
+        }
+
+        public IActionResult OnPostInstagramCodeRequest()
+        {
+
+            var clientId = _instagram.ClientId;
+            var redirectUri = _instagram.RedirectUri;
+            var scope = _instagram.Scope;
+            
+            var authorize = $" {_instagram.AuthorizeUri}?client_id={clientId}&redirect_uri={redirectUri}&scope={scope}&response_type=code&state=instagram";
+
+            return Redirect(authorize);
         }
     }
 
