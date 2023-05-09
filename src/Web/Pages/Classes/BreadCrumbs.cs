@@ -18,6 +18,8 @@ namespace Web.Pages.Classes
         public static string Suggestions => "Suggestions";
         public static string Writer => "Writer";
 
+        public static string Hire => "Hire";
+
         public static (string display, string active) AddDisplayForHome(ViewContext context) => AddingDisplayClass(context, Home);
         public static (string display, string active) AddDisplayForAbout(ViewContext context) => AddingDisplayClass(context, About);
         public static (string display, string active) AddDisplayForBlogPost(ViewContext context) => AddingDisplayClass(context, BlogPost);
@@ -30,6 +32,8 @@ namespace Web.Pages.Classes
         public static (string display, string active) AddDisplayForSuggestions(ViewContext context) => AddingDisplayClass(context, Suggestions);
         public static (string display, string active) AddDisplayForWriter(ViewContext context) => AddingDisplayClass(context, Writer);
         public static (string display, string active) AddDisplayForConnections(ViewContext context) => AddingDisplayClass(context, Connections);
+
+        public static (string display, string active) AddDisplayForHire(ViewContext context) => AddingDisplayClass(context, Hire);
 
 
         private static (string display, string active) AddingDisplayClass(ViewContext viewContext, string page)
