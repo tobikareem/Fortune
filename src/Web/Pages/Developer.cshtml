@@ -98,15 +98,19 @@
 
     <div class="company-section">
         <div class="company-section-left">
+            @{
+                var tenYearsAgo = DateTime.Now.AddYears(-10);
+                var timeSpan = DateTime.Now.Year - tenYearsAgo.Year;
+            }
             <p class="fs-6 lh-base">
-                I am an IT professional with over 10 years of experience in Computer Programming - Application Design,
+                I am an IT professional with over @timeSpan years of experience in Computer Programming - Application Design,
                 Website Creation and Cross platform Mobile Apps.
                 I have also garnered experience in the areas of Telecommunication and Networking. My work experience at
                 Aviat Networks availed me this opportunity as a technical support Engineer
                 for leased line communications used in major bank sectors in Nigeria.
 
             </p>
-            
+
             <p class="fs-6 lh-base">
                 Initially, I grew up with a career interest in Mechanical Engineering but ended up pursuing a B.Sc degree
                 in Computer Science at the time. My first experience at programming was during the summer
