@@ -78,16 +78,6 @@ namespace Web.Extensions
 
             #region Configurations And DbContext
 
-            if (!builder.Environment.IsDevelopment())
-            {
-                builder.Configuration.AddAzureAppConfiguration(opt =>
-                {
-                    var endPoint = config[nameof(ConfigAppSetting.AppEndPoint)];
-                    var label = config[nameof(ConfigAppSetting.ProductionLabelFilter)];
-                    opt.Connect(new Uri(endPoint), new DefaultAzureCredential()).Select(KeyFilter.Any, label);
-                });
-            }
-
             services.Configure<EmailProp>(config.GetSection(ConfigAppSetting.EmailPropOptions));
             services.Configure<ConnectionStrings>(config.GetSection(ConfigAppSetting.ConnectionStringsOptions));
             services.Configure<GoogleAnalytics>(config.GetSection(ConfigAppSetting.GoogleAnalyticsOptions));
