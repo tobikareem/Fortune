@@ -118,7 +118,7 @@ namespace Web.Pages
         private async Task SendEmailToWriterAsync(ApplicationUser user)
         {
             var email =
-                $"<!Doctype html>\r\n<head>\r\n    <title>Thank You</title>\r\n\r\n</head>\r\n<body>\r\n\r\n    <div class=\"container bg-default\">\r\n\r\n        <h3 class=\"display-6\"> Hi {UserPost.CreatedBy},</h3>\r\n\r\n        <p class=\"lead\">Thank you for adding a post. I am very excited to read it :).</p>\r\n\r\n        <footer>\r\n            <p>Regards,</p>\r\n    <p>{EmailText.MyName}</p>\r\n          <p>Web: <a href=\"https://www.tobikareem.com\">Tobi Kareem</a></p>\r\n    <p>{EmailText.FortuneSign}</p>\r\n      </footer>\r\n\r\n        </div>\r\n\r\n\r\n</body>\r\n<footer></footer>\r\n\r\n</html>";
+                $"<!Doctype html>\r\n<head>\r\n    <title>Thank You</title>\r\n\r\n</head>\r\n<body>\r\n\r\n    <div class=\"container bg-default\">\r\n\r\n        <h3 class=\"display-6\"> Hi {UserPost.CreatedBy},</h3>\r\n\r\n        <p class=\"lead\">Thank you for adding a post. I am very excited to read it :).</p>\r\n\r\n        <footer>\r\n    <br> <br>        <p>Regards,</p>\r\n    <p>{EmailText.MyName}</p>\r\n          <p>Web: <a href=\"https://www.tobikareem.com\">Tobi Kareem</a></p>\r\n    <p>{EmailText.FortuneSign}</p>\r\n      </footer>\r\n\r\n        </div>\r\n\r\n\r\n</body>\r\n<footer></footer>\r\n\r\n</html>";
 
             await _externalApiCalls.SendGridEmail(user.Email, "Thank you for your post", "", UserPost.CreatedBy ?? string.Empty, email);
 

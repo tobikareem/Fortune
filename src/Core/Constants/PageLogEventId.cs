@@ -10,5 +10,6 @@ namespace Core.Constants
         public const int EmailMessageInformation = 1006;
         public const int MakingAnApiCall = 1007;
         public const int ApiCallFailed = 1008;
+        public const int PageViewCount = 1009;
     }
 }
