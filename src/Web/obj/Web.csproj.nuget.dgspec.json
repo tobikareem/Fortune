@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\Web.csproj": {}
+    "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Web\\Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
+    "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj",
+        "projectUniqueName": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\Tobi Kareem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\obj\\",
+        "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\toboi\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Tobi Kareem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\toboi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -60,7 +60,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -69,25 +70,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj": {
+    "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj",
+        "projectUniqueName": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj",
-        "packagesPath": "C:\\Users\\Tobi Kareem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\obj\\",
+        "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\toboi\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Tobi Kareem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\toboi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -96,14 +96,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj"
+              "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
+                "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj"
               }
             }
           }
@@ -145,7 +146,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -154,25 +156,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj": {
+    "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj",
+        "projectUniqueName": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj",
-        "packagesPath": "C:\\Users\\Tobi Kareem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Shared\\obj\\",
+        "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj",
+        "packagesPath": "C:\\Users\\toboi\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Tobi Kareem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\toboi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -181,17 +182,18 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj"
+              "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
+                "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj"
               },
-              "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj": {
-                "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj"
+              "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj": {
+                "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj"
               }
             }
           }
@@ -209,6 +211,38 @@
             "Google.Analytics.Data.V1Beta": {
               "target": "Package",
               "version": "[1.0.0-beta08, )"
+            },
+            "Google.Apis.Analytics.v3": {
+              "target": "Package",
+              "version": "[1.57.0.1679, )"
+            },
+            "Google.Apis.Auth.AspNetCore3": {
+              "target": "Package",
+              "version": "[1.57.0, )"
+            },
+            "Google.Apis.Drive.v3": {
+              "target": "Package",
+              "version": "[1.57.0.2663, )"
+            },
+            "Google.Cloud.Storage.V1": {
+              "target": "Package",
+              "version": "[3.7.0, )"
+            },
+            "Microsoft.AspNetCore.Identity.UI": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "SendGrid": {
+              "target": "Package",
+              "version": "[9.27.0, )"
+            },
+            "SpotifyAPI.Web": {
+              "target": "Package",
+              "version": "[6.2.2, )"
+            },
+            "TweetinviAPI": {
+              "target": "Package",
+              "version": "[5.0.4, )"
             }
           },
           "imports": [
@@ -217,7 +251,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -226,25 +261,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\Web.csproj": {
+    "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Web\\Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\Web.csproj",
+        "projectUniqueName": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Web\\Web.csproj",
         "projectName": "Web",
-        "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\Web.csproj",
-        "packagesPath": "C:\\Users\\Tobi Kareem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Web\\obj\\",
+        "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Web\\Web.csproj",
+        "packagesPath": "C:\\Users\\toboi\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Tobi Kareem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\toboi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -253,20 +287,21 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj"
+              "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj": {
+                "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Core\\Core.csproj"
               },
-              "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj": {
-                "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj"
+              "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj": {
+                "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Data\\Data.csproj"
               },
-              "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\Tobi Kareem\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj"
+              "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj": {
+                "projectPath": "c:\\Users\\toboi\\OneDrive\\Documents\\Fortune\\src\\Shared\\Shared.csproj"
               }
             }
           }
@@ -281,37 +316,73 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AspNet.Security.OAuth.Spotify": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
             "Font.Awesome": {
               "target": "Package",
               "version": "[5.15.4, )"
             },
+            "Google.Apis.Auth.AspNetCore3": {
+              "target": "Package",
+              "version": "[1.57.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Facebook": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Twitter": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[6.0.3, )"
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.Azure.AppConfiguration.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.3, )"
+              "version": "[6.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.3, )"
+              "version": "[6.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.3, )"
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.Extensions.Logging.AzureAppServices": {
+              "target": "Package",
+              "version": "[6.0.9, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[6.0.2, )"
+              "version": "[6.0.5, )"
+            },
+            "NLog.Web.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             },
             "NetEscapades.Extensions.Logging.RollingFile": {
               "target": "Package",
               "version": "[2.4.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.3.1, )"
             }
           },
           "imports": [
@@ -320,7 +391,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -332,7 +404,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
