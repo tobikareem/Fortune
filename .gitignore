@@ -409,3 +409,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+/src/Web/appsettings.Production.json
+/src/Web/.config
+/src/Web/Properties/ServiceDependencies
+/src/Web/Properties
