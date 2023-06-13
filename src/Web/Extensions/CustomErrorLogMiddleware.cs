@@ -81,7 +81,7 @@ namespace Web.Extensions
             {
                 data.Error = e.Message;
 
-                await LogException(context, e, data);
+                LogException(context, e, data);
 
                 data.Duration = timer.Elapsed.TotalSeconds;
                 _logger.Log(LogLevel.Error, PageLogEventId.CustomErrorLogMiddleWare, data.Message);
@@ -120,7 +120,7 @@ namespace Web.Extensions
             _logPageViewDictionary.AddOrUpdate(path, pageView);
         }
 
-        private static async Task LogException(HttpContext context, Exception exception, PageTracking data)
+        private static void LogException(HttpContext context, Exception exception, PageTracking data)
         {
             var code = HttpStatusCode.InternalServerError;
 
