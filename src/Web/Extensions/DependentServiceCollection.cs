@@ -210,13 +210,13 @@ namespace Web.Extensions
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<IDataStore<Post>, PostRepository>();
-            services.AddScoped<IStringIdStore<IdentityUser>, UserRepository>();
-            services.AddScoped<IDataStore<Comment>, CommentRepository>();
-            services.AddScoped<IDataStore<Category>, CategoryRepository>();
-            services.AddScoped<IBaseStore<Suggestions>, SuggestionRepository>();
-            services.AddScoped<IDataStore<UserDetail>, UserDetailRepository>();
-            services.AddScoped<IHttpRepository, HttpRepository>();
+            services.AddTransient<IDataStore<Post>, PostRepository>();
+            services.AddTransient<IStringIdStore<IdentityUser>, UserRepository>();
+            services.AddTransient<IDataStore<Comment>, CommentRepository>();
+            services.AddTransient<IDataStore<Category>, CategoryRepository>();
+            services.AddTransient<IBaseStore<Suggestions>, SuggestionRepository>();
+            services.AddTransient<IDataStore<UserDetail>, UserDetailRepository>();
+            services.AddTransient<IHttpRepository, HttpRepository>();
             services.AddScoped<IExternalApiCalls, ExternalApiCalls>();
 
             services.AddScoped<ICacheService, CacheService>();
