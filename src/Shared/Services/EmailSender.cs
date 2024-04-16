@@ -6,7 +6,7 @@ using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Shared.Services
 {
-    public class EmailSender: IEmailSender
+    public class EmailSender : IEmailSender
     {
         private readonly ILogger<EmailSender> _logger;
         private readonly IExternalApiCalls _serviceCalls;

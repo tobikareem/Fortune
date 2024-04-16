@@ -8,9 +8,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Shared.Interfaces.Repository;
 using Shared.Interfaces.Services;
-using Tweetinvi;
 using Tweetinvi.Models;
-using Tweetinvi.Parameters.V2;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Shared.Repository
@@ -43,24 +41,11 @@ namespace Shared.Repository
         public async Task<TweetData?> GetMyTweetsAsync()
         {
 
-            var appCred = new ConsumerOnlyCredentials(_twitterSignInConfig.Twitterconsumerkey,
+            _ = new ConsumerOnlyCredentials(_twitterSignInConfig.Twitterconsumerkey,
                 _twitterSignInConfig.Twitterconsumersecret)
             {
                 BearerToken = _twitterSignInConfig.TwitterBearer
             };
-
-
-            var twitterClient = new TwitterClient(appCred);
-
-            //var user = await twitterClient.Users.GetAuthenticatedUserAsync();
-
-            var myTimeLine = await twitterClient.UsersV2.GetUserByNameAsync(new GetUserByNameV2Parameters("captainoath")
-            {
-                Expansions = UserResponseFields.Expansions.ALL,
-                TweetFields =UserResponseFields.Tweet.ALL,
-                UserFields = UserResponseFields.User.ALL,
-
-            });
 
 
 
