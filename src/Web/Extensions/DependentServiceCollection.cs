@@ -226,6 +226,9 @@ namespace Web.Extensions
 
             #endregion
 
+            // Swagger
+            services.AddSwaggerDocument(c => c.Title = "Flight Info");
+
             return services;
         }
     }

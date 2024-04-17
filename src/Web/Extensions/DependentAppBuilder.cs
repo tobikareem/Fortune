@@ -25,6 +25,8 @@ namespace Web.Extensions
                 app.UseHsts();
             }
 
+            app.UseOpenApi();
+            app.UseSwaggerUi();
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
