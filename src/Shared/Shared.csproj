@@ -1,20 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.13.1" />
+    <PackageReference Include="CaptainOath.DataStore" Version="2.0.5" />
     <PackageReference Include="Google.Analytics.Data.V1Beta" Version="1.0.0-beta08" />
-    <PackageReference Include="Google.Apis.Analytics.v3" Version="1.57.0.1679" />
-    <PackageReference Include="Google.Apis.Auth.AspNetCore3" Version="1.57.0" />
-    <PackageReference Include="Google.Apis.Drive.v3" Version="1.57.0.2663" />
-    <PackageReference Include="Google.Cloud.Storage.V1" Version="3.7.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.4" />
-    <PackageReference Include="SendGrid" Version="9.27.0" />
-    <PackageReference Include="SpotifyAPI.Web" Version="6.2.2" />
+    <PackageReference Include="Google.Apis.Analytics.v3" Version="1.68.0.1679" />
+    <PackageReference Include="Google.Apis.Auth.AspNetCore3" Version="1.68.0" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.68.0.3601" />
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="4.10.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="9.0.0" />
+    <PackageReference Include="SendGrid" Version="9.29.3" />
+    <PackageReference Include="SpotifyAPI.Web" Version="7.2.1" />
     <PackageReference Include="TweetinviAPI" Version="5.0.4" />
   </ItemGroup>
 
