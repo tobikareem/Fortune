@@ -413,3 +413,4 @@ FodyWeavers.xsd
 /src/Web/.config
 /src/Web/Properties/ServiceDependencies
 /src/Web/Properties
+/src/Web/${var

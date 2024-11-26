@@ -12,15 +12,12 @@ using Shared.Repository;
 using Web.Customs.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using Azure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using NLog;
 using NLog.Web;
 using SpotifyAPI.Web;
-using Web.Customs.Filter;
 using static SpotifyAPI.Web.Scopes;
 using Category = Data.Entity.Category;
 
@@ -28,41 +25,64 @@ namespace Web.Extensions
 {
     internal static class DependentServiceCollection
     {
-        internal static IServiceCollection AddCustomServiceBuilder(this IServiceCollection services, WebApplicationBuilder builder)
+        internal static IServiceCollection ConfigureCustomServices(this IServiceCollection services, WebApplicationBuilder builder)
         {
-            #region Host Settings / Logging / Deployment
 
+            var config = builder.Configuration;
+
+            #region Logging
             builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
             builder.Host.UseNLog();
-            // var getPathRoot = Path.GetPathRoot(Assembly.GetExecutingAssembly().Location);
-            LogManager.Configuration.Variables["myDir"] = $"C:\\home\\nlog-AspNetCore-own-{DateTime.Now:yyyy-MM-dd}.log";
-
-            builder.Logging.AddFile(f =>
-            {
-                f.FileName = $"File_Log.{DateTime.Now:d}";
-            });
+            LogManager.Configuration.Variables["logDir"] = builder.Configuration["Logging:NLog:logPath"];
             builder.Logging.AddAzureWebAppDiagnostics();
+            #endregion
 
-            // Default log location: D:\\home\\LogFiles\\Application
-            // Default file name: diagnostics-yyyymmdd.txt
-            // Default blob name: {app-name}{timestamp}/yyyy/mm/dd/hh/{guid}-applicationLog.txt.
-            builder.Services.Configure<AzureFileLoggerOptions>(options =>
-            {
-                options.FileName = "app-diagnostics-";
-                options.FileSizeLimit = 50 * 1024;
-                options.RetainedFileCountLimit = 5;
-            });
-            builder.Services.Configure<AzureBlobLoggerOptions>(options =>
-            {
-                options.BlobName = "app-log.txt";
-            });
+
+
+            //builder.Services.Configure<AzureFileLoggerOptions>(options =>
+            //{
+            //    options.FileName = "app-diagnostics-";
+            //    options.FileSizeLimit = 50 * 1024;
+            //    options.RetainedFileCountLimit = 5;
+            //});
+            //builder.Services.Configure<AzureBlobLoggerOptions>(options =>
+            //{
+            //    options.BlobName = "app-log.txt";
+            //});
+
 
             builder.WebHost.UseIIS();
             builder.WebHost.UseIISIntegration();
 
+
+            #region Configurations
+            services.Configure<EmailProp>(config.GetSection(ConfigAppSetting.EmailPropOptions));
+            services.Configure<RouteOptions>(options =>
+            {
+                options.AppendTrailingSlash = true;
+                options.LowercaseUrls = true;
+            });
+            builder.Configuration.AddEnvironmentVariables();
             #endregion
 
-            var config = builder.Configuration;
+            #region Database Context
+            var connString = config.GetConnectionString(nameof(ConnectionStrings.ProductionConnection));
+
+            if (!builder.Environment.IsDevelopment())
+            {
+                connString = config.GetConnectionString(nameof(ConnectionStrings.ProductionConnection));
+            }
+            services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
+            #endregion
+
+            #region Identity/Authorization
+        
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy(ResourcePolicy.IsTobiKareem, pol => pol.RequireRole("FortuneAdmin"));
+            });
+            #endregion
+
 
             services.AddRazorPages()
                 .AddMvcOptions(options =>
@@ -77,8 +97,6 @@ namespace Web.Extensions
 
 
             #region Configurations And DbContext
-
-            services.Configure<EmailProp>(config.GetSection(ConfigAppSetting.EmailPropOptions));
             services.Configure<ConnectionStrings>(config.GetSection(ConfigAppSetting.ConnectionStringsOptions));
             services.Configure<GoogleAnalytics>(config.GetSection(ConfigAppSetting.GoogleAnalyticsOptions));
             services.Configure<FacebookSignIn>(config.GetSection(ConfigAppSetting.FacebookSignInOptions));
@@ -89,12 +107,6 @@ namespace Web.Extensions
             services.Configure<Instagram>(config.GetSection(ConfigAppSetting.InstagramOptions));
 
             services.Configure<ConfigAppSetting>(config.GetSection(nameof(ConfigAppSetting)));
-            services.Configure<RouteOptions>(options =>
-            {
-                options.AppendTrailingSlash = true;
-                options.LowercaseUrls = true;
-                options.LowercaseQueryStrings = true;
-            });
 
             builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json");
 
@@ -102,15 +114,8 @@ namespace Web.Extensions
             {
                 builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
             }
-            builder.Configuration.AddEnvironmentVariables();
 
-            var connString = config.GetConnectionString(nameof(ConnectionStrings.DefaultConnection));
-
-            if (!builder.Environment.IsDevelopment())
-            {
-                connString = config.GetConnectionString(nameof(ConnectionStrings.ProductionConnection));
-            }
-            services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
+            
 
             #endregion
 
@@ -142,11 +147,6 @@ namespace Web.Extensions
                     pol.AddRequirements(new IsPostOwnerRequirement());
                 });
 
-                //opt.AddPolicy("Spotify", pol =>
-                //{
-                //    pol.AuthenticationSchemes.Add("Spotify");
-                //    pol.RequireAuthenticatedUser();
-                //});
             });
             services.AddAuthentication().AddFacebook(f =>
             {
@@ -181,28 +181,7 @@ namespace Web.Extensions
             services.AddSingleton<IAuthorizationHandler, FullAccessHandler>();
             services.AddScoped<IAuthorizationHandler, IsPostOwnerRequirementHandler>();
             services.AddSingleton(SpotifyClientConfig.CreateDefault());
-
-
-            services.AddDefaultIdentity<ApplicationUser>(opt =>
-            {
-                opt.Lockout.AllowedForNewUsers = true;
-                opt.SignIn.RequireConfirmedAccount = true;
-                opt.Password.RequiredLength = 6;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireDigit = false;
-                opt.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
-                opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
-
-            }).AddDefaultTokenProviders().AddEntityFrameworkStores<FortuneDbContext>()
-                .AddTokenProvider("Spotify", typeof(DataProtectorTokenProvider<ApplicationUser>));
-
-
-            services.ConfigureApplicationCookie(opt =>
-            {
-                opt.ExpireTimeSpan = TimeSpan.FromDays(5);
-                opt.SlidingExpiration = true;
-            });
-
+            services.AddCustomIdentity(config);
             #endregion
 
             #region Code Services
@@ -218,15 +197,39 @@ namespace Web.Extensions
             services.AddTransient<IDataStore<UserDetail>, UserDetailRepository>();
             services.AddTransient<IHttpRepository, HttpRepository>();
             services.AddScoped<IExternalApiCalls, ExternalApiCalls>();
-
             services.AddScoped<ICacheService, CacheService>();
-
-
             services.AddTransient<IEmailSender, EmailSender>();
-
             #endregion
 
             return services;
         }
+
+        public static IServiceCollection AddCustomIdentity(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddDefaultIdentity<ApplicationUser>(opt =>
+            {
+                opt.Lockout.AllowedForNewUsers = true;
+                opt.SignIn.RequireConfirmedAccount = true;
+                opt.Password.RequiredLength = 6;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireDigit = false;
+                opt.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+                opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+            })
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<FortuneDbContext>()
+            .AddTokenProvider("Spotify", typeof(DataProtectorTokenProvider<ApplicationUser>));
+
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.ExpireTimeSpan = TimeSpan.FromDays(5);
+                opt.SlidingExpiration = true;
+            });
+
+            return services;
+        }
+
     }
+
+
 }
