@@ -26,6 +26,7 @@ namespace Web.Extensions
                 app.UseHsts();
             }
 
+            // app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseMiddleware<CustomErrorLogMiddleware>();
             app.UseRouting();
@@ -34,6 +35,7 @@ namespace Web.Extensions
 
             _ = app.UseEndpoints(endPoints =>
             {
+                endPoints.MapStaticAssets();
                 endPoints.MapRazorPages().WithStaticAssets();
                 endPoints.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
                 {
