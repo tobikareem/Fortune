@@ -59,8 +59,8 @@ namespace Web.Extensions
         private static Timer _timer;
         public CustomErrorLogMiddleware(RequestDelegate next, ILogger<CustomErrorLogMiddleware> logger)
         {
-            _requestDelegate = next;
-            _logger = logger;
+            _requestDelegate = next ?? throw new ArgumentNullException(nameof(next));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _logPageViewDictionary = new Dictionary<string, LogPageViewCount>();
 
             SetTimer();
@@ -68,6 +68,12 @@ namespace Web.Extensions
 
         public async Task InvokeAsync(HttpContext context)
         {
+            if (context == null)
+            {
+                _logger.LogError("HttpContext is null in CustomErrorLogMiddleware.");
+                return;
+            }
+
             var timer = Stopwatch.StartNew();
             var data = GetData(context);
 
@@ -81,7 +87,7 @@ namespace Web.Extensions
             {
                 data.Error = e.Message;
 
-                await LogException(context, e, data);
+                LogException(context, e, data);
 
                 data.Duration = timer.Elapsed.TotalSeconds;
                 _logger.Log(LogLevel.Error, PageLogEventId.CustomErrorLogMiddleWare, data.Message);
@@ -94,6 +100,8 @@ namespace Web.Extensions
 
         private void LogBlogPostPath(HttpContext context)
         {
+            if (context?.Request?.RouteValues == null) return;
+
             var path = context.Request.RouteValues.TryGetValue("page", out var pathValue) ? pathValue?.ToString() : "unknown";
 
             if (string.Compare(path, "/blogPost", StringComparison.OrdinalIgnoreCase) != 0)
@@ -101,27 +109,32 @@ namespace Web.Extensions
                 return;
             }
 
-            path = context.Request.Path.HasValue ? context.Request.Path.Value : "";            
-            _logPageViewDictionary.TryGetValue(path, out var pageView);
+            path = context.Request.Path.HasValue ? context.Request.Path.Value : string.Empty;
 
-            pageView ??= new LogPageViewCount();
+            if (!_logPageViewDictionary.TryGetValue(path, out var pageView))
+            {
+                pageView = new LogPageViewCount();
+            }
 
             pageView.Count++;
             pageView.EndPoint = path;
             pageView.CreatedAt = DateTime.UtcNow;
 
-            var user = context.User;
-            if (user.Identity is { IsAuthenticated: true })
+            if (context.User.Identity is { IsAuthenticated: true })
             {
-                pageView.UserName = user.FindFirst("FirstName")?.Value;
+                pageView.UserName = context.User.FindFirst("FirstName")?.Value;
             }
 
-
-            _logPageViewDictionary.AddOrUpdate(path, pageView);
+            _logPageViewDictionary[path] = pageView;
         }
 
-        private static async Task LogException(HttpContext context, Exception exception, PageTracking data)
+        private static void LogException(HttpContext context, Exception exception, PageTracking data)
         {
+            if (context == null || context.Response == null || exception == null || data == null)
+            {
+                return;
+            }
+
             var code = HttpStatusCode.InternalServerError;
 
             if (BadAuthTypes.Contains(exception.GetType()))
@@ -160,8 +173,17 @@ namespace Web.Extensions
 
         private static PageTracking GetData(HttpContext context)
         {
+            if (context?.Request == null)
+            {
+                return new PageTracking { CreatedAt = DateTime.Now, Method = "Unknown", EndPoint = "Unknown" };
+            }
+
             var tracking = new PageTracking
-                { CreatedAt = DateTime.Now, Method = context.Request.Method, EndPoint = context.Request.Path };
+            {
+                CreatedAt = DateTime.Now,
+                Method = context.Request.Method ?? "Unknown",
+                EndPoint = context.Request.Path.HasValue ? context.Request.Path.Value : "Unknown"
+            };
 
             if (context.Request.QueryString.HasValue)
             {
@@ -186,16 +208,18 @@ namespace Web.Extensions
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            // save to database
-
-            foreach (var path in _logPageViewDictionary.Select(logPageViewCount => logPageViewCount.Key))
+            if (_logPageViewDictionary == null || !_logPageViewDictionary.Any())
             {
-                _logPageViewDictionary.TryGetValue(path, out var logPage);
-                _logger.LogInformation(PageLogEventId.PageViewCount, "Path - {path}, User - {user}, Count - {count}, SignalTime {signal}", path, logPage?.UserName, logPage?.Count, e.SignalTime);
+                _logger.LogWarning("No page views to log.");
+                return;
             }
 
-            // refresh the dictionary
-            // _logPageViewDictionary.Clear();
+            foreach (var (path, logPage) in _logPageViewDictionary)
+            {
+                _logger.LogInformation(PageLogEventId.PageViewCount,
+                    "Path - {path}, User - {user}, Count - {count}, SignalTime {signal}",
+                    path, logPage?.UserName, logPage?.Count, e.SignalTime);
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Security.Claims;
 using Core.Constants;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,7 +20,7 @@ namespace Web.Pages
         public bool IsTobiKareem { get; set; }
         public List<CustomPost> DisplayPosts { get; set; }
 
-        
+
 
         public HomeModel(IDataStore<Post> dataStore, ILogger<HomeModel> logger, ICacheService cacheService, IUserService userService, IExternalApiCalls serviceCalls)
         {
@@ -35,25 +36,6 @@ namespace Web.Pages
         {
             IsTobiKareem = User.HasClaim(ClaimTypes.Role, ResourceAction.FortuneAdmin);
 
-            var posts = _cacheService.GetOrCreate(CacheEntry.Posts, _dataPost.GetAll, 180);
-            var mindFeeds = posts.Where(x => string.Compare(x.Category?.Category1, "mindfeed", StringComparison.CurrentCultureIgnoreCase) == 0 && x.Enabled).ToList();
-
-            if (!mindFeeds.Any())
-            {
-                return Page();
-            }
-
-            _logger.Log(LogLevel.Information, PageLogEventId.GeneralInformationCount, ".... Got a count list of mind feeds: {mindFeeds} post(s) by me", mindFeeds.Count);
-            var cPosts = mindFeeds.OrderByDescending(x => x.Id).ToList();
-
-            DisplayPosts.AddRange(cPosts.Select(x => new CustomPost
-            {
-                Title = x.Title,
-                Id = x.Id,
-                CreatedOn = x.CreatedOn
-                
-            }));
-
             var spotifyPost = await GetSpotifyMusicInfo();
 
             if (!string.IsNullOrWhiteSpace(spotifyPost.SpotifyPreviewSong))
@@ -68,6 +50,23 @@ namespace Web.Pages
                         SpotifyArtistName = spotifyPost.SpotifyArtistName,
                         SpotifySongImage = spotifyPost.SpotifySongImage
                     });
+            }
+
+            var posts = _cacheService.GetOrCreate(CacheEntry.Posts, _dataPost.GetAll, 180);
+            var mindFeeds = posts.Where(x => string.Compare(x.Category?.Category1, "mindfeed", StringComparison.CurrentCultureIgnoreCase) == 0 && x.Enabled).ToList();
+
+            if (!mindFeeds.Any()) return Page();
+            {
+                _logger.Log(LogLevel.Information, PageLogEventId.GeneralInformationCount, ".... Got a count list of mind feeds: {mindFeeds} post(s) by me", mindFeeds.Count);
+                var cPosts = mindFeeds.OrderByDescending(x => x.Id).ToList();
+
+                DisplayPosts.AddRange(cPosts.Select(x => new CustomPost
+                {
+                    Title = x.Title,
+                    Id = x.Id,
+                    CreatedOn = x.CreatedOn
+
+                }));
             }
 
             return Page();
@@ -94,7 +93,7 @@ namespace Web.Pages
                 {
                     Market = "US"
                 });
-                
+
                 if (currentlyPlaying != null && currentlyPlaying.Item is FullTrack item)
                 {
                     customPost = new CustomPost
@@ -117,7 +116,7 @@ namespace Web.Pages
             return customPost;
         }
 
-        public class CustomPost:Post
+        public class CustomPost : Post
         {
             public string SpotifySongName { get; set; }
             public string SpotifyPreviewSong { get; set; }
