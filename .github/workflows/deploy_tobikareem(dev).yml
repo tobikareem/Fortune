@@ -21,6 +21,9 @@ jobs:
         with:
           dotnet-version: '9.x'
 
+      - name: Restore Dependencies
+        run: dotnet restore
+
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
@@ -32,6 +35,19 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
+
+      - name: Install EntityFramework Tools
+        run:  |
+            dotnet new tool-manifest
+            dotnet tool install dotnet-ef
+
+      - name: Generate EF Core Migration Script
+        run: dotnet ef migrations script --no-build --idempotent --configuration Release --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql" --context Data.Context.FortuneDbContext --project ${{ github.workspace }}/src/Web/Web.csproj
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ddl-updates
+          path: ${{env.DOTNET_ROOT}}/sql/sql-script.sql
 
   deploy:
     runs-on: windows-latest
@@ -45,8 +61,6 @@ jobs:
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
-        with:
-          name: .net-app
       
       - name: Login to Azure
         uses: azure/login@v2
@@ -61,5 +75,12 @@ jobs:
         with:
           app-name: 'tobikareem'
           slot-name: 'dev'
-          package: .
+          package: ./.net-app/
+
+      - name: Azure SQL Deploy
+        uses: Azure/sql-action@v2
+        with:
+          # The connection string,
+          connection-string: ${{ secrets.SQL_CONNECTION_STRING }}
+          path: ./ddl-updates/sql-script.sql
           
