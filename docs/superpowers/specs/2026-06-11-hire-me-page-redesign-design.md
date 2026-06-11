@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-11
 **Page:** `src/Web/Pages/Hire.cshtml` (`/hire/`)
-**Status:** Approved design, pending spec review
+**Status:** Approved design
 
 ## Goal
 
@@ -31,7 +31,7 @@ scope here, noted for a later pass.)
    - Headshot: `~/lib/images/tobiTesla.PNG`
    - Name: "Tobi Kareem"; title: "Staff Software Engineer"
    - Neutral, .NET-forward pitch (1–2 lines), e.g.:
-     > Staff Software Engineer with 8+ years building and shipping full-stack products end
+     > Staff Software Engineer with 12+ years building and shipping full-stack products end
      > to end — **ASP.NET Core / .NET 8** and Go backends behind React + TypeScript front
      > ends. Proven at scale: 50K+ daily events on Kafka, multi-region Cosmos DB, 99.95%
      > uptime, and P0 MTTR cut from 45 to 12 minutes.
@@ -41,7 +41,7 @@ scope here, noted for a later pass.)
    - Social links: LinkedIn, GitHub
 
 2. **Highlights strip** — stat cards from real numbers:
-   `8+ yrs experience` · `99.95% uptime` · `50K+ daily events` · `P0 MTTR 45→12 min`
+   `12+ yrs experience` · `99.95% uptime` · `50K+ daily events` · `P0 MTTR 45→12 min`
 
 3. **Core competencies** — neutral superset, .NET first:
    .NET / ASP.NET Core · Full-Stack (React + TypeScript) · Distributed Systems ·
@@ -84,8 +84,14 @@ scope here, noted for a later pass.)
   - Primary accent **teal `#2a9d8f`** (already used in `site.css`)
   - Secondary accent terracotta `#e07a5f`
   - Dark slate text
-- Clear type scale (distinct section headers vs body), generous spacing, card surfaces with
-  subtle borders/shadows, hover states on cards/buttons/timeline entries.
+- **Preserve the existing site fonts.** Use the site's current font stack (as defined by
+  `site.css` / Bootstrap defaults). Do **not** introduce new web fonts on the page — the
+  redesign changes layout and structure only, keeping the same look, feel, color, and
+  typography. (The downloadable CV PDF keeps its own separate typography; that is not the
+  web page.)
+- Type scale uses relative weight/size within the existing font family (distinct section
+  headers vs body) — no font-family changes. Generous spacing, card surfaces with subtle
+  borders/shadows, hover states on cards/buttons/timeline entries.
 - Fully responsive: timeline and grids collapse to a single column at mobile widths.
 
 ## Technical architecture
@@ -107,7 +113,7 @@ scope here, noted for a later pass.)
   the three tier SVGs (`presentation.svg`, `business.svg`, `data.svg`) usage — superseded by
   the tag-chip skill layout; leave the files unless cleanup is requested.
 - **`tenYearsAgo`/`timeSpan`** inline calc in the current view is replaced by a real
-  `8+ years` highlight derived from a start-year constant (2017) on the model.
+  `12+ years` highlight derived from a start-year constant (2014) on the model.
 
 ## Out of scope (noted, not fixed here)
 
