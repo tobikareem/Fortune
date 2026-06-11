@@ -2,7 +2,6 @@ using Data.Context;
 using Data.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DataSeeder;
 
@@ -16,10 +15,10 @@ public sealed class SeederDbContext : FortuneDbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            // Migrations live in the Data assembly, not this console app.
-            optionsBuilder
-                .UseSqlServer(_connectionString, sql => sql.MigrationsAssembly("Data"))
-                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+            // This context is used only for data inserts; schema drop/migrate
+            // runs on a real FortuneDbContext in Seeder.cs (migrations are bound
+            // to that type, and the PendingModelChangesWarning suppression lives there).
+            optionsBuilder.UseSqlServer(_connectionString);
         }
     }
 

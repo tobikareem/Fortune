@@ -62,7 +62,7 @@ static string? GetArg(string[] args, string name)
     return i >= 0 && i + 1 < args.Length ? args[i + 1] : null;
 }
 
-// Compare DB row counts against CSV row counts (CSV lines minus header).
+// Compare DB row counts against logical CSV record counts (RFC-4180 aware).
 static void Verify(SeederDbContext ctx, string dataPath)
 {
     Console.WriteLine("\nVerification (expected vs actual):");
