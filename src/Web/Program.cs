@@ -3,12 +3,12 @@ using NLog.Web;
 using Web.Extensions;
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
-logger.Debug("Initialized main method");
+logger.Debug("... Initialized main method");
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-    builder.Services.ConfigureCustomServices(builder);
+    builder.Services.ConfigureCustomServices(builder, logger);
 
     var app = builder.Build();
     app.UseCustomServiceBuilder(app.Environment);

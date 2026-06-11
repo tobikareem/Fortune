@@ -1,5 +1,4 @@
 ﻿
-using System.Reflection;
 using Shared.Interfaces.Services;
 using Shared.Interfaces.Repository;
 using Shared.Services;
@@ -14,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration.AzureAppConfiguration;
 using Microsoft.Extensions.Logging.AzureAppServices;
 using NLog;
 using NLog.Web;
@@ -25,30 +25,34 @@ namespace Web.Extensions
 {
     internal static class DependentServiceCollection
     {
-        internal static IServiceCollection ConfigureCustomServices(this IServiceCollection services, WebApplicationBuilder builder)
+        internal static IServiceCollection ConfigureCustomServices(this IServiceCollection services, WebApplicationBuilder builder, Logger logger)
         {
+            logger.Debug("... Configuring services");
 
             var config = builder.Configuration;
+
+            // Configuration sources (appsettings.json, appsettings.{Environment}.json,
+            // user secrets in Development, environment variables) are wired by
+            // WebApplication.CreateBuilder — do not re-add them here, or the later
+            // sources (user secrets) get overridden.
 
             #region Logging
             builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
             builder.Host.UseNLog();
-            LogManager.Configuration.Variables["logDir"] = builder.Configuration["Logging:NLog:logPath"];
+            // LogManager.Configuration.Variables["logDir"] = builder.Configuration["Logging:NLog:logPath"];
             builder.Logging.AddAzureWebAppDiagnostics();
+            
+            builder.Services.Configure<AzureFileLoggerOptions>(options =>
+            {
+                options.FileName = "app-diagnostics-";
+                options.FileSizeLimit = 50 * 1024;
+                options.RetainedFileCountLimit = 5;
+            });
+            builder.Services.Configure<AzureBlobLoggerOptions>(options =>
+            {
+                options.BlobName = "app-log.txt";
+            });
             #endregion
-
-
-
-            //builder.Services.Configure<AzureFileLoggerOptions>(options =>
-            //{
-            //    options.FileName = "app-diagnostics-";
-            //    options.FileSizeLimit = 50 * 1024;
-            //    options.RetainedFileCountLimit = 5;
-            //});
-            //builder.Services.Configure<AzureBlobLoggerOptions>(options =>
-            //{
-            //    options.BlobName = "app-log.txt";
-            //});
 
 
             builder.WebHost.UseIIS();
@@ -62,11 +66,10 @@ namespace Web.Extensions
                 options.AppendTrailingSlash = true;
                 options.LowercaseUrls = true;
             });
-            builder.Configuration.AddEnvironmentVariables();
             #endregion
 
             #region Database Context
-            var connString = config.GetConnectionString(nameof(ConnectionStrings.ProductionConnection));
+            var connString = config.GetConnectionString(nameof(ConnectionStrings.DefaultConnection));
 
             if (!builder.Environment.IsDevelopment())
             {
@@ -74,15 +77,6 @@ namespace Web.Extensions
             }
             services.AddDbContext<FortuneDbContext>(opt => opt.UseSqlServer(connString));
             #endregion
-
-            #region Identity/Authorization
-        
-            services.AddAuthorization(opt =>
-            {
-                opt.AddPolicy(ResourcePolicy.IsTobiKareem, pol => pol.RequireRole("FortuneAdmin"));
-            });
-            #endregion
-
 
             services.AddRazorPages()
                 .AddMvcOptions(options =>
@@ -108,14 +102,23 @@ namespace Web.Extensions
 
             services.Configure<ConfigAppSetting>(config.GetSection(nameof(ConfigAppSetting)));
 
-            builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json");
 
-            if (builder.Environment.IsDevelopment())
+            // In Development, secrets come from User Secrets (loaded automatically by
+            // the host). In other environments they come from Azure App Configuration /
+            // environment variables — fail fast if the Facebook credentials are missing.
+            if (!builder.Environment.IsDevelopment())
             {
-                builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
+                var facebookAppId = config["Authentications:FacebookSignIn:facebookappid"];
+                var facebookAppSecret = config["Authentications:FacebookSignIn:facebookappsecret"];
+
+                if (string.IsNullOrEmpty(facebookAppId) || string.IsNullOrEmpty(facebookAppSecret))
+                {
+                    throw new InvalidOperationException(
+                        "Facebook credentials are missing from configuration (Azure App Configuration / environment variables).");
+                }
             }
 
-            
+
 
             #endregion
 
@@ -151,14 +154,12 @@ namespace Web.Extensions
             services.AddAuthentication().AddFacebook(f =>
             {
                 var facebookAuth = config.GetSection(ConfigAppSetting.FacebookSignInOptions).Get<FacebookSignIn>();
-
                 f.AppId = facebookAuth.Facebookappid;
                 f.AppSecret = facebookAuth.Facebookappsecret;
                 f.AccessDeniedPath = "/Account/AccessDenied";
             }).AddTwitter(t =>
             {
                 var twitterAuth = config.GetSection(ConfigAppSetting.TwitterSignInOptions).Get<TwitterSignIn>();
-
                 t.ConsumerKey = twitterAuth.Twitterconsumerkey;
                 t.ConsumerSecret = twitterAuth.Twitterconsumersecret;
                 t.AccessDeniedPath = "/Account/AccessDenied";
@@ -168,7 +169,6 @@ namespace Web.Extensions
                 opt.ClientId = spotifyAuth.ClientId;
                 opt.ClientSecret = spotifyAuth.ClientSecret;
                 opt.AccessDeniedPath = "/Account/AccessDenied";
-               // opt.CallbackPath = "/callback";
                 opt.SaveTokens = true;
                 var scopes = new List<string>
                 {
