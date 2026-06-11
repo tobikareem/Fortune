@@ -51,12 +51,6 @@ namespace Web.Extensions
                     }
                 });
 
-                endPoints.MapGet("/tests", async context =>
-                {
-                    context.Response.ContentType = "text/plain";
-                    await context.Response.WriteAsync("Hello World");
-                });
-
             });
 
             return app;

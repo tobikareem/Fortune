@@ -20,8 +20,6 @@ namespace Web.Pages
         public bool IsTobiKareem { get; set; }
         public List<CustomPost> DisplayPosts { get; set; }
 
-
-
         public HomeModel(IDataStore<Post> dataStore, ILogger<HomeModel> logger, ICacheService cacheService, IUserService userService, IExternalApiCalls serviceCalls)
         {
             _logger = logger;
@@ -38,7 +36,7 @@ namespace Web.Pages
 
             var spotifyPost = await GetSpotifyMusicInfo();
 
-            if (!string.IsNullOrWhiteSpace(spotifyPost.SpotifyPreviewSong))
+            if(!string.IsNullOrWhiteSpace(spotifyPost.SpotifyPreviewSong))
             {
 
                 DisplayPosts.Insert(0,
@@ -84,6 +82,9 @@ namespace Web.Pages
             try
             {
                 var user = await _userService.GetTobiKareemUserAsync(); //_userService.GetCurrentUserId(User);
+
+                if(user is null)
+                    return new CustomPost();
 
                 var spotify = await _serviceCalls.SpotifyClientBuilderAsync(user);
 
