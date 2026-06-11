@@ -414,3 +414,9 @@ FodyWeavers.xsd
 /src/Web/Properties/ServiceDependencies
 /src/Web/Properties
 /src/Web/${var
+
+# Production data export — real PII/secrets, never commit
+/Data/
+
+# Seeder local connection config
+src/Tools/DataSeeder/appsettings.json
