@@ -23,6 +23,8 @@
           Google service-account private key),
         - flattens nested JSON to colon keys,
         - skips dev-only / misplaced keys (see -ExcludeKeys),
+        - SNAPSHOTS the current App Service settings first via
+          Backup-AzureAppSettings.ps1 (rollback point; skip with -SkipBackup),
         - writes the '__' app settings to the App Service (idempotent; existing
           keys are updated, new ones added).
 
@@ -58,6 +60,8 @@ param(
     #   Authentications:Logging             -> misplaced logging config; the app reads root "Logging"
     [string[]] $ExcludeKeys   = @("ConnectionStrings:DefaultConnection", "Authentications:Logging"),
     [switch]   $PruneLegacyUnderscore,
+    # Skip the automatic pre-write backup (not recommended).
+    [switch]   $SkipBackup,
     [switch]   $WhatIf
 )
 
@@ -115,6 +119,18 @@ if ($WhatIf) {
     Write-Host "`n-WhatIf: no changes made.`n" -ForegroundColor Yellow
     if ($PruneLegacyUnderscore) { Write-Host "(Would also prune single-underscore legacy keys for the same names.)" -ForegroundColor Yellow }
     return
+}
+
+# --- Safety: snapshot current settings before writing (rollback point) ------
+if (-not $SkipBackup) {
+    $backupScript = Join-Path $scriptRoot "Backup-AzureAppSettings.ps1"
+    if (Test-Path $backupScript) {
+        Write-Host "`nTaking a backup before writing..." -ForegroundColor Cyan
+        & $backupScript -ResourceGroup $ResourceGroup -AppName $AppName -Subscription $Subscription -OutDir $scriptRoot
+    }
+    else {
+        Write-Warning "Backup-AzureAppSettings.ps1 not found next to this script; proceeding WITHOUT a backup. Pass -SkipBackup to silence this."
+    }
 }
 
 # --- Write to Azure (JSON file avoids quoting issues with multi-line values) -
