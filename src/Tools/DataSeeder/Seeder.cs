@@ -1,27 +1,44 @@
+using Data.Context;
 using Data.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DataSeeder;
 
 public sealed class Seeder
 {
     private readonly SeederDbContext _ctx;
+    private readonly string _connectionString;
     private readonly string _dataPath;
 
-    public Seeder(SeederDbContext ctx, string dataPath)
+    public Seeder(SeederDbContext ctx, string connectionString, string dataPath)
     {
         _ctx = ctx;
+        _connectionString = connectionString;
         _dataPath = dataPath;
     }
 
     public void Run()
     {
-        Console.WriteLine("Dropping local database...");
-        _ctx.Database.EnsureDeleted();
+        // Schema (drop + migrate) must run on the real FortuneDbContext: EF Core
+        // discovers migrations by their [DbContext(typeof(FortuneDbContext))]
+        // attribute, so Migrate() on the SeederDbContext subclass finds none.
+        var schemaOptions = new DbContextOptionsBuilder<FortuneDbContext>()
+            .UseSqlServer(_connectionString, sql => sql.MigrationsAssembly("Data"))
+            // The model has drifted from the 2022 migration snapshot (net9 upgrade);
+            // we only need the existing migrations to build a schema for the seed.
+            .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning))
+            .Options;
 
-        Console.WriteLine("Applying migrations...");
-        _ctx.Database.Migrate();
+        using (var schemaCtx = new FortuneDbContext(schemaOptions))
+        {
+            Console.WriteLine("Dropping local database...");
+            schemaCtx.Database.EnsureDeleted();
+
+            Console.WriteLine("Applying migrations...");
+            schemaCtx.Database.Migrate();
+        }
 
         Console.WriteLine("Loading data...");
 

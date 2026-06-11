@@ -42,7 +42,7 @@ Console.WriteLine($"Data path: {dataPath}");
 try
 {
     using var ctx = new SeederDbContext(connectionString);
-    var seeder = new Seeder(ctx, dataPath);
+    var seeder = new Seeder(ctx, connectionString, dataPath);
     seeder.Run();
     Verify(ctx, dataPath);
     return 0;
@@ -50,6 +50,8 @@ try
 catch (Exception ex)
 {
     Console.Error.WriteLine($"SEED FAILED: {ex.Message}");
+    for (var inner = ex.InnerException; inner is not null; inner = inner.InnerException)
+        Console.Error.WriteLine($"  -> inner: {inner.Message}");
     Console.Error.WriteLine(ex.StackTrace);
     return 1;
 }
@@ -81,7 +83,7 @@ static void Verify(SeederDbContext ctx, string dataPath)
     {
         var path = Path.Combine(dataPath, csv);
         if (!File.Exists(path)) { Console.WriteLine($"  {table}: CSV missing, skipped"); continue; }
-        int expected = Math.Max(0, File.ReadAllLines(path).Length - 1);
+        int expected = CsvLoader.CountRecords(path);
         int actual = ctx.Database
             .SqlQueryRaw<int>($"SELECT COUNT(*) AS Value FROM {table}")
             .AsEnumerable()

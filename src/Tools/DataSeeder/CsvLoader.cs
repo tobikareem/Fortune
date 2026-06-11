@@ -22,6 +22,20 @@ public static class CsvLoader
         return csv.GetRecords<T>().ToList();
     }
 
+    // Counts logical data records (RFC-4180 aware) — quoted fields containing
+    // newlines, e.g. Post.Content HTML, count as one record, not many lines.
+    public static int CountRecords(string path)
+    {
+        using var reader = new StreamReader(path);
+        using var csv = new CsvReader(reader, BuildConfig());
+        csv.Read();
+        csv.ReadHeader();
+        var count = 0;
+        while (csv.Read())
+            count++;
+        return count;
+    }
+
     private static void RegisterMaps(CsvHelper.CsvContext ctx)
     {
         ctx.RegisterClassMap<CategoryMap>();
