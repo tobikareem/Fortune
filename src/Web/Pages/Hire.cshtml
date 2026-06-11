@@ -1,103 +1,131 @@
-﻿@page
+@page
 @using Web.Pages.Classes
 @model Web.Pages.HireModel
 @{
-}
-
-@{
-    ViewData["Title"] = "Hire Me";
+    ViewData["Title"] = "Tobi Kareem — Resume";
     ViewData["ActivePage"] = BreadCrumbs.Hire;
 }
 
-@{
-    var tenYearsAgo = DateTime.Now.AddYears(-10);
-    var timeSpan = DateTime.Now.Year - tenYearsAgo.Year;
-}
+<div class="hire-page">
 
-
-<section class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="text-center">Hire Me</h1>
-            <hr />
+    <section class="hire-hero">
+        <div class="hire-hero__photo">
+            <img src="~/lib/images/tobiTesla.PNG" alt="Tobi Kareem" asp-append-version="true" />
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <p>I'm an expert software developer with over @timeSpan years of experience, currently working at Tesla. I specialize in:</p>
-            <ul>
-                <li>ASP.NET Core</li>
-                <li>Python</li>
-                <li>JavaScript and TypeScript</li>
-                <li>React and Angular</li>
-                <li>Cloud Computing (AWS, Azure, GCP)</li>
-                <li>DevOps</li>
-                <li>Mobile Development (Android, iOS)</li>
-                <li>Kafka, RabbitMQ</li>
-                <li>Software development training and mentoring</li>
-            </ul>
-
-            
-        </div>
-     
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-4">
-            <h3>Presentation Tier</h3>
-            <img src="~/svg/presentation.svg" alt="Data Tier Icon" class="img-fluid mb-3" style="fill: blue;">
-
-            <ul>
-                <li>HTML5 &amp; CSS3</li>
-                <li>JavaScript &amp; TypeScript</li>
-                <li>React &amp; Angular</li>
-                <li>Vue.js &amp; Svelte</li>
-                <li>Bootstrap &amp; Tailwind CSS</li>
+        <div class="hire-hero__body">
+            <h1 class="hire-hero__name">Tobi Kareem</h1>
+            <p class="hire-hero__role">@Model.Role</p>
+            <p class="hire-hero__location">@Model.Location</p>
+            <p class="hire-hero__pitch">@Model.Pitch</p>
+            <div class="hire-hero__cta">
+                <a class="hire-btn hire-btn--primary" href="/files/tobi-kareem-cv.pdf" download>
+                    <i class="fas fa-download" aria-hidden="true"></i> Download Résumé
+                </a>
+                <a class="hire-btn hire-btn--secondary" asp-page="/Contact">
+                    <i class="fas fa-envelope" aria-hidden="true"></i> Contact me
+                </a>
+            </div>
+            <ul class="hire-social">
+                <li><a href="https://www.linkedin.com/in/oluwatobikareem/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="https://github.com/tobikareem" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a></li>
             </ul>
         </div>
-        <div class="col-md-4">
-            <h3>Business Tier</h3>
-            <img src="~/svg/business.svg" alt="Data Tier Icon" class="img-fluid mb-3" style="fill: blue;">
-            <ul>
-                <li>.NET Core</li>
-                <li>Python (Django, Flask)</li>
-                <li>Java (Spring Boot)</li>
-                <li>Node.js (Express, NestJS)</li>
-                <li>Ruby on Rails</li>
-            </ul>
+    </section>
+
+    <section class="hire-highlights">
+        @foreach (var h in Model.Highlights)
+        {
+            <div class="hire-stat">
+                <span class="hire-stat__value">@h.Value</span>
+                <span class="hire-stat__label">@h.Label</span>
+            </div>
+        }
+    </section>
+
+    <section class="hire-section">
+        <h2 class="hire-section__title">Core competencies</h2>
+        <ul class="hire-tags">
+            @foreach (var c in Model.Competencies)
+            {
+                <li class="hire-tag">@c</li>
+            }
+        </ul>
+    </section>
+
+    <section class="hire-section">
+        <h2 class="hire-section__title">Experience</h2>
+        <div class="hire-timeline">
+            @foreach (var e in Model.Experiences)
+            {
+                <article class="hire-job">
+                    <div class="hire-job__head">
+                        <span class="hire-job__company">@e.Company</span>
+                        <span class="hire-job__period">@e.Period</span>
+                    </div>
+                    <div class="hire-job__role">@e.Role</div>
+                    <div class="hire-job__location">@e.Location</div>
+                    <ul class="hire-job__bullets">
+                        @foreach (var b in e.Bullets)
+                        {
+                            <li>@Html.Raw(b)</li>
+                        }
+                    </ul>
+                </article>
+            }
         </div>
-        <div class="col-md-4">
-            <h3>Data Tier</h3>
-            <img src="~/svg/data.svg" alt="Data Tier Icon" class="img-fluid mb-3" style="fill: blue;">
-            <ul>
-                <li>Microsoft SQL Server</li>
-                <li>MySQL &amp; PostgreSQL</li>
-                <li>MongoDB &amp; Couchbase</li>
-                <li>Redis &amp; Memcached</li>
-                <li>Apache Cassandra &amp; Amazon DynamoDB</li>
-            </ul>
+    </section>
+
+    <section class="hire-section">
+        <h2 class="hire-section__title">Skills</h2>
+        <div class="hire-skills">
+            @foreach (var g in Model.SkillGroups)
+            {
+                <div class="hire-skill">
+                    <span class="hire-skill__label">@g.Label</span>
+                    <span class="hire-skill__items">@g.Items</span>
+                </div>
+            }
         </div>
-    </div>
-    
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <h2>Why you should hire me:</h2>
-            <p>
-                As a seasoned software developer with a proven track record, I can provide top-quality solutions to your technical challenges. My experience at Tesla and other companies has honed my skills in working with cutting-edge technologies and delivering innovative, reliable software products.
-            </p>
+    </section>
 
-            <h2>Portfolio</h2>
-            <p>
-                Visit my <a href="https://github.com/tobikareem">Github Page</a> page to see some of my past projects and accomplishments.
-            </p>
-
-            <h2>Contact Me</h2>
-            <p>
-                If you are interested in discussing a potential project or collaboration, please feel free to reach out to me through the <a href="/Contact">Contact</a> page or send an email to <a href="mailto:captain@tobikareem.com">captain@tobikareem.com</a>.
-            </p>
+    <section class="hire-section hire-credentials">
+        <div class="hire-credentials__col">
+            <h2 class="hire-section__title">Education</h2>
+            @foreach (var ed in Model.Education)
+            {
+                <div class="hire-cred">
+                    <div class="hire-cred__title">@ed.Title</div>
+                    <div class="hire-cred__meta"><span class="hire-cred__org">@ed.Org</span> · <span>@ed.Year</span></div>
+                </div>
+            }
         </div>
-    </div>
-    
-       
+        <div class="hire-credentials__col">
+            <h2 class="hire-section__title">Certifications</h2>
+            @foreach (var ce in Model.Certifications)
+            {
+                <div class="hire-cred">
+                    <div class="hire-cred__title">@ce.Title</div>
+                    <div class="hire-cred__meta">
+                        @if (!string.IsNullOrWhiteSpace(ce.Org)) { <span class="hire-cred__org">@ce.Org</span> }
+                        @if (!string.IsNullOrWhiteSpace(ce.Org) && !string.IsNullOrWhiteSpace(ce.Year)) { <text> · </text> }
+                        @if (!string.IsNullOrWhiteSpace(ce.Year)) { <span>@ce.Year</span> }
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
 
-</section>
+    <section class="hire-cta-band">
+        <h2>Let's build something together.</h2>
+        <p>Open to senior / staff engineering roles. Grab the résumé or get in touch.</p>
+        <div class="hire-hero__cta">
+            <a class="hire-btn hire-btn--primary" href="/files/tobi-kareem-cv.pdf" download>
+                <i class="fas fa-download" aria-hidden="true"></i> Download Résumé
+            </a>
+            <a class="hire-btn hire-btn--secondary" href="mailto:@Model.Email">
+                <i class="fas fa-envelope" aria-hidden="true"></i> @Model.Email
+            </a>
+        </div>
+    </section>
 
+</div>
