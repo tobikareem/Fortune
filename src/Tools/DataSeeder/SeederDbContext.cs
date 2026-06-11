@@ -2,6 +2,7 @@ using Data.Context;
 using Data.Entity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace DataSeeder;
 
@@ -16,7 +17,9 @@ public sealed class SeederDbContext : FortuneDbContext
         if (!optionsBuilder.IsConfigured)
         {
             // Migrations live in the Data assembly, not this console app.
-            optionsBuilder.UseSqlServer(_connectionString, sql => sql.MigrationsAssembly("Data"));
+            optionsBuilder
+                .UseSqlServer(_connectionString, sql => sql.MigrationsAssembly("Data"))
+                .ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
         }
     }
 
