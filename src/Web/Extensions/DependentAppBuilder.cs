@@ -26,6 +26,19 @@ namespace Web.Extensions
                 app.UseHsts();
             }
 
+            // Canonical host: 301-redirect www.tobikareem.com -> tobikareem.com
+            // (preserves path + query, forces https). Keeps SEO/cookies on one host.
+            app.Use(async (context, next) =>
+            {
+                if (string.Equals(context.Request.Host.Host, "www.tobikareem.com", StringComparison.OrdinalIgnoreCase))
+                {
+                    var target = $"https://tobikareem.com{context.Request.PathBase}{context.Request.Path}{context.Request.QueryString}";
+                    context.Response.Redirect(target, permanent: true);
+                    return;
+                }
+                await next();
+            });
+
             // app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseMiddleware<CustomErrorLogMiddleware>();
