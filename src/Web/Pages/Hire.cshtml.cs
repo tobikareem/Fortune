@@ -16,15 +16,15 @@ namespace Web.Pages
         public string Email => "captain@tobikareem.com";
 
         public string Pitch =>
-            "Staff Software Engineer with 12+ years building and shipping full-stack products " +
-            "end to end — ASP.NET Core / .NET 8 and Go backends behind React + TypeScript front " +
-            "ends. Proven at scale: 50K+ daily events on Kafka, multi-region Cosmos DB, 99.95% " +
+            $"Staff Software Engineer with {YearsExperience}+ years building and shipping full-stack " +
+            "products end to end — ASP.NET Core / .NET 8 and Go backends behind React + TypeScript " +
+            "front ends. Proven at scale: 50K+ daily events on Kafka, multi-region Cosmos DB, 99.95% " +
             "uptime, and P0 MTTR cut from 45 to 12 minutes. Deep in distributed systems, " +
             "OAuth2/OIDC identity platforms, and production LLM integration.";
 
-        public IReadOnlyList<Highlight> Highlights { get; } = new[]
+        public IReadOnlyList<Highlight> Highlights => new[]
         {
-            new Highlight("12+", "Years experience"),
+            new Highlight($"{YearsExperience}+", "Years experience"),
             new Highlight("99.95%", "Uptime at scale"),
             new Highlight("50K+", "Daily events on Kafka"),
             new Highlight("45→12 min", "P0 MTTR reduction"),
@@ -117,7 +117,7 @@ namespace Web.Pages
         public void OnGet() { }
     }
 
-    public record Experience(string Company, string Role, string Period, string Location, string[] Bullets);
+    public record Experience(string Company, string Role, string Period, string Location, IReadOnlyList<string> Bullets);
     public record SkillGroup(string Label, string Items);
     public record Highlight(string Value, string Label);
     public record Credential(string Title, string Org, string Year);
